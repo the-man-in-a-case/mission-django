@@ -1,22 +1,38 @@
-network topology
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
+
+package {{ package_name }};
+{% for import_item in imports -%}
+import {{ import_item }};
+{% endfor %}
+
+network {{ network_name }}
 {
-    types:
-        channel GasPipeChannel extends DatarateChannel
-        {
-            diameter = 5000;
-            length = 200;
-        }
+    parameters:
+
+        @display("bgb={{ display_size }}");
 
     submodules:
-        {% for node in nodes %}
-        {{ node.name }}: {{ node.type }} {
-            parameters:
-                @display("i=device/{{ node.type | lower }}");
+{% for node in nodes -%}
+        {{ node.id }}: {{ node.type }} {
+            @display("{{ node.display }}");
         }
-        {% endfor %}
-
+{% endfor -%}
     connections:
-        {% for edge in edges %}
-        {{ edge.src }}.pppg++ <--> GasPipeChannel <--> {{ edge.dst }}.pppg++;
-        {% endfor %}
+
+{% for edge in edges -%}
+        {{ edge.from }}.out++ --> {{ edge.pipe_type }}{% if edge.properties %} { {% for key, value in edge.properties.items() %} {{ key }} = {{ value }};{% if not loop.last %} {% endif %}{% endfor %} }{% endif %} --> {{ edge.to }}.in++;
+{% endfor -%}
 }

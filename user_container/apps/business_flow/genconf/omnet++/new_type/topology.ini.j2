@@ -1,15 +1,39 @@
 [General]
-network = topology
+network = {{ network_name }}
 
-{% for node in nodes %}
-topology.{{ node.name }}.pressure = {{ node.pressure }}
-topology.{{ node.name }}.supply = {{ node.supply }}
-topology.{{ node.name }}.LoadDemand = {{ node.LoadDemand }}
-topology.{{ node.name }}.TotalDemand = {{ node.TotalDemand }}
+# node 参数设置
+{% for node in nodes -%}
+{% if node.properties -%}
+{% for key, value in node.properties.items() -%}
+{{ network_name }}.{{ node.id }}.{{ key }} = {% if value is string and value not in ["true", "false"] and not value.replace(".", "").replace("-", "").isdigit() %}"{{ value }}"{% else %}{{ value | lower if value is sameas true or value is sameas false else value }}{% endif %}
+{%- if key == "LoadDemand" %}                 #负载需求量{% endif %}
+{%- if key == "TotalDemand" %}                #总需求量{% endif %}
+{%- if key == "supply" %}                     #供应量{% endif %}
+{%- if key == "GeneratorConsumption" %}       #发电机消耗量{% endif %}
+{%- if key == "csv" %}                        #是否开启输出csv{% endif %}
+{%- if key == "GeneratorConsumptionCsv" %}    #csv文件名{% endif %}
+{%- if key == "pressure" %}              # 压力{% if node.id == "gasNode2" %}from{% endif %}{% endif %}
+{% endfor %}
+{% if not loop.last %}
+{% endif -%}
+{% endif -%}
 {% endfor %}
 
-{% for edge in edges %}
-topology.{{ edge.src }}.GasPipe.diameter = {{ edge.diameter }}
-topology.{{ edge.src }}.GasPipe.length = {{ edge.length }}
-topology.{{ edge.src }}.gasPipe.flow = {{ edge.flow }}
-{% endfor %}
+# Compressor 参数设置
+{{ network_name }}.**.nst = {{ global_params.nst }}
+{{ network_name }}.**.np = {{ global_params.np }}
+{{ network_name }}.**.T_in = {{ global_params.T_in }}
+{{ network_name }}.**.Z_av = {{ global_params.Z_av }}
+{{ network_name }}.**.eta = {{ global_params.eta }}
+{{ network_name }}.**.pressRatio = {{ global_params.pressRatio }}
+{{ network_name }}.**.readInterval = {{ global_params.readInterval }}  # 设置读取间隔时间
+#{{ network_name }}.**.hpCsvFileName = "/opt/PyHLA-1.1.1-Source/examples/updateAttributeValues/gas_receive.csv"
+{{ network_name }}.**.hpCsvFileName = "{{ global_params.hpCsvFileName }}"
+
+#gaspipe 参数设置
+{{ network_name }}.GasPipe.diameter = {{ global_params.GasPipe_diameter }}    # 设置管道直径
+**.GasPipe.length = {{ global_params.GasPipe_length }}       # 设置管道长度
+**.gasPipe.flow = {{ global_params.gasPipe_flow }}          # 设置流量
+**.gasPipe.cij = {{ global_params.gasPipe_cij }}           # 设置cij平方
+**.gasPipe.type = "{{ global_params.gasPipe_type }}"          # 设置类型
+**.gasPipe.qij = "{{ global_params.gasPipe_qij }}"     # qij
