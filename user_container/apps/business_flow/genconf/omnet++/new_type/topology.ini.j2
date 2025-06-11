@@ -1,0 +1,15 @@
+[General]
+network = topology
+
+{% for node in nodes %}
+topology.{{ node.name }}.pressure = {{ node.pressure }}
+topology.{{ node.name }}.supply = {{ node.supply }}
+topology.{{ node.name }}.LoadDemand = {{ node.LoadDemand }}
+topology.{{ node.name }}.TotalDemand = {{ node.TotalDemand }}
+{% endfor %}
+
+{% for edge in edges %}
+topology.{{ edge.src }}.GasPipe.diameter = {{ edge.diameter }}
+topology.{{ edge.src }}.GasPipe.length = {{ edge.length }}
+topology.{{ edge.src }}.gasPipe.flow = {{ edge.flow }}
+{% endfor %}

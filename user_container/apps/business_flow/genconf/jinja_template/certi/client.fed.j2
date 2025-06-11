@@ -1,0 +1,27 @@
+(FED
+  (Federation {{ federation_name }})
+  (FEDversion {{ fed_version }})
+
+  (spaces
+  )
+
+  (objects
+    {% for obj in objects %}
+    (class {{ obj.class_name }}
+      {% for attr in obj.attributes %}
+      (attribute {{ attr.name }} {{ attr.type }} {{ attr.timestamp }})
+      {% endfor %}
+    )
+    {% endfor %}
+  )
+
+  (interactions
+    {% for interaction in interactions %}
+    (class {{ interaction.class_name }} {{ interaction.timestamp }}
+      {% for param in interaction.parameters %}
+      (parameter {{ param.name }})
+      {% endfor %}
+    )
+    {% endfor %}
+  )
+)

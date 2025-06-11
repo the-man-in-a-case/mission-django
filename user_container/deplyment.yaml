@@ -1,0 +1,12 @@
+# 示例：Kubernetes Deployment配置片段
+spec:
+  template:
+    spec:
+      containers:
+      - name: user-container
+        image: business-app:latest
+        env:
+        - name: USER_ID
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['user-id']  # 从Pod标签获取用户ID

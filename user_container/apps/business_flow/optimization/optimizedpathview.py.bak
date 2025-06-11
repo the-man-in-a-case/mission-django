@@ -1,0 +1,59 @@
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.exceptions import ValidationError
+from networkx.readwrite import json_graph
+
+
+class OptimizedPathView(APIView):
+    """DRF视图：获取优化路径的原Graph高亮JSON数据"""
+    def get(self, request):
+        try:
+            # 1. 参数验证（获取task_id）
+            task_id = request.query_params.get('task_id')
+            if not task_id:
+                raise ValidationError("缺少必要参数：task_id")
+            
+            # 2. 查找任务和场景（根据实际模型调整）
+            from course.models import Task  # 按需调整导入路径
+            task = Task.objects.get(task_id=task_id)
+            scene = task.scene  # 假设任务关联场景
+            
+            # 3. 获取优化路径（复用TargetOptimization逻辑）
+            optimizer = TargetOptimization(scene, task)
+            targets = optimizer.target_list()  # 生成目标列表
+            optimized_paths = optimizer.target_optimization(targets)  # 获取优化路径字典
+            
+            # 4. 为每个行业路径生成高亮子图
+            result = {}
+            for industry_code, path_nodes in optimized_paths.items():
+                if not path_nodes:
+                    result[industry_code] = None
+                    continue
+                
+                # 从原Graph获取该行业的拓扑图
+                graph = optimizer.network_graph.get(industry_code)
+                if not graph:
+                    result[industry_code] = None
+                    continue
+                
+                # 提取路径对应的子图（高亮标记）
+                subgraph = graph.subgraph(path_nodes)
+                
+                # 为节点/边添加高亮属性（前端可据此渲染）
+                for node in subgraph.nodes:
+                    subgraph.nodes[node]['is_optimized'] = True
+                for edge in subgraph.edges:
+                    subgraph.edges[edge]['is_optimized'] = True
+                
+                # 转换为node_link_data格式的JSON
+                result[industry_code] = json_graph.node_link_data(subgraph)
+            
+            return Response({"data": result}, status=status.HTTP_200_OK)
+        
+        except Task.DoesNotExist:
+            return Response({"error": "任务不存在"}, status=status.HTTP_404_NOT_FOUND)
+        except ValidationError as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({"error": f"服务器错误: {str(e)}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

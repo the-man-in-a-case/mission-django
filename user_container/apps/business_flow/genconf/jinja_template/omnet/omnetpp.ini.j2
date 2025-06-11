@@ -1,0 +1,18 @@
+[GasNetwork]
+network = {{ network }}
+
+# 关闭事件日志或根据需要开启
+# recordEventlog = {{ recordEventlog }}
+
+# 运行时间
+sim-time-limit = {{ sim_time_limit }}
+
+# 记录仿真数据
+output-scalar-file = results/scalarResults.sca
+output-vector-file = results/vectorResults.vec
+record-eventlog = {{ record_eventlog }}
+
+# Compressor 参数设置
+{% for key, value in compressor_params.items() %}
+*.compressor.{{ key }} = {{ value }}  # {{ compressor_desc[key] }}
+{% endfor %}

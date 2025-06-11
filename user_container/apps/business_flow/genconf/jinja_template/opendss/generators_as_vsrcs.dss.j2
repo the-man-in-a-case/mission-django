@@ -1,0 +1,4 @@
+/********************************************************************************************************  generators definitions as Vsources for {{ voltage_level }}kV  ***/
+{% for vsource in vsources %}
+New Vsource.{{ vsource.name }} bus1={{ vsource.bus }} basekv={{ vsource.basekv }} phases={{ vsource.phases }} pu={{ vsource.pu }} angle={{ vsource.angle }} frequency={{ vsource.frequency }} baseMVA={{ vsource.baseMVA }} puZ1={{ vsource.puZ1 }} !{{ vsource.description }}
+{% endfor %}

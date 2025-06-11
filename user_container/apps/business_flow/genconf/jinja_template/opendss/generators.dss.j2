@@ -1,0 +1,4 @@
+/********************************************************************************************************  generators definitions for {{ voltage_level }}kV  ***/
+{% for generator in generators %}
+New Generator.{{ generator.name }} bus1={{ generator.bus1 }} phases={{ generator.phases }} kV={{ generator.kV }} kW={{ generator.kW }} model={{ generator.model }} PVFactor={{ generator.PVFactor }} Vpu={{ generator.Vpu }} maxkvar={{ generator.maxkvar }} minkvar={{ generator.minkvar }}
+{% endfor %}

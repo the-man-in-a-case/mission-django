@@ -1,0 +1,39 @@
+# coding=utf-8
+# 程序配置
+
+# 燃气发电机名称列表
+GAS_GENERATOR_NAMES = {{ gas_generator_names | tojson }}
+
+# 压缩机负载名称列表
+COMPRESSOR_LOAD_NAMES = {{ compressor_load_names | tojson }}
+
+# 燃气节点到发电机的映射
+GAS_NODE_TO_GENERATOR_MAP = {{ gas_node_to_generator_map | tojson }}
+
+# 确保单位一致，燃气功率转换关系参数
+ALPHA = {{ alpha }}  # 基础燃气消耗 - 启动需要的最小燃气量 (MMSCM)
+BETA = {{ beta }}    # 一次项系数 (MMSCM/MW)
+GAMMA = {{ gamma }}  # 二次项系数 (MMSCM/MW²)
+
+## --- 文件路径 ---
+# 包含 master DSS 文件和其他相关DSS的目录
+# 假设此配置文件与 "IEEE118Bus_modified" 目录在同一级
+BASE_DSS_DIRECTORY = "{{ base_dss_directory }}"
+MASTER_DSS_FILE_NAME = "{{ master_dss_file_name }}"
+
+## --- 仿真参数 ---
+SIMULATION_SETTINGS = {{ simulation_settings | tojson }}
+# 应用仿真设置的命令（通过循环动态生成，避免硬编码）
+SIMULATION_SETUP_COMMANDS = [
+    {% for key, value in simulation_settings.items() %}
+    "Set {{ key }}={{{ value }}}",
+    {% endfor %}
+]
+
+## --- 故障仿真参数 ---
+# BUS_FAILURE_SEQUENCE = ["Bus7_xxx", "Bus12_xxxx", "Bus25_xxx"]
+BUS_FAILURE_SEQUENCE = {{ bus_failure_sequence | tojson }}  # 占位符，需要填写
+
+# 故障仿真函数参数
+# def run_failure_simulation_for_bus(target_bus, failure_time_step=2, max_steps=12, max_wait_time=300):
+FAILURE_SIMULATION_PARAMS = {{ failure_simulation_params | tojson }}

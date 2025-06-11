@@ -1,0 +1,37 @@
+{
+  "federation_name": "EnergySystem",
+  "fed_version": "v1.3",
+  "objects": [
+    {
+      "class_name": "ObjectRoot",
+      "attributes": [
+        {"name": "privilegeToDelete", "type": "reliable", "timestamp": "timestamp"},
+        {"name": "reliable", "type": "timestamp", "timestamp": "timestamp"}
+      ]
+    },
+    {
+      "class_name": "PowerPlant",
+      "attributes": [
+        {"name": "Power", "type": "reliable", "timestamp": "timestamp"},
+        {"name": "Load", "type": "reliable", "timestamp": "timestamp"}
+      ]
+    },
+    {
+      "class_name": "GasPipeline",
+      "attributes": [
+        {"name": "GasFlow", "type": "reliable", "timestamp": "timestamp"},
+        {"name": "FlowRate", "type": "reliable", "timestamp": "timestamp"}
+      ]
+    }
+  ],
+  "interactions": [
+    {
+      "class_name": "InteractionRoot",
+      "timestamp": "timestamp",
+      "parameters": [
+        {"name": "PowerValue"},
+        {"name": "GasFlowValue"}
+      ]
+    }
+  ]
+}

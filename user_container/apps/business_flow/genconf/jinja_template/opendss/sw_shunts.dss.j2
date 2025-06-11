@@ -1,0 +1,5 @@
+/********************************************************************************************************  switched shunt definitions for {{ voltage_level }}kV  ***/
+{% for shunt in switched_shunts %}
+New {{ shunt.type }}.{{ shunt.name }} bus={{ shunt.bus }} phases={{ shunt.phases }} kv={{ shunt.kv }} kvar={{ shunt.kvar }} R={{ shunt.R }} enabled={{ shunt.enabled }} 
+~ steps={{ shunt.steps }} min_step={{ shunt.min_step }} max_step={{ shunt.max_step }} ! 开关控制参数
+{% endfor %}

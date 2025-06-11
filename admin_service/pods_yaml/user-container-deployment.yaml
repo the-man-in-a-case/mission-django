@@ -1,0 +1,52 @@
+# user-container-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-123-deploy  # 替换为具体用户ID（如user-{user_id}-deploy）
+  namespace: user-containers  # 固定命名空间
+  labels:
+    app: user-123  # 与selector匹配
+    user-id: "123"  # 具体用户ID
+spec:
+  replicas: 1  # 初始副本数（可结合HPA自动扩缩容）
+  selector:
+    matchLabels:
+      app: user-123  # 匹配Pod标签
+  template:
+    metadata:
+      labels:
+        app: user-123  # Pod标签（与selector匹配）
+        user-id: "123"  # 具体用户ID
+    spec:
+      containers:
+      - name: user-123-container  # 容器名称
+        image: business-app:latest  # 业务应用镜像（根据实际替换）
+        ports:
+        - containerPort: 8080  # 容器内部端口（与Service targetPort一致）
+        env:
+        - name: USER_ID  # 用户ID环境变量（关键多租户标识）
+          value: "123"  # 具体用户ID
+        - name: DB_NAME  # 数据库名称（与用户绑定）
+          value: "user_123_db"  # 具体用户数据库名
+        resources:  # 资源限制（根据用户权限配置）
+          requests:
+            cpu: "500m"  # CPU请求
+            memory: "1Gi"  # 内存请求
+          limits:
+            cpu: "1000m"  # CPU限制
+            memory: "2Gi"  # 内存限制
+
+---
+# 配套Service（用于集群内访问Pod）
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-123-service  # 替换为具体用户ID（如user-{user_id}-service）
+  namespace: user-containers
+spec:
+  type: ClusterIP  # 集群内部访问
+  selector:
+    app: user-123  # 匹配Deployment的Pod标签
+  ports:
+  - port: 80  # Service暴露端口
+    targetPort: 8080  # 转发到容器的端口
