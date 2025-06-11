@@ -1,0 +1,37 @@
+[General]
+network = {{ omnetpp.network }}
+
+# node 参数设置
+{% for node in topology.nodes %}
+{% if node.name == "gasNode1" %}
+topology.{{ node.name }}.supply = {{ node.supply }}
+topology.{{ node.name }}.pressure = {{ node.pressure }}
+{% else %}
+{% if "LoadDemand" in node %}
+topology.{{ node.name }}.LoadDemand = {{ node.LoadDemand }}                 #负载需求量
+topology.{{ node.name }}.TotalDemand = {{ node.TotalDemand }}                #总需求量
+{% endif %}
+{% if "supply" in node %}
+topology.{{ node.name }}.supply = {{ node.supply }}                     #供应量
+{% endif %}
+{% if "GeneratorConsumption" in node %}
+topology.{{ node.name }}.GeneratorConsumption = {{ node.GeneratorConsumption }}       #发电机消耗量
+{% endif %}
+{% if "csv" in node %}
+topology.{{ node.name }}.csv = {{ node.csv | lower }}                        #是否开启输出csv
+{% endif %}
+{% if "GeneratorConsumptionCsv" in node %}
+topology.{{ node.name }}.GeneratorConsumptionCsv = "{{ node.GeneratorConsumptionCsv }}"    #csv文件名
+{% endif %}
+topology.{{ node.name }}.pressure = {{ node.pressure }}              # 压力from
+{% endif %}
+{% endfor %}
+
+# Compressor 参数设置
+{% for key, value in omnetpp.compressor_params.items() %}
+topology.**.{{ key }} = {{ value }}  # {{ omnetpp.compressor_desc[key] }}
+{% endfor %}
+
+# gaspipe 参数设置
+topology.GasPipe.diameter = 5000    # 设置管道直径
+**.GasPipe.length = 200       # 设置管道长度

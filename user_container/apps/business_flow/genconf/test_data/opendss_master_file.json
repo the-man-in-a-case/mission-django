@@ -1,0 +1,27 @@
+{
+  "default_base_frequency": "60",
+  "circuit_name": "ieee118bus",
+  "circuit_params": {
+    "basekv": "138.0",
+    "phases": "3",
+    "pu": "1.005",
+    "angle": "39.69",
+    "frequency": "60.0",
+    "baseMVA": "728.5374813610073",
+    "puZ1": "[0.001, 0.2]",
+    "bus1": "89_clinchrv"
+  },
+  "redirect_files": [
+    "redirect generators.dss              ! definitions for generators",
+    "!redirect generators_as_vsrcs.dss     ! definitions for generators",
+    "redirect dc_and_facts_equiv_elements.dss     ! definitions for dc and facts elements from pss/e",
+    "redirect lines.dss                   ! definitions for lines",
+    "redirect transformers.dss            ! definitions for transformers",
+    "redirect loads.dss                   ! definitions for loads",
+    "redirect shunts.dss                  ! definitions for reactors and capacitors",
+    "redirect sw_shunts.dss               ! definitions for switched reactors and capacitors"
+  ],
+  "voltage_bases": "138.0",
+  "algorithm": "NCIM",
+  "ignore_gen_q_limits": "Yes"
+}

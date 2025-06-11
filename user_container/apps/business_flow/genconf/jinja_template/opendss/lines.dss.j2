@@ -1,0 +1,4 @@
+/********************************************************************************************************  line definitions for {{ voltage_level }}kV  ***/
+{% for line in lines %}
+new line.{{ line.name }} Bus1={{ line.bus1 }} Bus2={{ line.bus2 }} phases={{ line.phases }} r1={{ line.r1 }} x1={{ line.x1 }} r0={{ line.r0 }} x0={{ line.x0 }} c1={{ line.c1 }} c0={{ line.c0 }} length={{ line.length }} normamps={{ line.normamps }} emergamps={{ line.emergamps }} enabled={{ line.enabled }}
+{% endfor %}

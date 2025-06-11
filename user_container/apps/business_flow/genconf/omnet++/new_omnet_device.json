@@ -1,0 +1,147 @@
+{
+  "nodes": [
+    {
+      "name": "gasNode1",
+      "supply": 78.75644208,
+      "pressure": 59.85168
+    },
+    {
+      "name": "gasNode2",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "supply": 0,
+      "GeneratorConsumption": 0,
+      "csv": false,
+      "GeneratorConsumptionCsv": "gasconsumption.csv",
+      "pressure": 58.00522748
+    },
+    {
+      "name": "gasNode3",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 59.81104853
+    },
+    {
+      "name": "integratedNode4",
+      "LoadDemand": 4,
+      "TotalDemand": 6.64908208,
+      "GeneratorConsumption": 2.64908208,
+      "csv": true,
+      "pressure": 53.68618422
+    },
+    {
+      "name": "gasNode5",
+      "pressure": 56.42567517
+    },
+    {
+      "name": "gasNode6",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 53.68618422
+    },
+    {
+      "name": "integratedNode7",
+      "LoadDemand": 4,
+      "TotalDemand": 4.4386,
+      "GeneratorConsumption": 0.4386,
+      "csv": true,
+      "pressure": 55.37856779
+    },
+    {
+      "name": "integratedNode8",
+      "LoadDemand": 4,
+      "TotalDemand": 4.09804,
+      "GeneratorConsumption": 0.09804,
+      "csv": true,
+      "pressure": 43.60855576
+    },
+    {
+      "name": "integratedNode9",
+      "LoadDemand": 4,
+      "TotalDemand": 4.09804,
+      "GeneratorConsumption": 0.09804,
+      "csv": true,
+      "pressure": 53.36793505
+    },
+    {
+      "name": "integratedNode10",
+      "LoadDemand": 4,
+      "TotalDemand": 5.05264,
+      "GeneratorConsumption": 1.05264,
+      "csv": true,
+      "pressure": 53.44867667
+    },
+    {
+      "name": "gasNode11",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 53.64088276
+    },
+    {
+      "name": "gasNode12",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 55.06706386
+    },
+    {
+      "name": "gasNode13",
+      "pressure": 48.37310799
+    },
+    {
+      "name": "gasNode14",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 46.48929073
+    },
+    {
+      "name": "gasNode15",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 45.13654014
+    },
+    {
+      "name": "gasNode16",
+      "pressure": 44.63302457
+    },
+    {
+      "name": "gasNode17",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 46.48929073
+    },
+    {
+      "name": "integratedNode18",
+      "LoadDemand": 4,
+      "TotalDemand": 4.09804,
+      "GeneratorConsumption": 0.09804,
+      "csv": true,
+      "pressure": 165.0860933
+    },
+    {
+      "name": "gasNode19",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 46.48929073
+    },
+    {
+      "name": "integratedNode20",
+      "LoadDemand": 4,
+      "TotalDemand": 6.322,
+      "GeneratorConsumption": 2.322,
+      "csv": true,
+      "pressure": 55.06706386
+    },
+    {
+      "name": "gasNode21",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 55.17723158
+    },
+    {
+      "name": "gasNode22",
+      "LoadDemand": 4,
+      "TotalDemand": 4,
+      "pressure": 55.17723158
+    }
+  ]
+}

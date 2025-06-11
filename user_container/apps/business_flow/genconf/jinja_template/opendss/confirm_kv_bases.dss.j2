@@ -1,0 +1,4 @@
+{# OpenDSS电压基准配置模板 #}
+{% for kv in confirm_kv_bases %}
+setkvbase bus={{ kv.bus }} kVLL={{ kv.kVLL }}
+{% endfor %}

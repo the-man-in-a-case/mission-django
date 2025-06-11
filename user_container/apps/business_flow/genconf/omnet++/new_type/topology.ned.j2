@@ -1,0 +1,22 @@
+network topology
+{
+    types:
+        channel GasPipeChannel extends DatarateChannel
+        {
+            diameter = 5000;
+            length = 200;
+        }
+
+    submodules:
+        {% for node in nodes %}
+        {{ node.name }}: {{ node.type }} {
+            parameters:
+                @display("i=device/{{ node.type | lower }}");
+        }
+        {% endfor %}
+
+    connections:
+        {% for edge in edges %}
+        {{ edge.src }}.pppg++ <--> GasPipeChannel <--> {{ edge.dst }}.pppg++;
+        {% endfor %}
+}

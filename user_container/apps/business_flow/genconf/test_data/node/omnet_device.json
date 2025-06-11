@@ -1,0 +1,220 @@
+{
+  "devices": [
+    {
+      "device_type": "compressor",
+      "device_name": "default_compressor",
+      "parameters": {
+        "nst": 2,
+        "np": 1.35,
+        "T_in": 530,
+        "Z_av": 0.92,
+        "eta": 0.88,
+        "pressRatio": 2.0,
+        "readInterval": 1.0,
+        "outputCsvFileName": "compressor_output.csv",
+        "hpCsvFileName": "hp_dta.csv"
+      },
+      "parameter_descriptions": {
+        "nst": "Number of stages in the compressor",
+        "np": "Polytropic efficiency",
+        "T_in": "Input temperature",
+        "Z_av": "Average compressibility factor",
+        "eta": "Efficiency",
+        "pressRatio": "Pressure ratio",
+        "readInterval": "Time interval for reading",
+        "outputCsvFileName": "Name of the output CSV file",
+        "hpCsvFileName": "Name of the high pressure CSV file"
+      }
+    },
+    {
+      "device_type": "GasNode",
+      "instances": [
+        {
+          "name": "gasNode2",
+          "position": [
+            104,
+            830
+          ]
+        },
+        {
+          "name": "gasNode22",
+          "position": [
+            87,
+            655
+          ]
+        },
+        {
+          "name": "gasNode21",
+          "position": [
+            172,
+            535
+          ]
+        },
+        {
+          "name": "gasNode6",
+          "position": [
+            247,
+            576
+          ]
+        },
+        {
+          "name": "gasNode5",
+          "position": [
+            265,
+            684
+          ]
+        },
+        {
+          "name": "gasNode1",
+          "position": [
+            292,
+            770
+          ]
+        },
+        {
+          "name": "gasNode3",
+          "position": [
+            459,
+            849
+          ]
+        },
+        {
+          "name": "gasNode12",
+          "position": [
+            625,
+            708
+          ]
+        },
+        {
+          "name": "gasNode11",
+          "position": [
+            584,
+            617
+          ]
+        },
+        {
+          "name": "gasNode19",
+          "position": [
+            236,
+            335
+          ]
+        },
+        {
+          "name": "gasNode13",
+          "position": [
+            831,
+            650
+          ]
+        },
+        {
+          "name": "gasNode14",
+          "position": [
+            735,
+            474
+          ]
+        },
+        {
+          "name": "gasNode15",
+          "position": [
+            799,
+            334
+          ]
+        },
+        {
+          "name": "gasNode16",
+          "position": [
+            792,
+            139
+          ]
+        },
+        {
+          "name": "gasNode17",
+          "position": [
+            608,
+            98
+          ]
+        }
+      ]
+    },
+    {
+      "device_type": "Compressor",
+      "instances": [
+        {
+          "name": "compressor23",
+          "position": [
+            170,
+            671
+          ]
+        },
+        {
+          "name": "compressor25",
+          "position": [
+            695,
+            247
+          ]
+        },
+        {
+          "name": "compressor24",
+          "position": [
+            685,
+            589
+          ]
+        }
+      ]
+    },
+    {
+      "device_type": "IntegratedNode",
+      "instances": [
+        {
+          "name": "integratedNode20",
+          "position": [
+            156,
+            400
+          ]
+        },
+        {
+          "name": "integratedNode7",
+          "position": [
+            381,
+            448
+          ]
+        },
+        {
+          "name": "integratedNode4",
+          "position": [
+            418,
+            702
+          ]
+        },
+        {
+          "name": "integratedNode10",
+          "position": [
+            477,
+            570
+          ]
+        },
+        {
+          "name": "integratedNode18",
+          "position": [
+            327,
+            304
+          ]
+        },
+        {
+          "name": "integratedNode9",
+          "position": [
+            532,
+            375
+          ]
+        },
+        {
+          "name": "integratedNode8",
+          "position": [
+            436,
+            176
+          ]
+        }
+      ]
+    }
+  ]
+}

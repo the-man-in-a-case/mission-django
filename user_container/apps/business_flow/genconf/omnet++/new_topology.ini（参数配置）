@@ -1,0 +1,492 @@
+[General]
+network = topology
+
+# Gas Node 参数设置
+
+topology.gasNode1.supply = 78.75644208
+topology.gasNode1.pressure = 59.85168
+
+
+topology.gasNode2.LoadDemand = 4
+topology.gasNode2.TotalDemand = 4
+topology.gasNode2.supply = 0
+topology.gasNode2.GeneratorConsumption = 0
+topology.gasNode2.csv = false
+topology.gasNode2.GeneratorConsumptionCsv = "gasconsumption.csv"
+topology.gasNode2.pressure = 58.00522748
+
+
+topology.gasNode3.LoadDemand = 4
+topology.gasNode3.TotalDemand = 4
+topology.gasNode3.pressure = 59.81104853
+
+
+topology.gasNode5.pressure = 56.42567517
+
+
+topology.gasNode6.LoadDemand = 4
+topology.gasNode6.TotalDemand = 4
+topology.gasNode6.pressure = 53.68618422
+
+
+topology.gasNode11.LoadDemand = 4
+topology.gasNode11.TotalDemand = 4
+topology.gasNode11.pressure = 53.64088276
+
+
+topology.gasNode12.LoadDemand = 4
+topology.gasNode12.TotalDemand = 4
+topology.gasNode12.pressure = 55.06706386
+
+
+topology.gasNode13.pressure = 48.37310799
+
+
+topology.gasNode14.LoadDemand = 4
+topology.gasNode14.TotalDemand = 4
+topology.gasNode14.pressure = 46.48929073
+
+
+topology.gasNode15.LoadDemand = 4
+topology.gasNode15.TotalDemand = 4
+topology.gasNode15.pressure = 45.13654014
+
+
+topology.gasNode16.pressure = 44.63302457
+
+
+topology.gasNode17.LoadDemand = 4
+topology.gasNode17.TotalDemand = 4
+topology.gasNode17.pressure = 44.12376354
+
+
+topology.gasNode19.LoadDemand = 4
+topology.gasNode19.TotalDemand = 4
+topology.gasNode19.pressure = 46.48929073
+
+
+topology.gasNode21.LoadDemand = 4
+topology.gasNode21.TotalDemand = 4
+topology.gasNode21.pressure = 55.17723158
+
+
+topology.gasNode22.LoadDemand = 4
+topology.gasNode22.TotalDemand = 4
+topology.gasNode22.pressure = 55.17723158
+
+
+
+# Integrated Node 参数设置
+
+topology.integratedNode4.LoadDemand = 4
+topology.integratedNode4.TotalDemand = 6.64908208
+topology.integratedNode4.GeneratorConsumption = 2.64908208
+topology.integratedNode4.csv = true
+topology.integratedNode4.pressure = 53.68618422
+
+
+topology.integratedNode7.LoadDemand = 4
+topology.integratedNode7.TotalDemand = 4.4386
+topology.integratedNode7.GeneratorConsumption = 0.4386
+topology.integratedNode7.csv = true
+topology.integratedNode7.pressure = 55.37856779
+
+
+topology.integratedNode8.LoadDemand = 4
+topology.integratedNode8.TotalDemand = 4.09804
+topology.integratedNode8.GeneratorConsumption = 0.09804
+topology.integratedNode8.csv = true
+topology.integratedNode8.pressure = 43.60855576
+
+
+topology.integratedNode9.LoadDemand = 4
+topology.integratedNode9.TotalDemand = 4.09804
+topology.integratedNode9.GeneratorConsumption = 0.09804
+topology.integratedNode9.csv = true
+topology.integratedNode9.pressure = 53.36793505
+
+
+topology.integratedNode10.LoadDemand = 4
+topology.integratedNode10.TotalDemand = 5.05264
+topology.integratedNode10.GeneratorConsumption = 1.05264
+topology.integratedNode10.csv = true
+topology.integratedNode10.pressure = 53.44867667
+
+
+topology.integratedNode18.LoadDemand = 4
+topology.integratedNode18.TotalDemand = 4.09804
+topology.integratedNode18.GeneratorConsumption = 0.09804
+topology.integratedNode18.csv = true
+topology.integratedNode18.pressure = 165.0860933
+
+
+topology.integratedNode20.LoadDemand = 4
+topology.integratedNode20.TotalDemand = 6.322
+topology.integratedNode20.GeneratorConsumption = 2.322
+topology.integratedNode20.csv = true
+topology.integratedNode20.pressure = 55.06706386
+
+
+
+# Compressor 参数设置
+
+topology.compressor23.nst = 1
+topology.compressor23.np = 1.35
+topology.compressor23.T_in = 530
+topology.compressor23.Z_av = 0.92
+topology.compressor23.eta = 0.88
+topology.compressor23.pressRatio = 2.0
+topology.compressor23.readInterval = 5.0
+topology.compressor23.hpCsvFileName = "gas1.csv"
+
+
+topology.compressor24.nst = 1
+topology.compressor24.np = 1.35
+topology.compressor24.T_in = 530
+topology.compressor24.Z_av = 0.92
+topology.compressor24.eta = 0.88
+topology.compressor24.pressRatio = 2.0
+topology.compressor24.readInterval = 5.0
+topology.compressor24.hpCsvFileName = "gas1.csv"
+
+
+topology.compressor25.nst = 1
+topology.compressor25.np = 1.35
+topology.compressor25.T_in = 530
+topology.compressor25.Z_av = 0.92
+topology.compressor25.eta = 0.88
+topology.compressor25.pressRatio = 2.0
+topology.compressor25.readInterval = 5.0
+topology.compressor25.hpCsvFileName = "gas1.csv"
+
+
+
+# Gas Pipe 参数设置
+
+topology.gasNode1_to_gasNode2.diameter = 5000
+topology.gasNode1_to_gasNode2.length = 200
+topology.gasNode1_to_gasNode2.flow = 100
+topology.gasNode1_to_gasNode2.cij = 1.11405
+topology.gasNode1_to_gasNode2.type = "p"
+topology.gasNode1_to_gasNode2.qij = "26.7606"
+
+
+topology.gasNode1_to_gasNode3.diameter = 5000
+topology.gasNode1_to_gasNode3.length = 200
+topology.gasNode1_to_gasNode3.flow = 100
+topology.gasNode1_to_gasNode3.cij = 1.21405
+topology.gasNode1_to_gasNode3.type = "p"
+topology.gasNode1_to_gasNode3.qij = "26.7606"
+
+
+topology.gasNode1_to_integratedNode4.diameter = 5000
+topology.gasNode1_to_integratedNode4.length = 200
+topology.gasNode1_to_integratedNode4.flow = 100
+topology.gasNode1_to_integratedNode4.cij = 1.31405
+topology.gasNode1_to_integratedNode4.type = "p"
+topology.gasNode1_to_integratedNode4.qij = "26.7606"
+
+
+topology.gasNode2_to_gasNode3.diameter = 5000
+topology.gasNode2_to_gasNode3.length = 200
+topology.gasNode2_to_gasNode3.flow = 100
+topology.gasNode2_to_gasNode3.cij = 1.49543
+topology.gasNode2_to_gasNode3.type = "p"
+topology.gasNode2_to_gasNode3.qij = "26.7606"
+
+
+topology.gasNode2_to_gasNode22.diameter = 5000
+topology.gasNode2_to_gasNode22.length = 200
+topology.gasNode2_to_gasNode22.flow = 100
+topology.gasNode2_to_gasNode22.cij = 1.51405
+topology.gasNode2_to_gasNode22.type = "p"
+topology.gasNode2_to_gasNode22.qij = "26.7606"
+
+
+topology.gasNode21_to_integratedNode20.diameter = 5000
+topology.gasNode21_to_integratedNode20.length = 200
+topology.gasNode21_to_integratedNode20.flow = 100
+topology.gasNode21_to_integratedNode20.cij = 1.71405
+topology.gasNode21_to_integratedNode20.type = "p"
+topology.gasNode21_to_integratedNode20.qij = "26.7606"
+
+
+topology.gasNode2_to_gasNode5.diameter = 5000
+topology.gasNode2_to_gasNode5.length = 200
+topology.gasNode2_to_gasNode5.flow = 100
+topology.gasNode2_to_gasNode5.cij = 1.81405
+topology.gasNode2_to_gasNode5.type = "p"
+topology.gasNode2_to_gasNode5.qij = "26.7606"
+
+
+topology.gasNode3_to_integratedNode4.diameter = 5000
+topology.gasNode3_to_integratedNode4.length = 200
+topology.gasNode3_to_integratedNode4.flow = 100
+topology.gasNode3_to_integratedNode4.cij = 0.5
+topology.gasNode3_to_integratedNode4.type = "p"
+topology.gasNode3_to_integratedNode4.qij = "26.7606"
+
+
+topology.integratedNode4_to_integratedNode10.diameter = 5000
+topology.integratedNode4_to_integratedNode10.length = 200
+topology.integratedNode4_to_integratedNode10.flow = 100
+topology.integratedNode4_to_integratedNode10.cij = 0.5
+topology.integratedNode4_to_integratedNode10.type = "p"
+topology.integratedNode4_to_integratedNode10.qij = "26.7606"
+
+
+topology.integratedNode4_to_gasNode11.diameter = 5000
+topology.integratedNode4_to_gasNode11.length = 200
+topology.integratedNode4_to_gasNode11.flow = 100
+topology.integratedNode4_to_gasNode11.cij = 0.5
+topology.integratedNode4_to_gasNode11.type = "p"
+topology.integratedNode4_to_gasNode11.qij = "26.7606"
+
+
+topology.integratedNode4_to_gasNode12.diameter = 5000
+topology.integratedNode4_to_gasNode12.length = 200
+topology.integratedNode4_to_gasNode12.flow = 100
+topology.integratedNode4_to_gasNode12.cij = 0.5
+topology.integratedNode4_to_gasNode12.type = "p"
+topology.integratedNode4_to_gasNode12.qij = "26.7606"
+
+
+topology.gasNode5_to_gasNode6.diameter = 5000
+topology.gasNode5_to_gasNode6.length = 200
+topology.gasNode5_to_gasNode6.flow = 100
+topology.gasNode5_to_gasNode6.cij = 0.5
+topology.gasNode5_to_gasNode6.type = "p"
+topology.gasNode5_to_gasNode6.qij = "26.7606"
+
+
+topology.gasNode6_to_gasNode21.diameter = 5000
+topology.gasNode6_to_gasNode21.length = 200
+topology.gasNode6_to_gasNode21.flow = 100
+topology.gasNode6_to_gasNode21.cij = 1.81405
+topology.gasNode6_to_gasNode21.type = "p"
+topology.gasNode6_to_gasNode21.qij = "10.322"
+
+
+topology.gasNode6_to_integratedNode10.diameter = 5000
+topology.gasNode6_to_integratedNode10.length = 200
+topology.gasNode6_to_integratedNode10.flow = 100
+topology.gasNode6_to_integratedNode10.cij = 0.5
+topology.gasNode6_to_integratedNode10.type = "p"
+topology.gasNode6_to_integratedNode10.qij = "26.7606"
+
+
+topology.gasNode6_to_integratedNode7.diameter = 5000
+topology.gasNode6_to_integratedNode7.length = 200
+topology.gasNode6_to_integratedNode7.flow = 100
+topology.gasNode6_to_integratedNode7.cij = 0.5
+topology.gasNode6_to_integratedNode7.type = "p"
+topology.gasNode6_to_integratedNode7.qij = "26.7606"
+
+
+topology.integratedNode7_to_integratedNode9.diameter = 5000
+topology.integratedNode7_to_integratedNode9.length = 200
+topology.integratedNode7_to_integratedNode9.flow = 100
+topology.integratedNode7_to_integratedNode9.cij = 0.5
+topology.integratedNode7_to_integratedNode9.type = "p"
+topology.integratedNode7_to_integratedNode9.qij = "26.7606"
+
+
+topology.integratedNode7_to_integratedNode18.diameter = 5000
+topology.integratedNode7_to_integratedNode18.length = 200
+topology.integratedNode7_to_integratedNode18.flow = 100
+topology.integratedNode7_to_integratedNode18.cij = 0.5
+topology.integratedNode7_to_integratedNode18.type = "p"
+topology.integratedNode7_to_integratedNode18.qij = "26.7606"
+
+
+topology.integratedNode7_to_integratedNode20.diameter = 5000
+topology.integratedNode7_to_integratedNode20.length = 200
+topology.integratedNode7_to_integratedNode20.flow = 100
+topology.integratedNode7_to_integratedNode20.cij = 0.5
+topology.integratedNode7_to_integratedNode20.type = "p"
+topology.integratedNode7_to_integratedNode20.qij = "26.7606"
+
+
+topology.integratedNode8_to_integratedNode18.diameter = 5000
+topology.integratedNode8_to_integratedNode18.length = 200
+topology.integratedNode8_to_integratedNode18.flow = 100
+topology.integratedNode8_to_integratedNode18.cij = 0.5
+topology.integratedNode8_to_integratedNode18.type = "p"
+topology.integratedNode8_to_integratedNode18.qij = "26.7606"
+
+
+topology.integratedNode8_to_integratedNode9.diameter = 5000
+topology.integratedNode8_to_integratedNode9.length = 200
+topology.integratedNode8_to_integratedNode9.flow = 100
+topology.integratedNode8_to_integratedNode9.cij = 0.5
+topology.integratedNode8_to_integratedNode9.type = "p"
+topology.integratedNode8_to_integratedNode9.qij = "26.7606"
+
+
+topology.integratedNode9_to_integratedNode10.diameter = 5000
+topology.integratedNode9_to_integratedNode10.length = 200
+topology.integratedNode9_to_integratedNode10.flow = 100
+topology.integratedNode9_to_integratedNode10.cij = 0.5
+topology.integratedNode9_to_integratedNode10.type = "p"
+topology.integratedNode9_to_integratedNode10.qij = "26.7606"
+
+
+topology.integratedNode10_to_gasNode11.diameter = 5000
+topology.integratedNode10_to_gasNode11.length = 200
+topology.integratedNode10_to_gasNode11.flow = 100
+topology.integratedNode10_to_gasNode11.cij = 0.5
+topology.integratedNode10_to_gasNode11.type = "p"
+topology.integratedNode10_to_gasNode11.qij = "26.7606"
+
+
+topology.gasNode11_to_gasNode12.diameter = 5000
+topology.gasNode11_to_gasNode12.length = 200
+topology.gasNode11_to_gasNode12.flow = 100
+topology.gasNode11_to_gasNode12.cij = 0.5
+topology.gasNode11_to_gasNode12.type = "p"
+topology.gasNode11_to_gasNode12.qij = "26.7606"
+
+
+topology.gasNode12_to_gasNode13.diameter = 5000
+topology.gasNode12_to_gasNode13.length = 200
+topology.gasNode12_to_gasNode13.flow = 100
+topology.gasNode12_to_gasNode13.cij = 0.5
+topology.gasNode12_to_gasNode13.type = "p"
+topology.gasNode12_to_gasNode13.qij = "26.7606"
+
+
+topology.gasNode13_to_gasNode14.diameter = 5000
+topology.gasNode13_to_gasNode14.length = 200
+topology.gasNode13_to_gasNode14.flow = 100
+topology.gasNode13_to_gasNode14.cij = 0.5
+topology.gasNode13_to_gasNode14.type = "p"
+topology.gasNode13_to_gasNode14.qij = "26.7606"
+
+
+topology.gasNode14_to_gasNode15.diameter = 5000
+topology.gasNode14_to_gasNode15.length = 200
+topology.gasNode14_to_gasNode15.flow = 100
+topology.gasNode14_to_gasNode15.cij = 0.5
+topology.gasNode14_to_gasNode15.type = "p"
+topology.gasNode14_to_gasNode15.qij = "26.7606"
+
+
+topology.gasNode15_to_gasNode16.diameter = 5000
+topology.gasNode15_to_gasNode16.length = 200
+topology.gasNode15_to_gasNode16.flow = 100
+topology.gasNode15_to_gasNode16.cij = 0.5
+topology.gasNode15_to_gasNode16.type = "p"
+topology.gasNode15_to_gasNode16.qij = "26.7606"
+
+
+topology.gasNode14_to_integratedNode10.diameter = 5000
+topology.gasNode14_to_integratedNode10.length = 200
+topology.gasNode14_to_integratedNode10.flow = 100
+topology.gasNode14_to_integratedNode10.cij = 0.5
+topology.gasNode14_to_integratedNode10.type = "p"
+topology.gasNode14_to_integratedNode10.qij = "26.7606"
+
+
+topology.gasNode15_to_integratedNode9.diameter = 5000
+topology.gasNode15_to_integratedNode9.length = 200
+topology.gasNode15_to_integratedNode9.flow = 100
+topology.gasNode15_to_integratedNode9.cij = 0.5
+topology.gasNode15_to_integratedNode9.type = "p"
+topology.gasNode15_to_integratedNode9.qij = "26.7606"
+
+
+topology.gasNode16_to_gasNode17.diameter = 5000
+topology.gasNode16_to_gasNode17.length = 200
+topology.gasNode16_to_gasNode17.flow = 100
+topology.gasNode16_to_gasNode17.cij = 0.5
+topology.gasNode16_to_gasNode17.type = "p"
+topology.gasNode16_to_gasNode17.qij = "26.7606"
+
+
+topology.gasNode17_to_integratedNode8.diameter = 5000
+topology.gasNode17_to_integratedNode8.length = 200
+topology.gasNode17_to_integratedNode8.flow = 100
+topology.gasNode17_to_integratedNode8.cij = 0.5
+topology.gasNode17_to_integratedNode8.type = "p"
+topology.gasNode17_to_integratedNode8.qij = "26.7606"
+
+
+topology.integratedNode18_to_gasNode19.diameter = 5000
+topology.integratedNode18_to_gasNode19.length = 200
+topology.integratedNode18_to_gasNode19.flow = 100
+topology.integratedNode18_to_gasNode19.cij = 0.5
+topology.integratedNode18_to_gasNode19.type = "p"
+topology.integratedNode18_to_gasNode19.qij = "26.7606"
+
+
+topology.gasNode19_to_integratedNode20.diameter = 5000
+topology.gasNode19_to_integratedNode20.length = 200
+topology.gasNode19_to_integratedNode20.flow = 100
+topology.gasNode19_to_integratedNode20.cij = 0.5
+topology.gasNode19_to_integratedNode20.type = "p"
+topology.gasNode19_to_integratedNode20.qij = "26.7606"
+
+
+topology.gasNode17_to_integratedNode9.diameter = 5000
+topology.gasNode17_to_integratedNode9.length = 200
+topology.gasNode17_to_integratedNode9.flow = 100
+topology.gasNode17_to_integratedNode9.cij = 0.5
+topology.gasNode17_to_integratedNode9.type = "p"
+topology.gasNode17_to_integratedNode9.qij = "26.7606"
+
+
+topology.compressor25_to_gasNode17.diameter = 5000
+topology.compressor25_to_gasNode17.length = 200
+topology.compressor25_to_gasNode17.flow = 100
+topology.compressor25_to_gasNode17.cij = 0.5
+topology.compressor25_to_gasNode17.type = "p"
+topology.compressor25_to_gasNode17.qij = "26.7606"
+
+
+topology.compressor23_to_gasNode6.diameter = 5000
+topology.compressor23_to_gasNode6.length = 200
+topology.compressor23_to_gasNode6.flow = 100
+topology.compressor23_to_gasNode6.cij = 0.5
+topology.compressor23_to_gasNode6.type = "p"
+topology.compressor23_to_gasNode6.qij = "26.7606"
+
+
+topology.compressor24_to_gasNode14.diameter = 5000
+topology.compressor24_to_gasNode14.length = 200
+topology.compressor24_to_gasNode14.flow = 100
+topology.compressor24_to_gasNode14.cij = 0.5
+topology.compressor24_to_gasNode14.type = "p"
+topology.compressor24_to_gasNode14.qij = "26.7606"
+
+
+topology.compressor23_to_gasNode2.diameter = 5000
+topology.compressor23_to_gasNode2.length = 200
+topology.compressor23_to_gasNode2.flow = 100
+topology.compressor23_to_gasNode2.cij = 0.5
+topology.compressor23_to_gasNode2.type = "p"
+topology.compressor23_to_gasNode2.qij = "26.7606"
+
+
+topology.compressor25_to_gasNode15.diameter = 5000
+topology.compressor25_to_gasNode15.length = 200
+topology.compressor25_to_gasNode15.flow = 100
+topology.compressor25_to_gasNode15.cij = 0.5
+topology.compressor25_to_gasNode15.type = "p"
+topology.compressor25_to_gasNode15.qij = "26.7606"
+
+
+topology.compressor24_to_gasNode12.diameter = 5000
+topology.compressor24_to_gasNode12.length = 200
+topology.compressor24_to_gasNode12.flow = 100
+topology.compressor24_to_gasNode12.cij = 0.5
+topology.compressor24_to_gasNode12.type = "p"
+topology.compressor24_to_gasNode12.qij = "26.7606"
+
+
+topology.gasNode22_to_gasNode21.diameter = 5000
+topology.gasNode22_to_gasNode21.length = 200
+topology.gasNode22_to_gasNode21.flow = 100
+topology.gasNode22_to_gasNode21.cij = 0.5
+topology.gasNode22_to_gasNode21.type = "p"
+topology.gasNode22_to_gasNode21.qij = "26.7606"
+

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-service-deployment
+  labels:
+    app: admin-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: admin-service
+  template:
+    metadata:
+      labels:
+        app: admin-service
+    spec:
+      serviceAccountName: pod-creator-sa  # 必须
+      containers: 
+      - name: admin-service-container
+        image: admin-service:latest  # 替换为实际镜像名:标签
+        ports:
+        - containerPort: 8000  # 对应代码中配置的Django应用端口（services.py中设置）
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+          limits:
+            cpu: "2"
+            memory: "4Gi"  # 参考代码中cpu/memory/storage的资源限制逻辑
+        env:
+        - name: MYSQL_HOST
+          value: "mysql-service"  # 对应代码中services.py的mysql_config.host
+        - name: MYSQL_PORT
+          value: "3306"
+        - name: MYSQL_USER
+          value: "django_user"
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password  # 需提前创建Secret存储数据库密码
+        - name: DJANGO_DEBUG
+          value: "False"  # 生产环境关闭调试模式
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service
+spec:
+  type: ClusterIP  # 如需外部访问可改为NodePort或使用Ingress
+  selector:
+    app: admin-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000  # 映射容器的8000端口
+

@@ -1,0 +1,39 @@
+(FED
+      (Federation EnergySystem)
+      (FEDversion v1.3)
+      (spaces
+      )
+      (objects
+        (class ObjectRoot
+          (attribute privilegeToDelete reliable timestamp)
+          (class PowerPlant
+            (attribute compressor_at_26_1 reliable timestamp)
+        (attribute compressor_at_58_2 reliable timestamp)
+        (attribute compressor_at_60_2 reliable timestamp)
+        (attribute Power reliable timestamp)
+        (attribute Load reliable timestamp)
+        (attribute Step reliable timestamp)
+        (attribute Time reliable timestamp)
+          )
+          (class GasPipeline
+            (attribute IntegratedNodeintegratedNode20 reliable timestamp)
+        (attribute IntegratedNodeintegratedNode7 reliable timestamp)
+        (attribute IntegratedNodeintegratedNode4 reliable timestamp)
+        (attribute GasFlow reliable timestamp)
+        (attribute FlowRate reliable timestamp)
+        (attribute Step reliable timestamp)
+        (attribute SimTime reliable timestamp)
+        (attribute NodeName reliable timestamp)
+        (attribute GeneratorConsumption reliable timestamp)
+          )
+        )
+      )
+      (interactions
+        (class InteractionRoot reliable timestamp
+          (class EnergyDataExchange reliable timestamp
+            (parameter PowerValue)
+            (parameter GasFlowValue)
+          )
+        )
+      )
+    )

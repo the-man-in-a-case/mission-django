@@ -1,0 +1,9 @@
+/********************************************************************************************************  fixed shunt definitions for {{ voltage_level }}kV  ***/
+{% for shunt in shunts %}
+New {{ shunt.type }}.{{ shunt.name }} bus={{ shunt.bus }} phases={{ shunt.phases }} kv={{ shunt.kv }} kvar={{ shunt.kvar }} R={{ shunt.R }} enabled={{ shunt.enabled }}
+{% endfor %}
+
+/********************************************************************************************************  fixed shunt definitions for 20.0kV  ***/
+{% for shunt in shunts_20kv %}
+New {{ shunt.type }}.{{ shunt.name }} bus={{ shunt.bus }} phases={{ shunt.phases }} kv={{ shunt.kv }} kvar={{ shunt.kvar }} R={{ shunt.R }} enabled={{ shunt.enabled }}
+{% endfor %}

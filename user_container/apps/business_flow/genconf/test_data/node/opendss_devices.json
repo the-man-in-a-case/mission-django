@@ -1,0 +1,2172 @@
+{
+  "buses": {
+    "1_riversde": {
+      "kVLL": 138.0
+    },
+    "2_pokagon": {
+      "kVLL": 138.0
+    },
+    "3_hickryck": {
+      "kVLL": 138.0
+    },
+    "12_twinbrch": {
+      "kVLL": 138.0
+    },
+    "5_olive": {
+      "kVLL": 138.0
+    },
+    "4_nwcarlsl": {
+      "kVLL": 138.0
+    },
+    "11_southbnd": {
+      "kVLL": 138.0
+    },
+    "6_kankakee": {
+      "kVLL": 138.0
+    },
+    "7_jacksnrd": {
+      "kVLL": 138.0
+    },
+    "8_olive": {
+      "kVLL": 138.0
+    },
+    "9_bequine": {
+      "kVLL": 138.0
+    },
+    "30_sorenson": {
+      "kVLL": 138.0
+    },
+    "10_breed": {
+      "kVLL": 138.0
+    },
+    "13_concord": {
+      "kVLL": 138.0
+    },
+    "14_goshenjt": {
+      "kVLL": 138.0
+    },
+    "16_ne": {
+      "kVLL": 138.0
+    },
+    "117_corey": {
+      "kVLL": 138.0
+    },
+    "15_ftwayne": {
+      "kVLL": 138.0
+    },
+    "17_sorenson": {
+      "kVLL": 138.0
+    },
+    "19_lincoln": {
+      "kVLL": 138.0
+    },
+    "33_haviland": {
+      "kVLL": 138.0
+    },
+    "18_mckinley": {
+      "kVLL": 138.0
+    },
+    "31_deercrk": {
+      "kVLL": 138.0
+    },
+    "113_deercrk": {
+      "kVLL": 138.0
+    },
+    "20_adams": {
+      "kVLL": 138.0
+    },
+    "34_rockhill": {
+      "kVLL": 138.0
+    },
+    "21_jay": {
+      "kVLL": 138.0
+    },
+    "22_randolph": {
+      "kVLL": 138.0
+    },
+    "23_collcrnr": {
+      "kVLL": 138.0
+    },
+    "24_trenton": {
+      "kVLL": 138.0
+    },
+    "25_tannrsck": {
+      "kVLL": 138.0
+    },
+    "32_delaware": {
+      "kVLL": 138.0
+    },
+    "70_portsmth": {
+      "kVLL": 138.0
+    },
+    "72_hillsbro": {
+      "kVLL": 138.0
+    },
+    "27_madison": {
+      "kVLL": 138.0
+    },
+    "26_tannrsck": {
+      "kVLL": 138.0
+    },
+    "28_mullin": {
+      "kVLL": 138.0
+    },
+    "115_medford": {
+      "kVLL": 138.0
+    },
+    "29_grant": {
+      "kVLL": 138.0
+    },
+    "38_eastlima": {
+      "kVLL": 138.0
+    },
+    "114_wmedford": {
+      "kVLL": 138.0
+    },
+    "37_eastlima": {
+      "kVLL": 138.0
+    },
+    "36_sterling": {
+      "kVLL": 138.0
+    },
+    "43_skenton": {
+      "kVLL": 138.0
+    },
+    "35_westlima": {
+      "kVLL": 138.0
+    },
+    "39_nwlibrty": {
+      "kVLL": 138.0
+    },
+    "40_westend": {
+      "kVLL": 138.0
+    },
+    "65_muskngum": {
+      "kVLL": 138.0
+    },
+    "41_stiffin": {
+      "kVLL": 138.0
+    },
+    "42_howard": {
+      "kVLL": 138.0
+    },
+    "49_philo": {
+      "kVLL": 138.0
+    },
+    "44_wmvernon": {
+      "kVLL": 138.0
+    },
+    "45_nnewark": {
+      "kVLL": 138.0
+    },
+    "46_wlancst": {
+      "kVLL": 138.0
+    },
+    "47_crooksvl": {
+      "kVLL": 138.0
+    },
+    "48_zanesvll": {
+      "kVLL": 138.0
+    },
+    "69_sporn": {
+      "kVLL": 138.0
+    },
+    "50_wcambrdg": {
+      "kVLL": 138.0
+    },
+    "51_newcmrst": {
+      "kVLL": 138.0
+    },
+    "54_torrey": {
+      "kVLL": 138.0
+    },
+    "66_muskngum": {
+      "kVLL": 138.0
+    },
+    "57_wnwphil1": {
+      "kVLL": 138.0
+    },
+    "52_scoshoct": {
+      "kVLL": 138.0
+    },
+    "58_wnwphil2": {
+      "kVLL": 138.0
+    },
+    "53_wooster": {
+      "kVLL": 138.0
+    },
+    "55_wagenhls": {
+      "kVLL": 138.0
+    },
+    "56_sunnysde": {
+      "kVLL": 138.0
+    },
+    "59_tidd": {
+      "kVLL": 138.0
+    },
+    "60_swkammer": {
+      "kVLL": 138.0
+    },
+    "61_wkammer": {
+      "kVLL": 138.0
+    },
+    "62_natrium": {
+      "kVLL": 138.0
+    },
+    "67_summerfl": {
+      "kVLL": 138.0
+    },
+    "63_tidd": {
+      "kVLL": 138.0
+    },
+    "64_kammer": {
+      "kVLL": 138.0
+    },
+    "68_sporn": {
+      "kVLL": 138.0
+    },
+    "81_kanawha": {
+      "kVLL": 138.0
+    },
+    "116_kygercrk": {
+      "kVLL": 138.0
+    },
+    "75_sthpoint": {
+      "kVLL": 138.0
+    },
+    "77_turner": {
+      "kVLL": 138.0
+    },
+    "71_nportsmt": {
+      "kVLL": 138.0
+    },
+    "74_bellefnt": {
+      "kVLL": 138.0
+    },
+    "73_sargents": {
+      "kVLL": 138.0
+    },
+    "118_whuntngd": {
+      "kVLL": 138.0
+    },
+    "76_darrah": {
+      "kVLL": 138.0
+    },
+    "78_chemical": {
+      "kVLL": 138.0
+    },
+    "80_cabincrk": {
+      "kVLL": 138.0
+    },
+    "82_logan": {
+      "kVLL": 138.0
+    },
+    "79_capitlhl": {
+      "kVLL": 138.0
+    },
+    "96_baileysv": {
+      "kVLL": 138.0
+    },
+    "97_sundial": {
+      "kVLL": 138.0
+    },
+    "98_bradley": {
+      "kVLL": 138.0
+    },
+    "99_hinton": {
+      "kVLL": 138.0
+    },
+    "83_sprigg": {
+      "kVLL": 138.0
+    },
+    "84_betsylne": {
+      "kVLL": 138.0
+    },
+    "85_beaverck": {
+      "kVLL": 138.0
+    },
+    "86_hazard": {
+      "kVLL": 138.0
+    },
+    "88_fremont": {
+      "kVLL": 138.0
+    },
+    "89_clinchrv": {
+      "kVLL": 138.0
+    },
+    "87_pinevlle": {
+      "kVLL": 138.0
+    },
+    "90_holston": {
+      "kVLL": 138.0
+    },
+    "92_saltvlle": {
+      "kVLL": 138.0
+    },
+    "91_holstont": {
+      "kVLL": 138.0
+    },
+    "93_tazewell": {
+      "kVLL": 138.0
+    },
+    "94_switchbk": {
+      "kVLL": 138.0
+    },
+    "100_glenlyn": {
+      "kVLL": 138.0
+    },
+    "102_smythe": {
+      "kVLL": 138.0
+    },
+    "95_caldwell": {
+      "kVLL": 138.0
+    },
+    "101_wythe": {
+      "kVLL": 138.0
+    },
+    "103_claytor": {
+      "kVLL": 138.0
+    },
+    "104_hancock": {
+      "kVLL": 138.0
+    },
+    "106_cloverdl": {
+      "kVLL": 138.0
+    },
+    "105_roanoke": {
+      "kVLL": 138.0
+    },
+    "110_fieldale": {
+      "kVLL": 138.0
+    },
+    "107_reusens": {
+      "kVLL": 138.0
+    },
+    "108_blaine": {
+      "kVLL": 138.0
+    },
+    "109_franklin": {
+      "kVLL": 138.0
+    },
+    "111_danriver": {
+      "kVLL": 138.0
+    },
+    "112_danville": {
+      "kVLL": 138.0
+    }
+  },
+  "generators": {
+    "Gen_at_1_1": {
+      "bus": "1_riversde",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.955,
+      "maxkvar": 15000.0,
+      "minkvar": -5000.0
+    },
+    "Gen_at_4_1": {
+      "bus": "4_nwcarlsl",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.998,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_6_1": {
+      "bus": "6_kankakee",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.99,
+      "maxkvar": 50000.0,
+      "minkvar": -13000.0
+    },
+    "Gen_at_8_1": {
+      "bus": "8_olive",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.015,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_10_1": {
+      "bus": "10_breed",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 450000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.05,
+      "maxkvar": 200000.0,
+      "minkvar": -147000.0
+    },
+    "Gen_at_12_1": {
+      "bus": "12_twinbrch",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 85000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.99,
+      "maxkvar": 120000.0,
+      "minkvar": -35000.0
+    },
+    "Gen_at_15_1": {
+      "bus": "15_ftwayne",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.97,
+      "maxkvar": 30000.0,
+      "minkvar": -10000.0
+    },
+    "Gen_at_18_1": {
+      "bus": "18_mckinley",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.973,
+      "maxkvar": 50000.0,
+      "minkvar": -16000.0
+    },
+    "Gen_at_19_1": {
+      "bus": "19_lincoln",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.9634299999999999,
+      "maxkvar": 24000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_24_1": {
+      "bus": "24_trenton",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.992,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_25_1": {
+      "bus": "25_tannrsck",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 220000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.05,
+      "maxkvar": 140000.0,
+      "minkvar": -47000.0
+    },
+    "Gen_at_26_1": {
+      "bus": "26_tannrsck",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 314000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.015,
+      "maxkvar": 1000000.0,
+      "minkvar": -1000000.0
+    },
+    "Gen_at_27_1": {
+      "bus": "27_madison",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.968,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_31_1": {
+      "bus": "31_deercrk",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 7000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.967,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_32_1": {
+      "bus": "32_delaware",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.96359,
+      "maxkvar": 42000.0,
+      "minkvar": -14000.0
+    },
+    "Gen_at_34_1": {
+      "bus": "34_rockhill",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.9858600000000001,
+      "maxkvar": 24000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_36_1": {
+      "bus": "36_sterling",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.98,
+      "maxkvar": 24000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_40_1": {
+      "bus": "40_westend",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.97,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_42_1": {
+      "bus": "42_howard",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.985,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_46_1": {
+      "bus": "46_wlancst",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 19000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.005,
+      "maxkvar": 100000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_49_1": {
+      "bus": "49_philo",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 204000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.025,
+      "maxkvar": 210000.0,
+      "minkvar": -85000.0
+    },
+    "Gen_at_54_1": {
+      "bus": "54_torrey",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 48000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.955,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_55_1": {
+      "bus": "55_wagenhls",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.952,
+      "maxkvar": 23000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_56_1": {
+      "bus": "56_sunnysde",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.954,
+      "maxkvar": 15000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_59_1": {
+      "bus": "59_tidd",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 155000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.985,
+      "maxkvar": 180000.0,
+      "minkvar": -60000.0
+    },
+    "Gen_at_61_1": {
+      "bus": "61_wkammer",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 160000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.995,
+      "maxkvar": 300000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_62_1": {
+      "bus": "62_natrium",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.998,
+      "maxkvar": 20000.0,
+      "minkvar": -20000.0
+    },
+    "Gen_at_65_1": {
+      "bus": "65_muskngum",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 391000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.005,
+      "maxkvar": 200000.0,
+      "minkvar": -67000.0
+    },
+    "Gen_at_66_1": {
+      "bus": "66_muskngum",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 392000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.05,
+      "maxkvar": 200000.0,
+      "minkvar": -67000.0
+    },
+    "Gen_at_69_1": {
+      "bus": "69_sporn",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 513388.00000000006,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.035,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_70_1": {
+      "bus": "70_portsmth",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.984,
+      "maxkvar": 32000.0,
+      "minkvar": -10000.0
+    },
+    "Gen_at_72_1": {
+      "bus": "72_hillsbro",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.98,
+      "maxkvar": 100000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_73_1": {
+      "bus": "73_sargents",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.991,
+      "maxkvar": 100000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_74_1": {
+      "bus": "74_bellefnt",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.958,
+      "maxkvar": 9000.0,
+      "minkvar": -6000.0
+    },
+    "Gen_at_76_1": {
+      "bus": "76_darrah",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.943,
+      "maxkvar": 23000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_77_1": {
+      "bus": "77_turner",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.006,
+      "maxkvar": 70000.0,
+      "minkvar": -20000.0
+    },
+    "Gen_at_80_1": {
+      "bus": "80_cabincrk",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 477000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.04,
+      "maxkvar": 280000.0,
+      "minkvar": -165000.0
+    },
+    "Gen_at_85_1": {
+      "bus": "85_beaverck",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.985,
+      "maxkvar": 23000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_87_1": {
+      "bus": "87_pinevlle",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 4000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.015,
+      "maxkvar": 1000000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_90_1": {
+      "bus": "90_holston",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.985,
+      "maxkvar": 300000.0,
+      "minkvar": -300000.0
+    },
+    "Gen_at_91_1": {
+      "bus": "91_holstont",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.98,
+      "maxkvar": 100000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_92_1": {
+      "bus": "92_saltvlle",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.9922799999999999,
+      "maxkvar": 9000.0,
+      "minkvar": -3000.0
+    },
+    "Gen_at_99_1": {
+      "bus": "99_hinton",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.01,
+      "maxkvar": 100000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_100_1": {
+      "bus": "100_glenlyn",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 252000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.017,
+      "maxkvar": 155000.0,
+      "minkvar": -50000.0
+    },
+    "Gen_at_103_1": {
+      "bus": "103_claytor",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 40000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.00072,
+      "maxkvar": 40000.0,
+      "minkvar": -15000.0
+    },
+    "Gen_at_104_1": {
+      "bus": "104_hancock",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.971,
+      "maxkvar": 23000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_105_1": {
+      "bus": "105_roanoke",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.96599,
+      "maxkvar": 23000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_107_1": {
+      "bus": "107_reusens",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.952,
+      "maxkvar": 200000.0,
+      "minkvar": -200000.0
+    },
+    "Gen_at_110_1": {
+      "bus": "110_fieldale",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.973,
+      "maxkvar": 23000.0,
+      "minkvar": -8000.0
+    },
+    "Gen_at_111_1": {
+      "bus": "111_danriver",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 36000.0,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.98,
+      "maxkvar": 1000000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_112_1": {
+      "bus": "112_danville",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.975,
+      "maxkvar": 1000000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_113_1": {
+      "bus": "113_deercrk",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 0.993,
+      "maxkvar": 200000.0,
+      "minkvar": -100000.0
+    },
+    "Gen_at_116_1": {
+      "bus": "116_kygercrk",
+      "phases": 3,
+      "kV": 138.0,
+      "kW": 0.001,
+      "model": 3,
+      "PVFactor": 0.005,
+      "Vpu": 1.005,
+      "maxkvar": 1000000.0,
+      "minkvar": -1000000.0
+    }
+  },
+  "loads": {
+    "Load_at_1_1": {
+      "bus": "1_riversde",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 51000.0,
+      "kvar": 27000.0,
+      "model": 1
+    },
+    "Load_at_2_1": {
+      "bus": "2_pokagon",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 20000.0,
+      "kvar": 9000.0,
+      "model": 1
+    },
+    "Load_at_3_1": {
+      "bus": "3_hickryck",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 39000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_4_1": {
+      "bus": "4_nwcarlsl",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 39000.0,
+      "kvar": 12000.0,
+      "model": 1
+    },
+    "Load_at_6_1": {
+      "bus": "6_kankakee",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 52000.0,
+      "kvar": 22000.0,
+      "model": 1
+    },
+    "Load_at_7_1": {
+      "bus": "7_jacksnrd",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 19000.0,
+      "kvar": 2000.0,
+      "model": 1
+    },
+    "Load_at_8_1": {
+      "bus": "8_olive",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 28000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_11_1": {
+      "bus": "11_southbnd",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 70000.0,
+      "kvar": 23000.0,
+      "model": 1
+    },
+    "Load_at_12_1": {
+      "bus": "12_twinbrch",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 47000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_13_1": {
+      "bus": "13_concord",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 34000.0,
+      "kvar": 16000.0,
+      "model": 1
+    },
+    "Load_at_14_1": {
+      "bus": "14_goshenjt",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 14000.0,
+      "kvar": 1000.0,
+      "model": 1
+    },
+    "Load_at_15_1": {
+      "bus": "15_ftwayne",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 90000.0,
+      "kvar": 30000.0,
+      "model": 1
+    },
+    "Load_at_16_1": {
+      "bus": "16_ne",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 25000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_17_1": {
+      "bus": "17_sorenson",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 11000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "Load_at_18_1": {
+      "bus": "18_mckinley",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 60000.0,
+      "kvar": 34000.0,
+      "model": 1
+    },
+    "Load_at_19_1": {
+      "bus": "19_lincoln",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 45000.0,
+      "kvar": 25000.0,
+      "model": 1
+    },
+    "Load_at_20_1": {
+      "bus": "20_adams",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 18000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "Load_at_21_1": {
+      "bus": "21_jay",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 14000.0,
+      "kvar": 8000.0,
+      "model": 1
+    },
+    "Load_at_22_1": {
+      "bus": "22_randolph",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 10000.0,
+      "kvar": 5000.0,
+      "model": 1
+    },
+    "Load_at_23_1": {
+      "bus": "23_collcrnr",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 7000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "Load_at_24_1": {
+      "bus": "24_trenton",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 13000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "compressor_at_26_1": {
+      "bus": "26_tannrsck",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 50000.0,
+      "kvar": 0.0,
+      "model": 2
+    },
+    "Load_at_27_1": {
+      "bus": "27_madison",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 71000.0,
+      "kvar": 13000.0,
+      "model": 1
+    },
+    "Load_at_28_1": {
+      "bus": "28_mullin",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 17000.0,
+      "kvar": 7000.0,
+      "model": 1
+    },
+    "Load_at_29_1": {
+      "bus": "29_grant",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 24000.0,
+      "kvar": 4000.0,
+      "model": 1
+    },
+    "Load_at_31_1": {
+      "bus": "31_deercrk",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 43000.0,
+      "kvar": 27000.0,
+      "model": 1
+    },
+    "Load_at_32_1": {
+      "bus": "32_delaware",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 59000.0,
+      "kvar": 23000.0,
+      "model": 1
+    },
+    "Load_at_33_1": {
+      "bus": "33_haviland",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 23000.0,
+      "kvar": 9000.0,
+      "model": 1
+    },
+    "Load_at_34_1": {
+      "bus": "34_rockhill",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 59000.0,
+      "kvar": 26000.0,
+      "model": 1
+    },
+    "Load_at_35_1": {
+      "bus": "35_westlima",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 33000.0,
+      "kvar": 9000.0,
+      "model": 1
+    },
+    "Load_at_36_1": {
+      "bus": "36_sterling",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 31000.0,
+      "kvar": 17000.0,
+      "model": 1
+    },
+    "Load_at_39_1": {
+      "bus": "39_nwlibrty",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 27000.0,
+      "kvar": 11000.0,
+      "model": 1
+    },
+    "Load_at_40_1": {
+      "bus": "40_westend",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 66000.0,
+      "kvar": 23000.0,
+      "model": 1
+    },
+    "Load_at_41_1": {
+      "bus": "41_stiffin",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 37000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_42_1": {
+      "bus": "42_howard",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 96000.0,
+      "kvar": 23000.0,
+      "model": 1
+    },
+    "Load_at_43_1": {
+      "bus": "43_skenton",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 18000.0,
+      "kvar": 7000.0,
+      "model": 1
+    },
+    "Load_at_44_1": {
+      "bus": "44_wmvernon",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 16000.0,
+      "kvar": 8000.0,
+      "model": 1
+    },
+    "Load_at_45_1": {
+      "bus": "45_nnewark",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 53000.0,
+      "kvar": 22000.0,
+      "model": 1
+    },
+    "Load_at_46_1": {
+      "bus": "46_wlancst",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 28000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_47_1": {
+      "bus": "47_crooksvl",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 34000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_48_1": {
+      "bus": "48_zanesvll",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 20000.0,
+      "kvar": 11000.0,
+      "model": 1
+    },
+    "Load_at_49_1": {
+      "bus": "49_philo",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 87000.0,
+      "kvar": 30000.0,
+      "model": 1
+    },
+    "Load_at_50_1": {
+      "bus": "50_wcambrdg",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 17000.0,
+      "kvar": 4000.0,
+      "model": 1
+    },
+    "Load_at_51_1": {
+      "bus": "51_newcmrst",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 17000.0,
+      "kvar": 8000.0,
+      "model": 1
+    },
+    "Load_at_52_1": {
+      "bus": "52_scoshoct",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 18000.0,
+      "kvar": 5000.0,
+      "model": 1
+    },
+    "Load_at_53_1": {
+      "bus": "53_wooster",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 23000.0,
+      "kvar": 11000.0,
+      "model": 1
+    },
+    "Load_at_54_1": {
+      "bus": "54_torrey",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 113000.0,
+      "kvar": 32000.0,
+      "model": 1
+    },
+    "Load_at_55_1": {
+      "bus": "55_wagenhls",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 63000.0,
+      "kvar": 22000.0,
+      "model": 1
+    },
+    "Load_at_56_1": {
+      "bus": "56_sunnysde",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 84000.0,
+      "kvar": 18000.0,
+      "model": 1
+    },
+    "Load_at_57_1": {
+      "bus": "57_wnwphil1",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 12000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "Load_at_58_1": {
+      "bus": "58_wnwphil2",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 12000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "compressor_at_58_2": {
+      "bus": "58_wnwphil2",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 10000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_59_1": {
+      "bus": "59_tidd",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 277000.0,
+      "kvar": 113000.0,
+      "model": 1
+    },
+    "Load_at_60_1": {
+      "bus": "60_swkammer",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 78000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "compressor_at_60_2": {
+      "bus": "60_swkammer",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 10000.0,
+      "kvar": 0.0,
+      "model": 2
+    },
+    "Load_at_62_1": {
+      "bus": "62_natrium",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 77000.0,
+      "kvar": 14000.0,
+      "model": 1
+    },
+    "Load_at_66_1": {
+      "bus": "66_muskngum",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 39000.0,
+      "kvar": 18000.0,
+      "model": 1
+    },
+    "Load_at_67_1": {
+      "bus": "67_summerfl",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 28000.0,
+      "kvar": 7000.0,
+      "model": 1
+    },
+    "Load_at_70_1": {
+      "bus": "70_portsmth",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 66000.0,
+      "kvar": 20000.0,
+      "model": 1
+    },
+    "Load_at_72_1": {
+      "bus": "72_hillsbro",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 12000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_73_1": {
+      "bus": "73_sargents",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 6000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_74_1": {
+      "bus": "74_bellefnt",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 68000.0,
+      "kvar": 27000.0,
+      "model": 1
+    },
+    "Load_at_75_1": {
+      "bus": "75_sthpoint",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 47000.0,
+      "kvar": 11000.0,
+      "model": 1
+    },
+    "Load_at_76_1": {
+      "bus": "76_darrah",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 68000.0,
+      "kvar": 36000.0,
+      "model": 1
+    },
+    "Load_at_77_1": {
+      "bus": "77_turner",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 61000.0,
+      "kvar": 28000.0,
+      "model": 1
+    },
+    "Load_at_78_1": {
+      "bus": "78_chemical",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 71000.0,
+      "kvar": 26000.0,
+      "model": 1
+    },
+    "Load_at_79_1": {
+      "bus": "79_capitlhl",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 39000.0,
+      "kvar": 32000.0,
+      "model": 1
+    },
+    "Load_at_80_1": {
+      "bus": "80_cabincrk",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 130000.0,
+      "kvar": 26000.0,
+      "model": 1
+    },
+    "Load_at_82_1": {
+      "bus": "82_logan",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 54000.0,
+      "kvar": 27000.0,
+      "model": 1
+    },
+    "Load_at_83_1": {
+      "bus": "83_sprigg",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 20000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_84_1": {
+      "bus": "84_betsylne",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 11000.0,
+      "kvar": 7000.0,
+      "model": 1
+    },
+    "Load_at_85_1": {
+      "bus": "85_beaverck",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 24000.0,
+      "kvar": 15000.0,
+      "model": 1
+    },
+    "Load_at_86_1": {
+      "bus": "86_hazard",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 21000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_88_1": {
+      "bus": "88_fremont",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 48000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_90_1": {
+      "bus": "90_holston",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 163000.0,
+      "kvar": 42000.0,
+      "model": 1
+    },
+    "Load_at_91_1": {
+      "bus": "91_holstont",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 10000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_92_1": {
+      "bus": "92_saltvlle",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 65000.0,
+      "kvar": 10000.0,
+      "model": 1
+    },
+    "Load_at_93_1": {
+      "bus": "93_tazewell",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 12000.0,
+      "kvar": 7000.0,
+      "model": 1
+    },
+    "Load_at_94_1": {
+      "bus": "94_switchbk",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 30000.0,
+      "kvar": 16000.0,
+      "model": 1
+    },
+    "Load_at_95_1": {
+      "bus": "95_caldwell",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 42000.0,
+      "kvar": 31000.0,
+      "model": 1
+    },
+    "Load_at_96_1": {
+      "bus": "96_baileysv",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 38000.0,
+      "kvar": 15000.0,
+      "model": 1
+    },
+    "Load_at_97_1": {
+      "bus": "97_sundial",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 15000.0,
+      "kvar": 9000.0,
+      "model": 1
+    },
+    "Load_at_98_1": {
+      "bus": "98_bradley",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 34000.0,
+      "kvar": 8000.0,
+      "model": 1
+    },
+    "Load_at_99_1": {
+      "bus": "99_hinton",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 42000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_100_1": {
+      "bus": "100_glenlyn",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 37000.0,
+      "kvar": 18000.0,
+      "model": 1
+    },
+    "Load_at_101_1": {
+      "bus": "101_wythe",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 22000.0,
+      "kvar": 15000.0,
+      "model": 1
+    },
+    "Load_at_102_1": {
+      "bus": "102_smythe",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 5000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "Load_at_103_1": {
+      "bus": "103_claytor",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 23000.0,
+      "kvar": 16000.0,
+      "model": 1
+    },
+    "Load_at_104_1": {
+      "bus": "104_hancock",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 38000.0,
+      "kvar": 25000.0,
+      "model": 1
+    },
+    "Load_at_105_1": {
+      "bus": "105_roanoke",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 31000.0,
+      "kvar": 26000.0,
+      "model": 1
+    },
+    "Load_at_106_1": {
+      "bus": "106_cloverdl",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 43000.0,
+      "kvar": 16000.0,
+      "model": 1
+    },
+    "Load_at_107_1": {
+      "bus": "107_reusens",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 50000.0,
+      "kvar": 12000.0,
+      "model": 1
+    },
+    "Load_at_108_1": {
+      "bus": "108_blaine",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 2000.0,
+      "kvar": 1000.0,
+      "model": 1
+    },
+    "Load_at_109_1": {
+      "bus": "109_franklin",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 8000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "Load_at_110_1": {
+      "bus": "110_fieldale",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 39000.0,
+      "kvar": 30000.0,
+      "model": 1
+    },
+    "Load_at_112_1": {
+      "bus": "112_danville",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 68000.0,
+      "kvar": 13000.0,
+      "model": 1
+    },
+    "Load_at_113_1": {
+      "bus": "113_deercrk",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 6000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_114_1": {
+      "bus": "114_wmedford",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 8000.0,
+      "kvar": 3000.0,
+      "model": 1
+    },
+    "Load_at_115_1": {
+      "bus": "115_medford",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 22000.0,
+      "kvar": 7000.0,
+      "model": 1
+    },
+    "Load_at_116_1": {
+      "bus": "116_kygercrk",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 184000.0,
+      "kvar": 0.0,
+      "model": 1
+    },
+    "Load_at_117_1": {
+      "bus": "117_corey",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 20000.0,
+      "kvar": 8000.0,
+      "model": 1
+    },
+    "Load_at_118_1": {
+      "bus": "118_whuntngd",
+      "phases": 3,
+      "kv": 138.0,
+      "kW": 33000.0,
+      "kvar": 15000.0,
+      "model": 1
+    }
+  },
+  "shunts": {
+    "Reac_at5_1": {
+      "type": "Reactor",
+      "bus": "5_olive",
+      "kvar": 40000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at34_1": {
+      "type": "Capacitor",
+      "bus": "34_rockhill",
+      "kvar": 14000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Reac_at37_1": {
+      "type": "Reactor",
+      "bus": "37_eastlima",
+      "kvar": 25000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at44_1": {
+      "type": "Capacitor",
+      "bus": "44_wmvernon",
+      "kvar": 10000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at45_1": {
+      "type": "Capacitor",
+      "bus": "45_nnewark",
+      "kvar": 10000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at46_1": {
+      "type": "Capacitor",
+      "bus": "46_wlancst",
+      "kvar": 10000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at48_1": {
+      "type": "Capacitor",
+      "bus": "48_zanesvll",
+      "kvar": 15000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at74_1": {
+      "type": "Capacitor",
+      "bus": "74_bellefnt",
+      "kvar": 12000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at79_1": {
+      "type": "Capacitor",
+      "bus": "79_capitlhl",
+      "kvar": 20000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at82_1": {
+      "type": "Capacitor",
+      "bus": "82_logan",
+      "kvar": 20000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at83_1": {
+      "type": "Capacitor",
+      "bus": "83_sprigg",
+      "kvar": 10000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at105_1": {
+      "type": "Capacitor",
+      "bus": "105_roanoke",
+      "kvar": 20000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at107_1": {
+      "type": "Capacitor",
+      "bus": "107_reusens",
+      "kvar": 6000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    },
+    "Capa_at110_1": {
+      "type": "Capacitor",
+      "bus": "110_fieldale",
+      "kvar": 6000.0,
+      "phases": 3,
+      "kv": 138.0,
+      "R": 0.0
+    }
+  },
+  "transformers": {
+    "8_5_0_1_1": {
+      "buses": [
+        "5_olive",
+        "8_olive"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.985
+      ],
+      "Xhl": 2.6700000000000004,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "30_17_0_1_1": {
+      "buses": [
+        "17_sorenson",
+        "30_sorenson"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.96
+      ],
+      "Xhl": 3.88,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "26_25_0_1_1": {
+      "buses": [
+        "25_tannrsck",
+        "26_tannrsck"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.96
+      ],
+      "Xhl": 3.82,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "38_37_0_1_1": {
+      "buses": [
+        "37_eastlima",
+        "38_eastlima"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.935
+      ],
+      "Xhl": 3.75,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "63_59_0_1_1": {
+      "buses": [
+        "59_tidd",
+        "63_tidd"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.96
+      ],
+      "Xhl": 3.8600000000000003,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "64_61_0_1_1": {
+      "buses": [
+        "61_wkammer",
+        "64_kammer"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.985
+      ],
+      "Xhl": 2.68,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "65_66_0_1_1": {
+      "buses": [
+        "66_muskngum",
+        "65_muskngum"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.935
+      ],
+      "Xhl": 3.6999999999999997,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "68_69_0_1_1": {
+      "buses": [
+        "69_sporn",
+        "68_sporn"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.935
+      ],
+      "Xhl": 3.6999999999999997,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    },
+    "81_80_0_1_1": {
+      "buses": [
+        "80_cabincrk",
+        "81_kanawha"
+      ],
+      "kVs": [
+        138.0,
+        138.0
+      ],
+      "kVA": 100000.0,
+      "taps": [
+        1.0,
+        0.935
+      ],
+      "Xhl": 3.6999999999999997,
+      "conns": [
+        "wye",
+        "wye"
+      ],
+      "percent_rs": [
+        0.0005,
+        0.0005
+      ]
+    }
+  },
+  "vsources": {
+    "Vsrc_at_1_1": {
+      "bus": "1_riversde",
+      "basekv": 138.0,
+      "phases": 3,
+      "pu": 0.7804804179887121,
+      "angle": 11.046858401037541,
+      "frequency": 60.0,
+      "baseMVA": 3.7247999999999992,
+      "puZ1": "[0.001, 0.2]",
+      "description": "Model=ideal"
+    },
+    "Vsrc_at_4_1": {
+      "bus": "4_nwcarlsl",
+      "basekv": 138.0,
+      "phases": 3,
+      "pu": 0.8309997515105423,
+      "angle": 15.641171828662817,
+      "frequency": 60.0,
+      "baseMVA": 18.006,
+      "puZ1": "[0.001, 0.2]",
+      "description": "Model=ideal"
+    },
+    "Vsrc_at_6_1": {
+      "bus": "6_kankakee",
+      "basekv": 138.0,
+      "phases": 3,
+      "pu": 1.1583504741922208,
+      "angle": 13.26016426370681,
+      "frequency": 60.0,
+      "baseMVA": 19.116,
+      "puZ1": "[0.001, 0.2]",
+      "description": "Model=ideal"
+    },
+    "Vsrc_at_8_1": {
+      "bus": "8_olive",
+      "basekv": 138.0,
+      "phases": 3,
+      "pu": 1.1792038982954989,
+      "angle": 21.009307939137607,
+      "frequency": 60.0,
+      "baseMVA": 75.3096,
+      "puZ1": "[0.001, 0.2]",
+      "description": "Model=ideal"
+    },
+    "Vsrc_at_10_1": {
+      "bus": "10_breed",
+      "basekv": 138.0,
+      "phases": 3,
+      "pu": 1.0448846573562858,
+      "angle": 44.57078491918578,
+      "frequency": 60.0,
+      "baseMVA": 543.4626127896564,
+      "puZ1": "[0.001, 0.2]",
+      "description": "Model=ideal"
+    },
+    "Vsrc_at_12_1": {
+      "bus": "12_twinbrch",
+      "basekv": 138.0,
+      "phases": 3,
+      "pu": 1.1196049845090805,
+      "angle": 18.34934121030433,
+      "frequency": 60.0,
+      "baseMVA": 149.66815970486172,
+      "puZ1": "[0.001, 0.2]",
+      "description": "Model=ideal"
+    },
+    "Vsrc_at_15_1": {
+      "bus": "15_ftwayne",
+      "basekv": 138.0,
+      "phases": 3,
+      "pu": 1.1418216290378222,
+      "angle": 11.446290654662429,
+      "frequency": 60.0,
+      "baseMVA": 3.6719999999999997,
+      "puZ1": "[0.001, 0.2]",
+      "description": "Model=ideal"
+    }
+  }
+}

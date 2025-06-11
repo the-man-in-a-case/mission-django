@@ -1,0 +1,33 @@
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+
+package o_g_topology_test2.simulations;
+import o_g_topology_test2.Compressor;
+import o_g_topology_test2.GasNode;
+import o_g_topology_test2.GasPipe;
+import o_g_topology_test2.IntegratedNode;
+
+network topology
+{
+    parameters:
+        @display("bgb=1268,1055");
+
+    submodules:
+        {% for module in topology.submodules %}
+        {{ module.name }}: {{ module.type }} {
+            @display("p={{ module.position[0] }},{{ module.position[1] }}");  # 动态生成位置
+        }
+        {% endfor %}
+
+    connections:
+        {% for conn in topology.connections %}
+        {{ conn.source }}.out++ --> GasPipe {
+            {% if "cij" in conn %}cij = {{ conn.cij }};{% endif %}  # 动态生成管道属性
+            {% if "qij" in conn %}qij = {{ conn.qij }};{% endif %}
+        } --> {{ conn.target }}.in++;
+        {% endfor %}
+}

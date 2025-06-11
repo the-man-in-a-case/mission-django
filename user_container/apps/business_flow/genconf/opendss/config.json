@@ -1,0 +1,43 @@
+{
+  "gas_generator_names": [
+    "Gen_at_10_1",
+    "Gen_at_12_1",
+    "Gen_at_18_1",
+    "Gen_at_19_1",
+    "Gen_at_46_1",
+    "Gen_at_49_1",
+    "Gen_at_69_1"
+  ],
+  "compressor_load_names": [
+    "compressor_at_26_1",
+    "compressor_at_58_2",
+    "compressor_at_60_2"
+  ],
+  "gas_node_to_generator_map": {
+    "integratedNode20": "Gen_at_10_1",
+    "integratedNode7": "Gen_at_12_1",
+    "integratedNode4": "Gen_at_69_1",
+    "integratedNode10": "Gen_at_49_1",
+    "integratedNode18": "Gen_at_18_1",
+    "integratedNode9": "Gen_at_46_1",
+    "integratedNode8": "Gen_at_19_1"
+  },
+  "alpha": 0.0,
+  "beta": 0.00516,
+  "gamma": 0.0,
+  "base_dss_directory": "IEEE118Bus_modified",
+  "master_dss_file_name": "master_file.dss",
+  "simulation_settings": {
+    "hour": 0,
+    "mode": "daily",
+    "maxiterations": 5000,
+    "stepsize": "30s",
+    "number": 1
+  },
+  "bus_failure_sequence": [],
+  "failure_simulation_params": {
+    "failure_time_step": 2,
+    "max_steps": 12,
+    "max_wait_time": 300
+  }
+}

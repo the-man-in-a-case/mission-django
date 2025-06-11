@@ -1,0 +1,416 @@
+{
+  "network_config": {
+    "network": "GasNetwork",
+    "recordEventlog": true,
+    "sim_time_limit": "1000s"
+  },
+  "nodes": [
+    {
+      "name": "gasNode2",
+      "type": "GasNode",
+      "position": [
+        104,
+        830
+      ]
+    },
+    {
+      "name": "gasNode22",
+      "type": "GasNode",
+      "position": [
+        87,
+        655
+      ]
+    },
+    {
+      "name": "gasNode21",
+      "type": "GasNode",
+      "position": [
+        172,
+        535
+      ]
+    },
+    {
+      "name": "gasNode6",
+      "type": "GasNode",
+      "position": [
+        247,
+        576
+      ]
+    },
+    {
+      "name": "gasNode5",
+      "type": "GasNode",
+      "position": [
+        265,
+        684
+      ]
+    },
+    {
+      "name": "compressor23",
+      "type": "Compressor",
+      "position": [
+        170,
+        671
+      ]
+    },
+    {
+      "name": "gasNode1",
+      "type": "GasNode",
+      "position": [
+        292,
+        770
+      ]
+    },
+    {
+      "name": "gasNode3",
+      "type": "GasNode",
+      "position": [
+        459,
+        849
+      ]
+    },
+    {
+      "name": "integratedNode20",
+      "type": "IntegratedNode",
+      "position": [
+        156,
+        400
+      ]
+    },
+    {
+      "name": "integratedNode7",
+      "type": "IntegratedNode",
+      "position": [
+        381,
+        448
+      ]
+    },
+    {
+      "name": "integratedNode4",
+      "type": "IntegratedNode",
+      "position": [
+        418,
+        702
+      ]
+    },
+    {
+      "name": "integratedNode10",
+      "type": "IntegratedNode",
+      "position": [
+        477,
+        570
+      ]
+    },
+    {
+      "name": "gasNode12",
+      "type": "GasNode",
+      "position": [
+        625,
+        708
+      ]
+    },
+    {
+      "name": "gasNode11",
+      "type": "GasNode",
+      "position": [
+        584,
+        617
+      ]
+    },
+    {
+      "name": "integratedNode18",
+      "type": "IntegratedNode",
+      "position": [
+        327,
+        304
+      ]
+    },
+    {
+      "name": "gasNode19",
+      "type": "GasNode",
+      "position": [
+        236,
+        335
+      ]
+    },
+    {
+      "name": "integratedNode9",
+      "type": "IntegratedNode",
+      "position": [
+        532,
+        375
+      ]
+    },
+    {
+      "name": "integratedNode8",
+      "type": "IntegratedNode",
+      "position": [
+        436,
+        176
+      ]
+    },
+    {
+      "name": "gasNode13",
+      "type": "GasNode",
+      "position": [
+        831,
+        650
+      ]
+    },
+    {
+      "name": "gasNode14",
+      "type": "GasNode",
+      "position": [
+        735,
+        474
+      ]
+    },
+    {
+      "name": "gasNode15",
+      "type": "GasNode",
+      "position": [
+        799,
+        334
+      ]
+    },
+    {
+      "name": "gasNode16",
+      "type": "GasNode",
+      "position": [
+        792,
+        139
+      ]
+    },
+    {
+      "name": "gasNode17",
+      "type": "GasNode",
+      "position": [
+        608,
+        98
+      ]
+    },
+    {
+      "name": "compressor25",
+      "type": "Compressor",
+      "position": [
+        695,
+        247
+      ]
+    },
+    {
+      "name": "compressor24",
+      "type": "Compressor",
+      "position": [
+        685,
+        589
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "source": "gasNode1",
+      "target": "gasNode2",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode1",
+      "target": "gasNode3",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode1",
+      "target": "integratedNode4",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode2",
+      "target": "gasNode3",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode2",
+      "target": "gasNode22",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode22",
+      "target": "gasNode21",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode21",
+      "target": "integratedNode20",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode2",
+      "target": "gasNode5",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode3",
+      "target": "integratedNode4",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode4",
+      "target": "integratedNode10",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode4",
+      "target": "gasNode11",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode4",
+      "target": "gasNode12",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode5",
+      "target": "gasNode6",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode6",
+      "target": "gasNode21",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode6",
+      "target": "integratedNode10",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode6",
+      "target": "integratedNode7",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode7",
+      "target": "integratedNode9",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode7",
+      "target": "integratedNode18",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode7",
+      "target": "integratedNode20",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode8",
+      "target": "integratedNode18",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode8",
+      "target": "integratedNode9",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode9",
+      "target": "integratedNode10",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode10",
+      "target": "gasNode11",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode11",
+      "target": "gasNode12",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode12",
+      "target": "gasNode13",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode13",
+      "target": "gasNode14",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode14",
+      "target": "gasNode15",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode15",
+      "target": "gasNode16",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode14",
+      "target": "integratedNode10",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode15",
+      "target": "integratedNode9",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode16",
+      "target": "gasNode17",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode17",
+      "target": "integratedNode8",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "integratedNode18",
+      "target": "gasNode19",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode19",
+      "target": "integratedNode20",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "gasNode17",
+      "target": "integratedNode9",
+      "connection_type": "gas_flow"
+    },
+    {
+      "source": "compressor25",
+      "target": "gasNode17",
+      "connection_type": "compression"
+    },
+    {
+      "source": "compressor23",
+      "target": "gasNode6",
+      "connection_type": "compression"
+    },
+    {
+      "source": "compressor24",
+      "target": "gasNode14",
+      "connection_type": "compression"
+    },
+    {
+      "source": "compressor23",
+      "target": "gasNode2",
+      "connection_type": "compression"
+    },
+    {
+      "source": "compressor25",
+      "target": "gasNode15",
+      "connection_type": "compression"
+    },
+    {
+      "source": "compressor24",
+      "target": "gasNode12",
+      "connection_type": "compression"
+    }
+  ]
+}
