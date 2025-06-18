@@ -251,7 +251,7 @@ class UserViewSet(viewsets.ModelViewSet):
             )
 
 
-class AuthViewSet(viewsets.GenericViewSet):
+class AuthViewSet(viewsets.ViewSet):
     """认证视图集"""
     permission_classes = [permissions.AllowAny]
     
@@ -337,3 +337,17 @@ class AuthViewSet(viewsets.GenericViewSet):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+    
+    @action(detail=False, methods=['get'], url_path='get-token')
+    def get_token(self, request):
+        """获取当前用户的Token"""
+        user = request.user
+        if not user.is_authenticated:
+            return Response({'error': '用户未登录'}, status=status.HTTP_401_UNAUTHORIZED)
+        
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.id,
+            'username': user.username
+        })

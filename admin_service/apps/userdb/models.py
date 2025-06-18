@@ -196,7 +196,7 @@ class ContainerInstance(models.Model):
         default=1000,
         verbose_name='最大连接数',
         validators=[MinValueValidator(1)]
-    )  // 新增核心属性字段
+    )  
 
     health_check_url = models.CharField(max_length=200, blank=True, verbose_name='健康检查URL')
     last_health_check = models.DateTimeField(null=True, blank=True, verbose_name='最后健康检查时间')
@@ -522,7 +522,7 @@ class AlertRule(models.Model):
     )
     level = models.CharField(max_length=20, choices=LEVEL_CHOICES, default='info', verbose_name='警报级别')
     trigger_condition = models.TextField(verbose_name='触发条件')
-    message = models.TextField(verbose_name='警报消息')  // 融合ContainerLog的日志内容字段
+    message = models.TextField(verbose_name='警报消息')  
     is_active = models.BooleanField(default=True, verbose_name='是否激活')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     triggered_at = models.DateTimeField(null=True, blank=True, verbose_name='触发时间')

@@ -516,10 +516,10 @@ admin.site.index_title = "系统管理"
 
 @admin.register(ResourceImportJob)
 class ResourceImportJobAdmin(admin.ModelAdmin):
-    list_display = ['id', 'status', 'created_at', 'updated_at', 'imported_by']
-    list_filter = ['status', 'created_at']
-    search_fields = ['file_path', 'error_message']
-    readonly_fields = ('created_at', 'updated_at')
+    list_display = ['id', 'import_type', 'status', 'created_at', 'completed_at']  # Removed 'updated_at' and 'imported_by'
+    list_filter = ['status', 'import_type', 'created_at']
+    search_fields = ['imported_data']
+    readonly_fields = ['created_at', 'completed_at']
     
     fieldsets = (
         ('基本信息', {

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     #第三方
     'rest_framework',  # Example of 
+    'rest_framework.authtoken',  # 添加此行
 
     #新增app
     # 'apps.gateway_client',
@@ -49,6 +50,16 @@ INSTALLED_APPS = [
     'apps.resourcedb',
     'django_celery_results',  # Add this line
 ]
+
+# 添加REST Framework配置
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

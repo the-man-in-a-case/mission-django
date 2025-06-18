@@ -26,6 +26,10 @@ class UserService:
             user.set_password(password)
             user.save()
             
+            # 新增：创建用户Token
+            from rest_framework.authtoken.models import Token
+            Token.objects.create(user=user)
+            
             # 2. 创建用户容器
             container_config = {
                 'user_id': str(user.id),

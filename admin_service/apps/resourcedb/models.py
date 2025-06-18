@@ -705,3 +705,19 @@ class ResourceImportJob(models.Model):
 
     def __str__(self):
         return f"{self.get_import_type_display()} Import - {self.created_at}"
+
+
+class MapVersionSnapshot(models.Model):
+    from_map = models.ForeignKey(Map, on_delete=models.CASCADE, related_name='from_snapshots')
+    to_map = models.ForeignKey(Map, on_delete=models.CASCADE, related_name='to_snapshots')
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        db_table = 'MapVersionSnapshot'
+        verbose_name = '地图版本快照'
+        verbose_name_plural = '地图版本快照'
+    
+    def __str__(self):
+        return f"Snapshot {self.id}: Map {self.from_map_id} -> {self.to_map_id}"
+
+# Add this after the Map model definition

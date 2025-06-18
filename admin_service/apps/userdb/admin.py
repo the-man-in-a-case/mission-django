@@ -181,8 +181,8 @@ class AlertRuleAdmin(admin.ModelAdmin):
     list_display = ('container_instance', 'level', 'is_active', 'created_at', 'triggered_at')
     list_filter = ('level', 'is_active')
     search_fields = ('message', 'trigger_condition')
-    raw_id_fields = ('container_instance',)  // 优化外键选择体验
-    date_hierarchy = 'created_at'  // 按时间分层筛选
+    raw_id_fields = ('container_instance',)  
+    date_hierarchy = 'created_at'  
     readonly_fields = ('created_at',)
     fieldsets = (
         ('基础信息', {
