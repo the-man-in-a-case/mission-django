@@ -18,6 +18,10 @@ from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from ..resourcedb.models import Template, Project, Map, Technique  # 假设相关模型已存在
 from .serializers import TemplateSerializer, TemplateNodeSerializer
+from channels.generic.websocket import AsyncWebsocketConsumer
+from django.http import StreamingHttpResponse
+import json
+import time
 
 class BusinessFlowViewSet(viewsets.GenericViewSet):
     @action(detail=False, methods=['get'], url_path='resource-list')
@@ -131,6 +135,55 @@ class BusinessFlowViewSet(viewsets.GenericViewSet):
         # 异步计算组合
         tasks.calculate_brute_force_combinations.delay(project.id, area_json)
         return Response({'message': '区域数据已接收'})
+
+    
+    @action(detail=False, methods=['post'], url_path='create-project-task')
+    def create_project_task(self, request):
+        """接口五：创建项目任务（示例实现）"""
+        task_data = request.data.get('task')
+        project_id = request.data.get('project_id')
+        # 调用任务创建服务
+        created_task = tasks.create_project_task(project_id, task_data)
+        return Response({'task_id': created_task.id}, status=status.HTTP_201_CREATED)
+
+    @action(detail=False, methods=['get'], url_path='industry-nodes')
+    def get_industry_nodes(self, request):
+        """接口六：获取行业节点（示例实现）"""
+        industry_type = request.query_params.get('type')
+        nodes = Node.objects.filter(industry=industry_type)
+        serializer = NodeSerializer(nodes, many=True)
+        return Response({'nodes': serializer.data})
+
+    @action(detail=True, methods=['post'], url_path='region-target-issue')
+    def region_target_issue(self, request, pk):
+        """接口八：区域目标发布（示例实现）"""
+        region_data = request.data.get('region')
+        project = get_object_or_404(Project, id=pk)
+        tasks.publish_region_target.delay(project.id, region_data)
+        return Response({'message': '区域目标已发布'})
+
+    @action(detail=True, methods=['post'], url_path='single-target-issue')
+    def single_target_issue(self, request, pk):
+        """接口七：单点目标发布（示例实现）"""
+        target_data = request.data.get('target')
+        project = get_object_or_404(Project, id=pk)
+        tasks.publish_single_target.delay(project.id, target_data)
+        return Response({'message': '单点目标已发布'})
+
+    @action(detail=False, methods=['post'], url_path='create-task-template')
+    def create_task_template(self, request):
+        """接口十一：创建任务模板（示例实现）"""
+        serializer = TaskTemplateSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        template = serializer.save()
+        return Response({'template_id': template.id}, status=status.HTTP_201_CREATED)
+
+    @action(detail=True, methods=['get'], url_path='task-template/(?P<template_id>[0-9]+)')
+    def retrieve_task_template(self, request, pk, template_id):
+        """接口十二：获取任务模板详情（示例实现）"""
+        template = get_object_or_404(Template, id=template_id)
+        serializer = TaskTemplateDetailSerializer(template)
+        return Response(serializer.data)
 
 class LatestResourcesAPIView(APIView):
     """获取最新的map和layer资源"""
@@ -263,4 +316,95 @@ class RetrieveTemplateNodesAPI(generics.RetrieveAPIView):
 
         return Response(result)
 
-# 将新视图添加到BusinessFlowViewSet或独立注册（根据项目路由风格）
+
+class SimulationDataConsumer(AsyncWebsocketConsumer):
+    """接口九：WebSocket 仿真数据接口"""
+    async def connect(self):
+        # 1. 解析并校验请求参数（根据接口文档要求）
+        # WebSocket 连接建立后，客户端会通过 send 发送参数（参考文档 JS 示例）
+        # 此处需等待客户端发送参数（实际需根据项目通信协议调整，示例假设参数在连接时通过 URL 传递）
+        params = self.scope['query_string'].decode('utf-8')  # 从 URL 查询参数获取（如 ws://...?projectId=xxx&...）
+        param_dict = dict(q.split('=') for q in params.split('&')) if params else {}
+
+        self.project_id = param_dict.get('projectId')
+        self.industry_id = param_dict.get('industryId')
+        self.target = param_dict.get('target')
+        self.token = param_dict.get('token')
+
+        # 校验必传参数
+        if not all([self.project_id, self.industry_id, self.target, self.token]):
+            await self.close(code=4000)  # 自定义错误码表示参数缺失
+            return
+
+        # 2. 加入频道组（根据项目 ID 隔离不同仿真任务的数据流）
+        self.group_name = f'simulation_data_{self.project_id}'
+        await self.channel_layer.group_add(self.group_name, self.channel_name)
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        # 从频道组移除
+        await self.channel_layer.group_discard(self.group_name, self.channel_name)
+
+    async def send_simulation_data(self, event):
+        # 3. 接收并推送实时仿真数据（根据接口文档格式封装）
+        data = event.get('data', {})
+        # 校验数据格式（需包含 timestamp 和 nodeStatus）
+        if not all(key in data for key in ['timestamp', 'nodeStatus']):
+            await self.send(json.dumps({
+                'code': 500,
+                'success': False,
+                'error': '仿真数据格式错误'
+            }))
+        else:
+            # 按接口文档格式封装数据流
+            await self.send(json.dumps({
+                'code': 200,
+                'success': True,
+                'data': {'dataStream': data}
+            }))
+
+    async def receive(self, text_data):
+        # 可选：处理客户端发送的控制指令（如暂停/恢复数据推送）
+        pass
+
+class SimulationLogAPIView(APIView):
+    """接口十：SSE 仿真日志接口"""
+    def get(self, request):
+        # 1. 提取并校验请求参数（根据接口文档要求）
+        project_id = request.query_params.get('projectId')
+        simulator_id = request.query_params.get('simulatorId')
+        target = request.query_params.get('target')
+        token = request.query_params.get('token')
+
+        # 校验必传参数
+        if not all([project_id, simulator_id, target, token]):
+            return Response({
+                'code': 400,
+                'success': False,
+                'error': '缺少必传参数（projectId, simulatorId, target, token）'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # 2. 定义 SSE 事件流生成器（根据接口文档返回格式）
+        def event_stream():
+            while True:
+                # 调用任务获取指定仿真器的日志（需实现 tasks.get_simulation_log）
+                log = tasks.get_simulation_log(
+                    project_id=project_id,
+                    simulator_id=simulator_id,
+                    target=target,
+                    token=token
+                )
+                # 校验日志数据格式（需包含 timestamp, level, message）
+                if not all(key in log for key in ['timestamp', 'level', 'message']):
+                    yield 'data: {"code": 500, "success": false, "error": "日志格式错误"}'
+                else:
+                    # 按接口文档格式封装日志流
+                    yield f'data: {json.dumps({
+                        "code": 200,
+                        "success": True,
+                        "data": {"logStream": log}
+                    })}'
+                time.sleep(1)  # 每秒推送一次日志
+
+        # 3. 返回 SSE 响应（指定 content_type 为 text/event-stream）
+        return StreamingHttpResponse(event_stream(), content_type='text/event-stream')

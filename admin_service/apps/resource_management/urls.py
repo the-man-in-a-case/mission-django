@@ -2,7 +2,8 @@ from django.urls import path
 from .views import (
     ResourceImportJobViewSet,
     MapExportAPIView, LayerExportAPIView,
-    MapListAPIView, LayerListAPIView
+    MapListAPIView, LayerListAPIView,
+    LatestMapExportAPIView, LatestLayerExportAPIView  # 补充缺失导入
 )
 from rest_framework.routers import DefaultRouter
 
@@ -12,8 +13,8 @@ router.register(r'import-jobs', ResourceImportJobViewSet)
 urlpatterns = [
     path('export/map/<int:id>/', MapExportAPIView.as_view(), name='export-map'),
     path('export/layer/<int:id>/', LayerExportAPIView.as_view(), name='export-layer'),
-    path('export/map/latest/', LatestMapExportAPIView.as_view(), name='export-latest-map'),  # 新增
-    path('export/layer/latest/', LatestLayerExportAPIView.as_view(), name='export-latest-layer'),  # 新增
+    path('export/map/latest/', LatestMapExportAPIView.as_view(), name='export-latest-map'),
+    path('export/layer/latest/', LatestLayerExportAPIView.as_view(), name='export-latest-layer'),
     path('maps/', MapListAPIView.as_view(), name='list-maps'),
     path('layers/', LayerListAPIView.as_view(), name='list-layers'),
 ] + router.urls
