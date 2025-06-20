@@ -42,12 +42,17 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer.is_valid(raise_exception=True)
             
             user = self.user_service.create_user(serializer.validated_data)
+            # 新增：生成用户Token
+            token, _ = Token.objects.get_or_create(user=user)
             response_serializer = UserSerializer(user)
             
             return Response(
                 {
                     'success': True,
-                    'data': response_serializer.data,
+                    'data': {
+                        'user': response_serializer.data,
+                        'token': token.key  # 返回Token
+                    },
                     'message': '用户创建成功'
                 },
                 status=status.HTTP_201_CREATED
@@ -344,10 +349,13 @@ class AuthViewSet(viewsets.ViewSet):
         user = request.user
         if not user.is_authenticated:
             return Response({'error': '用户未登录'}, status=status.HTTP_401_UNAUTHORIZED)
-        
+
         token, created = Token.objects.get_or_create(user=user)
         return Response({
-            'token': token.key,
-            'user_id': user.id,
-            'username': user.username
+            'success': True,
+            'data': {
+                'token': token.key,
+                'user_id': user.id,
+                'username': user.username
+            }
         })

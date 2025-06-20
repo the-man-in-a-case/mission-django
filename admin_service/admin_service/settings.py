@@ -40,8 +40,17 @@ INSTALLED_APPS = [
     'apps.userdb',
     'apps.resourcedb',  # Add comma here
     'rest_framework',
-    'rest_framework.authtoken',  # 添加此行
+    'rest_framework.authtoken',  # 添加DRF Token认证应用
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',  # 启用Token认证
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',  # 全局要求认证
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,12 +134,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-# 添加REST Framework配置
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-    ],
-}

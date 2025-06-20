@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #第三方
-    'rest_framework',  # Example of 
-    'rest_framework.authtoken',  # 添加此行
+    'rest_framework',
+    'rest_framework.authtoken',  # 添加DRF Token认证应用
 
     #新增app
     # 'apps.gateway_client',
@@ -53,12 +53,12 @@ INSTALLED_APPS = [
 
 # 添加REST Framework配置
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',  # 启用Token认证
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',  # 全局要求认证
+    )
 }
 
 MIDDLEWARE = [

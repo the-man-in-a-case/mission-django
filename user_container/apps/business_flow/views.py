@@ -22,8 +22,10 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from django.http import StreamingHttpResponse
 import json
 import time
-
+from rest_framework import permissions
 class BusinessFlowViewSet(viewsets.GenericViewSet):
+    permission_classes = [permissions.IsAuthenticated]  # 全局添加认证要求
+
     @action(detail=False, methods=['get'], url_path='resource-list')
     def get_resource_list(self, request):
         """获取资源列表（调用独立客户端模块）"""
