@@ -403,7 +403,7 @@ class SimulationLogAPIView(APIView):
                     # 按接口文档格式封装日志流
                     yield f'data: {json.dumps({
                         "code": 200,
-                        "success": True,
+                        "success": True, 
                         "data": {"logStream": log}
                     })}'
                 time.sleep(1)  # 每秒推送一次日志

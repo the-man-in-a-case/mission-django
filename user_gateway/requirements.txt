@@ -1,0 +1,9 @@
+aiohttp==3.12.13
+common==0.1.2
+Django==4.2.7
+djangorestframework==3.14.0
+kubernetes==23.6.0
+redis==5.0.1
+pymysql
+tasks==2.8.0
+gunicorn==21.2.0

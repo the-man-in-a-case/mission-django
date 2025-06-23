@@ -39,6 +39,33 @@ services:
     networks:
       - app-network
 
+  influxdb:
+    image: influxdb:1.0
+    container_name: influxdb2
+    ports:
+      - "28086:8086"
+    volumes:
+      - /home/nsr/Desktop/hez/influxdb/data:/var/lib/influxdb2
+      - /home/nsr/Desktop/hez/influxdb/config:/etc/influxdb2
+    restart: always
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-loadbalancer
+    ports:
+      - "80:80"   # 外部访问端口（可根据需求改为443）
+      - "443:443" # HTTPS端口（可选）
+    volumes:
+      - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf  # 挂载自定义Nginx配置
+      - ./nginx/certs:/etc/nginx/certs  # 可选：HTTPS证书目录（若需要）
+    depends_on:
+      - user_gateway  # 确保user_gateway先启动（需确认user_gateway服务名）
+      - admin_service  # 确保admin_service先启动（需确认admin_service服务名）
+    networks:
+      - app-network  # 与user_gateway共享同一网络
+
 volumes:
   rabbitmq-data:
   redis-data:
