@@ -1,0 +1,11 @@
+/********************************************************************************************************  dc bus equivalent definitions for {{ voltage_level }}kV  ***/
+{% for element in dc_elements %}
+New {{ element.type }}.{{ element.name }} bus={{ element.bus }} phases={{ element.phases }} kv={{ element.kv }} 
+~ {{ element.params }} enabled={{ element.enabled }}
+{% endfor %}
+
+/********************************************************************************************************  dc bus equivalent definitions for 20.0kV  ***/
+{% for element in dc_elements_20kv %}
+New {{ element.type }}.{{ element.name }} bus={{ element.bus }} phases={{ element.phases }} kv={{ element.kv }} 
+~ {{ element.params }} enabled={{ element.enabled }}
+{% endfor %}

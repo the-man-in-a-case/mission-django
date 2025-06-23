@@ -1,0 +1,41 @@
+
+[General]
+network = topology
+
+# 全局 Compressor 参数
+{% for prop in global_params.compressor %}
+topology.**.{{ prop }} = {{ global_params.compressor[prop] }}
+{% endfor %}
+
+# 全局 GasPipe 参数
+{% for prop in global_params.gas_pipe %}
+**.GasPipe.{{ prop }} = {{ global_params.gas_pipe[prop] }}
+{% endfor %}
+
+# GasNode 参数
+{%- for node in nodedata if node.type == "GasNode" -%}
+{%- if node.properties.LoadDemand is defined -%}
+topology.{{ node.name }}.LoadDemand = {{ node.properties.LoadDemand }}
+{%- endif -%}
+{%- if node.properties.TotalDemand is defined -%}
+topology.{{ node.name }}.TotalDemand = {{ node.properties.TotalDemand }}
+{%- endif -%}
+{%- if node.properties.supply is defined -%}
+topology.{{ node.name }}.supply = {{ node.properties.supply }}
+{%- endif -%}
+{%- if node.properties.pressure is defined -%}
+topology.{{ node.name }}.pressure = {{ node.properties.pressure }}
+{%- endif -%}
+{%- if node.properties.GeneratorConsumptionCsv is defined -%}
+topology.{{ node.name }}.GeneratorConsumptionCsv = "{{ node.properties.GeneratorConsumptionCsv }}"
+{%- endif -%}
+{% endfor %}
+
+# IntegratedNode 参数
+{%- for node in nodedata if node.type == "IntegratedNode" -%}
+topology.{{ node.name }}.LoadDemand = {{ node.properties.LoadDemand }}
+topology.{{ node.name }}.TotalDemand = {{ node.properties.TotalDemand }}
+topology.{{ node.name }}.GeneratorConsumption = {{ node.properties.GeneratorConsumption }}
+topology.{{ node.name }}.csv = {{ node.properties.csv | lower }}
+topology.{{ node.name }}.pressure = {{ node.properties.pressure }}
+{% endfor %}

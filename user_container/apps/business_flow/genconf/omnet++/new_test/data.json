@@ -1,0 +1,404 @@
+{
+    "global_params": {
+        "license_comment": "This program is free software...",
+        "package": "o_g_topology_test2.simulations",
+        "imports": [
+            "o_g_topology_test2.Compressor",
+            "o_g_topology_test2.DataProcessor",
+            "o_g_topology_test2.GasNode",
+            "o_g_topology_test2.GasPipe",
+            "o_g_topology_test2.IntegratedNode"
+        ],
+        "display": "1268,1055",
+        "compressor": {
+            "nst": "1",
+            "np": "1.35",
+            "T_in": "530",
+            "Z_av": "0.92",
+            "eta": "0.88",
+            "pressRatio": "2.0",
+            "readInterval": "5.0",
+            "hpCsvFileName": "\"gas1.csv\""
+        },
+        "gas_pipe": {
+            "length": "200",
+            "flow": "100",
+            "cij": "0.5",
+            "type": "\"p\"",
+            "qij": "\"26.7606\""
+        }
+    },
+    "nodedata": [
+        {
+            "name": "gasNode1",
+            "type": "GasNode",
+            "position": "292,770",
+            "properties": {
+                "supply": 78.75644208,
+                "pressure": 59.85168
+            }
+        },
+        {
+            "name": "gasNode2",
+            "type": "GasNode",
+            "position": "104,830",
+            "properties": {
+                "supply": 0.0,
+                "pressure": 58.00522748,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "gasNode3",
+            "type": "GasNode",
+            "position": "459,849",
+            "properties": {
+                "pressure": 59.81104853,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "integratedNode4",
+            "type": "IntegratedNode",
+            "position": "418,702",
+            "properties": {
+                "LoadDemand": 4,
+                "TotalDemand": 6.64908208,
+                "GeneratorConsumption": 2.64908208,
+                "csv": true,
+                "pressure": 53.68618422
+            }
+        },
+        {
+            "name": "gasNode5",
+            "type": "GasNode",
+            "position": "265,684",
+            "properties": {
+                "pressure": 56.42567517
+            }
+        },
+        {
+            "name": "gasNode6",
+            "type": "GasNode",
+            "position": "247,576",
+            "properties": {
+                "pressure": 53.68618422,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "integratedNode7",
+            "type": "IntegratedNode",
+            "position": "381,448",
+            "properties": {
+                "LoadDemand": 4,
+                "TotalDemand": 4.4386,
+                "GeneratorConsumption": 0.4386,
+                "csv": true,
+                "pressure": 55.37856779
+            }
+        },
+        {
+            "name": "integratedNode8",
+            "type": "IntegratedNode",
+            "position": "436,176",
+            "properties": {
+                "LoadDemand": 4,
+                "TotalDemand": 4.09804,
+                "GeneratorConsumption": 0.09804,
+                "csv": true,
+                "pressure": 43.60855576
+            }
+        },
+        {
+            "name": "integratedNode9",
+            "type": "IntegratedNode",
+            "position": "532,375",
+            "properties": {
+                "LoadDemand": 4,
+                "TotalDemand": 4.09804,
+                "GeneratorConsumption": 0.09804,
+                "csv": true,
+                "pressure": 53.36793505
+            }
+        },
+        {
+            "name": "integratedNode10",
+            "type": "IntegratedNode",
+            "position": "477,570",
+            "properties": {
+                "LoadDemand": 4,
+                "TotalDemand": 5.05264,
+                "GeneratorConsumption": 1.05264,
+                "csv": true,
+                "pressure": 53.44867667
+            }
+        },
+        {
+            "name": "gasNode11",
+            "type": "GasNode",
+            "position": "584,617",
+            "properties": {
+                "pressure": 53.64088276,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "gasNode12",
+            "type": "GasNode",
+            "position": "625,708",
+            "properties": {
+                "pressure": 55.06706386,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "gasNode13",
+            "type": "GasNode",
+            "position": "831,650",
+            "properties": {
+                "pressure": 48.37310799
+            }
+        },
+        {
+            "name": "gasNode14",
+            "type": "GasNode",
+            "position": "735,474",
+            "properties": {
+                "pressure": 46.48929073,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "gasNode15",
+            "type": "GasNode",
+            "position": "799,334",
+            "properties": {
+                "pressure": 45.13654014,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "gasNode16",
+            "type": "GasNode",
+            "position": "792,139",
+            "properties": {
+                "pressure": 44.63302457
+            }
+        },
+        {
+            "name": "gasNode17",
+            "type": "GasNode",
+            "position": "608,98",
+            "properties": {
+                "pressure": 44.12376354,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "integratedNode18",
+            "type": "IntegratedNode",
+            "position": "327,304",
+            "properties": {
+                "LoadDemand": 4,
+                "TotalDemand": 4.09804,
+                "GeneratorConsumption": 0.09804,
+                "csv": true,
+                "pressure": 165.0860933
+            }
+        },
+        {
+            "name": "gasNode19",
+            "type": "GasNode",
+            "position": "236,335",
+            "properties": {
+                "pressure": 46.48929073,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "integratedNode20",
+            "type": "IntegratedNode",
+            "position": "156,400",
+            "properties": {
+                "LoadDemand": 4,
+                "TotalDemand": 6.322,
+                "GeneratorConsumption": 2.322,
+                "csv": true,
+                "pressure": 55.06706386
+            }
+        },
+        {
+            "name": "gasNode21",
+            "type": "GasNode",
+            "position": "172,535",
+            "properties": {
+                "pressure": 55.17723158,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "gasNode22",
+            "type": "GasNode",
+            "position": "87,655",
+            "properties": {
+                "pressure": 55.17723158,
+                "LoadDemand": 4,
+                "TotalDemand": 4.0
+            }
+        },
+        {
+            "name": "compressor23",
+            "type": "Compressor",
+            "position": "184,680",
+            "properties": {
+                "nst": "1",
+                "np": "1.35",
+                "T_in": "530",
+                "Z_av": "0.92",
+                "eta": "0.88",
+                "pressRatio": "2.0",
+                "readInterval": "5.0",
+                "hpCsvFileName": "\"gas1.csv\""
+            }
+        },
+        {
+            "name": "compressor24",
+            "type": "Compressor",
+            "position": "685,589",
+            "properties": {
+                "nst": "1",
+                "np": "1.35",
+                "T_in": "530",
+                "Z_av": "0.92",
+                "eta": "0.88",
+                "pressRatio": "2.0",
+                "readInterval": "5.0",
+                "hpCsvFileName": "\"gas1.csv\""
+            }
+        },
+        {
+            "name": "compressor25",
+            "type": "Compressor",
+            "position": "695,247",
+            "properties": {
+                "nst": "1",
+                "np": "1.35",
+                "T_in": "530",
+                "Z_av": "0.92",
+                "eta": "0.88",
+                "pressRatio": "2.0",
+                "readInterval": "5.0",
+                "hpCsvFileName": "\"gas1.csv\""
+            }
+        }
+    ],
+    "edgedata": [
+        {
+            "from": "gasNode1",
+            "to": "gasNode2",
+            "properties": {
+                "cij": "1.11405",
+                "diameter": 5000,
+                "length": 200,
+                "flow": 100,
+                "type": "p",
+                "qij": "26.7606"
+            }
+        },
+        {
+            "from": "gasNode1",
+            "to": "gasNode3",
+            "properties": {
+                "cij": "1.21405",
+                "diameter": 5000,
+                "length": 200,
+                "flow": 100,
+                "type": "p",
+                "qij": "26.7606"
+            }
+        },
+        {
+            "from": "gasNode1",
+            "to": "integratedNode4",
+            "properties": {
+                "cij": "1.31405",
+                "diameter": 5000,
+                "length": 200,
+                "flow": 100,
+                "type": "p",
+                "qij": "26.7606"
+            }
+        },
+        {
+            "from": "gasNode2",
+            "to": "gasNode3",
+            "properties": {
+                "cij": "1.49543",
+                "diameter": 5000,
+                "length": 200,
+                "flow": 100,
+                "type": "p",
+                "qij": "26.7606"
+            }
+        },
+        {
+            "from": "gasNode2",
+            "to": "gasNode22",
+            "properties": {
+                "cij": "1.51405",
+                "diameter": 5000,
+                "length": 200,
+                "flow": 100,
+                "type": "p",
+                "qij": "26.7606"
+            }
+        },
+        {
+            "from": "gasNode21",
+            "to": "integratedNode20",
+            "properties": {
+                "cij": "1.71405",
+                "diameter": 5000,
+                "length": 200,
+                "flow": 100,
+                "type": "p",
+                "qij": "26.7606"
+            }
+        },
+        {
+            "from": "gasNode2",
+            "to": "gasNode5",
+            "properties": {
+                "cij": "1.81405",
+                "diameter": 5000,
+                "length": 200,
+                "flow": 100,
+                "type": "p",
+                "qij": "26.7606"
+            }
+        },
+        {
+            "from": "gasNode6",
+            "to": "gasNode21",
+            "properties": {
+                "cij": "1.81405",
+                "qij": "26.7606",
+                "diameter": 5000,
+                "length": 200,
+                "flow": 100,
+                "type": "p"
+            }
+        }
+    ]
+}

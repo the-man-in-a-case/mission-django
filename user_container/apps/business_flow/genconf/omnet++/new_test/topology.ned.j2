@@ -1,0 +1,28 @@
+
+package {{ global_params.package }};
+{% for imp in global_params.imports %}
+import {{ imp }};
+{% endfor %}
+
+network topology
+{
+    parameters:
+
+        @display("bgb={{ global_params.display }}");
+
+    submodules:
+        {% for node in nodedata|sort(attribute='type')|sort(attribute='name') %}
+        {{ node.name }}: {{ node.type }} {
+            @display("p={{ node.position }}");
+        }
+        {% endfor %}
+
+    connections:
+        {% for edge in connections %}
+        {{ edge.from }}.out++ --> GasPipe { 
+            {% for key, value in edge.properties.items() %}
+            {{ key }} = {{ value }}{% if not loop.last %}; {% endif %};
+            {% endfor %}
+        } --> {{ edge.to }}.in++;
+        {% endfor %}
+}

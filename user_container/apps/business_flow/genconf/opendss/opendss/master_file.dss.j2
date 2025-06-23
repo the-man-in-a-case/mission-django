@@ -1,0 +1,40 @@
+Clear
+
+set DefaultBaseFrequency={{ global_params.default_base_frequency }}
+
+New Circuit.{{ global_params.circuit_name }}
+~ basekv={{ global_params.basekv }} phases={{ global_params.phases }} pu={{ global_params.pu }} angle={{ global_params.angle }} frequency={{ global_params.frequency }} baseMVA={{ global_params.baseMVA }} puZ1={{ global_params.puZ1 }} !Model=ideal
+~ bus1={{ global_params.bus1 }}
+!~ basekv=138.0 phases=3 pu=1.0162276665500547 angle=49.136995333567725 frequency=60.0 baseMVA=7280000.5374813610073 puZ1=[0.001, 0.2] !Model=ideal
+/**** Conversion from PSS/E RAW data file ****/
+
+/**** Circuit elements definition ****/
+
+/*** ---- Choose either generators.dss or gens_as_vsrcs.dss ***/
+{% for redirect in global_params.redirect_files %}
+{{ redirect }}
+{% endfor %}
+
+/**** Voltage bases for all buses ****/
+Set VoltageBases = [{{ global_params.voltage_bases }}]
+Calcv
+redirect confirm_kv_bases.dss
+
+set algorithm={{ global_params.algorithm }} !IgnoreGenQLimits={{ global_params.ignore_gen_q_limits }}
+
+!/*
+!set maxcontroliter=100 maxiterations=100
+!Solve mode = snap
+!Solve mode = direct
+!*/
+!show voltages ln Nodes
+!show powers MVA Elem
+
+/*Set mode=daily
+Set maxiterations=500
+Set stepsize=36s
+Set number=50
+
+solve
+
+summary*/

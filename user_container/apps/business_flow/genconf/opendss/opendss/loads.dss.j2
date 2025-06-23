@@ -1,0 +1,4 @@
+/********************************************************************************************************  load definitions for {{ voltage_level }}kV  ***/
+{% for load in loads %}
+New Load.{{ load.name }} phases={{ load.phases }} bus={{ load.bus }} kv={{ load.kv }} kW={{ load.kW }} kvar={{ load.kvar }} model={{ load.model }} daily={{ load.daily }} spectrum={{ load.spectrum }}
+{% endfor %}

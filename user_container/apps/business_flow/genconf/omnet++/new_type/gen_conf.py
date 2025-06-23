@@ -2,11 +2,11 @@ import json
 from jinja2 import Environment, FileSystemLoader
 
 # 加载 JSON 数据
-with open('data.json', 'r', encoding='utf-8') as f:
+with open('topo_data.json', 'r', encoding='utf-8') as f:
     data = json.load(f)
 
 # 设置 Jinja2 模板环境
-env = Environment(loader=FileSystemLoader('./templates'), trim_blocks=True, lstrip_blocks=True)
+env = Environment(loader=FileSystemLoader('./'), trim_blocks=True, lstrip_blocks=True)
 
 # 渲染 topology.ini
 template_ini = env.get_template('topology.ini.j2')

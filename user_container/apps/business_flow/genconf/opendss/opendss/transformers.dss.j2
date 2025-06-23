@@ -1,0 +1,11 @@
+! transformer definitions
+
+/********************************************************************************************************  xfmr definitions for {{ windings }} wdgs  ***/
+{% for transformer in transformers %}
+New Transformer.{{ transformer.name }} windings={{ transformer.windings }}
+~ buses=[{{ transformer.buses|join(', ') }}] kVs=[{{ transformer.kVs|join(', ') }}] kVA={{ transformer.kVA }}
+~ %rs=[{{ transformer.percent_rs|join(', ') }}] taps=[{{ transformer.taps|join(', ') }}]
+~ Xhl={{ transformer.Xhl }} conns=[{{ transformer.conns|join(', ') }}]
+! ANG1 record in the raw file is: 0.0
+! VECGRP record not in the raw or gic files, assumed: given by ANG1 (record in table is " ")
+{% endfor %}
