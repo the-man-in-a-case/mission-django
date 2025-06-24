@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: django-services-pod
+  labels:
+    app: django-services
+spec:
+  containers:
+    # user_gateway 容器配置
+    - name: user-gateway
+      image: user_gateway:latest  # 替换为实际镜像地址（如 registry.example.com/user_gateway:v1）
+      ports:
+        - containerPort: 8000  # 与 supervisord.conf 中 Gunicorn 绑定端口一致
+          name: http
+      env:
+        # 数据库配置（与 docker-compose 中 mysql 服务对应）
+        - name: DB_HOST
+          value: mysql  # 对应 MySQL Service 名
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_USER
+          value: user
+        - name: DB_PASSWORD
+          value: password
+        - name: DB_NAME
+          value: mydb
+        # Redis 配置
+        - name: REDIS_HOST
+          value: redis  # 对应 Redis Service 名
+        - name: REDIS_PORT
+          value: "6379"
+        # Django 配置
+        - name: DJANGO_SETTINGS_MODULE
+          value: "user_gateway.settings"
+        - name: DEBUG
+          value: "False"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
+
+    # admin_service 容器配置
+    - name: admin-service
+      image: admin_service:latest  # 替换为实际镜像地址
+      ports:
+        - containerPort: 8000
+          name: http
+      env:
+        - name: DB_HOST
+          value: mysql
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_USER
+          value: user
+        - name: DB_PASSWORD
+          value: password
+        - name: DB_NAME
+          value: mydb
+        - name: REDIS_HOST
+          value: redis
+        - name: REDIS_PORT
+          value: "6379"
+        - name: DJANGO_SETTINGS_MODULE
+          value: "admin_service.settings"
+        - name: DEBUG
+          value: "False"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
+  restartPolicy: Always  # 与 docker-compose 的自动重启策略一致

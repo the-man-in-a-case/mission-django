@@ -1,0 +1,39 @@
+---
+# user_gateway Service（内部访问）
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-gateway-service
+spec:
+  selector:
+    app: user-gateway
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000  # 映射到Pod的8000端口
+---
+# admin_service Service（内部访问）
+apiVersion: v1
+kind: Service
+metadata:
+  name: admin-service-service
+spec:
+  selector:
+    app: admin-service
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8001  # 假设admin_service端口为8001
+---
+# mysql Service（内部访问）
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+spec:
+  selector:
+    app: mysql
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
