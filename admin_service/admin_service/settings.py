@@ -134,3 +134,24 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery 配置
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # 需安装 Redis 作为消息代理
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = 'Asia/Shanghai'
+
+# 定时任务调度（Celery Beat）
+CELERY_BEAT_SCHEDULE = {
+    'cleanup-user-activities': {
+        'task': 'apps.user_management.tasks.cleanup_user_activities',
+        'schedule': 86400.0,  # 每天执行一次（单位：秒）
+    },
+    'sync-container-status': {
+        'task': 'apps.user_management.tasks.sync_container_status',
+        'schedule': 300.0,  # 每5分钟执行一次
+    },
+    'generate-user-report': {
+        'task': 'apps.user_management.tasks.generate_user_report',
+        'schedule': 86400.0,  # 每天执行一次
+    },
+}

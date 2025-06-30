@@ -206,3 +206,22 @@ class UserService:
             ip_address=ip_address,
             user_agent=user_agent
         )
+    
+    @transaction.atomic
+    def create_user_with_token(self, user_data: Dict) -> Tuple[User, Token]:
+        """创建用户并生成Token"""
+        user = self.create_user(user_data)
+        from rest_framework.authtoken.models import Token
+        token, _ = Token.objects.get_or_create(user=user)
+        return user, token
+    
+    def get_filtered_users(self, query_params: Dict) -> List[User]:
+        """处理查询参数并返回过滤后的用户列表"""
+        filters = {}
+        if query_params.get('status'):
+            filters['status'] = query_params.get('status')
+        if query_params.get('permission_level'):
+            filters['permission_level'] = query_params.get('permission_level')
+        if query_params.get('search'):
+            filters['search'] = query_params.get('search')
+        return self.get_users_list(filters)

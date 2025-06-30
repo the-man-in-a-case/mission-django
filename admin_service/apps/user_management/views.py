@@ -41,9 +41,8 @@ class UserViewSet(viewsets.ModelViewSet):
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             
-            user = self.user_service.create_user(serializer.validated_data)
-            # 新增：生成用户Token
-            token, _ = Token.objects.get_or_create(user=user)
+            # 简化：将Token生成逻辑移至服务层
+            user, token = self.user_service.create_user_with_token(serializer.validated_data)
             response_serializer = UserSerializer(user)
             
             return Response(
@@ -51,7 +50,7 @@ class UserViewSet(viewsets.ModelViewSet):
                     'success': True,
                     'data': {
                         'user': response_serializer.data,
-                        'token': token.key  # 返回Token
+                        'token': token.key
                     },
                     'message': '用户创建成功'
                 },
@@ -68,43 +67,25 @@ class UserViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
     
-    @method_decorator(cache_page(60 * 5))  # 缓存5分钟
+    @method_decorator(cache_page(60 * 5))
     def list(self, request):
         """获取用户列表"""
         try:
-            # 获取查询参数
-            filters = {}
-            if request.query_params.get('status'):
-                filters['status'] = request.query_params.get('status')
-            if request.query_params.get('permission_level'):
-                filters['permission_level'] = request.query_params.get('permission_level')
-            if request.query_params.get('search'):
-                filters['search'] = request.query_params.get('search')
+            # 简化：查询参数处理移至服务层
+            users = self.user_service.get_filtered_users(request.query_params)
             
-            users = self.user_service.get_users_list(filters)
-            
-            # 分页
             page = self.paginate_queryset(users)
             if page is not None:
                 serializer = self.get_serializer(page, many=True)
-                return self.get_paginated_response({
-                    'success': True,
-                    'data': serializer.data
-                })
+                return self.get_paginated_response({'success': True, 'data': serializer.data})
             
             serializer = self.get_serializer(users, many=True)
-            return Response({
-                'success': True,
-                'data': serializer.data
-            })
+            return Response({'success': True, 'data': serializer.data})
             
         except Exception as e:
             logger.error(f"获取用户列表失败: {str(e)}")
             return Response(
-                {
-                    'success': False,
-                    'message': str(e)
-                },
+                {'success': False, 'message': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
     
