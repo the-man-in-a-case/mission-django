@@ -1,0 +1,253 @@
+# 1. 为监控组件创建独立的命名空间
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+---
+# 2. Prometheus RBAC (权限配置)
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus-sa
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus-role
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - services
+  - endpoints
+  - pods
+  verbs: ["get", "list", "watch"]
+- apiGroups:
+  - extensions
+  - networking.k8s.io
+  resources:
+  - ingresses
+  verbs: ["get", "list", "watch"]
+- nonResourceURLs: ["/metrics"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus-role-binding
+subjects:
+- kind: ServiceAccount
+  name: prometheus-sa
+  namespace: monitoring
+roleRef:
+  kind: ClusterRole
+  name: prometheus-role
+  apiGroup: rbac.authorization.k8s.io
+---
+# 3. Prometheus 配置
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: monitoring
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+    scrape_configs:
+      - job_name: 'pod-metrics'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          # 核心修改: 只抓取 pod annotation 中 prometheus.io/scrape=true 的 pod
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+---
+# 4. Prometheus Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: monitoring
+  labels:
+    app: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      serviceAccountName: prometheus-sa
+      containers:
+      - name: prometheus
+        image: prom/prometheus:v2.37.0
+        args:
+        - "--config.file=/etc/prometheus/prometheus.yml"
+        - "--storage.tsdb.path=/prometheus/"
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: prometheus-config-volume
+          mountPath: /etc/prometheus/
+        - name: prometheus-storage-volume
+          mountPath: /prometheus/
+      volumes:
+      - name: prometheus-config-volume
+        configMap:
+          name: prometheus-config
+      - name: prometheus-storage-volume
+        emptyDir: {}
+---
+# 5. Prometheus Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  namespace: monitoring
+spec:
+  selector:
+    app: prometheus
+  ports:
+  - port: 9090
+    targetPort: 9090
+---
+# 6. Prometheus Adapter (转换器) 的 RBAC 和相关配置
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: custom-metrics-adapter
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: custom-metrics-server-resources
+rules:
+- apiGroups:
+  - custom.metrics.k8s.io
+  resources: ["*"]
+  verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: custom-metrics-adapter-resource-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: custom-metrics-server-resources
+subjects:
+- kind: ServiceAccount
+  name: custom-metrics-adapter
+  namespace: monitoring
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: custom-metrics:system:auth-delegator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+- kind: ServiceAccount
+  name: custom-metrics-adapter
+  namespace: monitoring
+---
+# 7. 关键: Adapter 配置, 定义如何从 Prometheus 查询数据并生成自定义指标
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: adapter-config
+  namespace: monitoring
+data:
+  config.yaml: |
+    rules:
+    - seriesQuery: 'django_http_requests_total'
+      resources:
+        overrides:
+          kubernetes_namespace: {resource: "namespace"}
+          kubernetes_pod_name: {resource: "pod"}
+      name:
+        matches: "^(.*)_total$"
+        as: "${1}_per_second"
+      metricsQuery: 'sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)'
+---
+# 8. Prometheus Adapter Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-metrics-adapter
+  namespace: monitoring
+  labels:
+    app: custom-metrics-adapter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: custom-metrics-adapter
+  template:
+    metadata:
+      labels:
+        app: custom-metrics-adapter
+    spec:
+      serviceAccountName: custom-metrics-adapter
+      containers:
+      - name: custom-metrics-adapter
+        image: k8s.gcr.io/prometheus-adapter/prometheus-adapter:v0.9.1
+        args:
+        - --prometheus-url=http://prometheus.svc.monitoring:9090/
+        - --metrics-relist-interval=1m
+        - --config=/etc/adapter/config.yaml
+        ports:
+        - containerPort: 6443
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/adapter
+      volumes:
+      - name: config-volume
+        configMap:
+          name: adapter-config
+---
+# 9. Adapter Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: custom-metrics-adapter
+  namespace: monitoring
+spec:
+  selector:
+    app: custom-metrics-adapter
+  ports:
+  - port: 443
+    targetPort: 6443
+---
+# 10. 将 Adapter 提供的指标 API 注册到 Kubernetes 主 API 中
+apiVersion: apiregistration.k8s.io/v1
+kind: APIService
+metadata:
+  name: v1beta1.custom.metrics.k8s.io
+spec:
+  service:
+    name: custom-metrics-adapter
+    namespace: monitoring
+  group: custom.metrics.k8s.io
+  version: v1beta1
+  insecureSkipTLSVerify: true
+  groupPriorityMinimum: 100
+  versionPriority: 100

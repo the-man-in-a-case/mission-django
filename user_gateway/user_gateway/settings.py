@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-*2s^r$s8k&=yw3c9976*f8cq9!cgz(s8%enhxauqqgy@qu57kn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['user-gateway.mission-django.svc.cluster.local', 'localhost']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.userdb',
+    'django_prometheus', 
 ]
 
 # AUTH_USER_MODEL = 'apps.userdb.User'
@@ -50,6 +51,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_prometheus.middleware.PrometheusAfterMiddleware', 
 ]
 
 ROOT_URLCONF = 'user_gateway.urls'
@@ -124,3 +126,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 添加容器管理核心配置
+ENABLE_DIRECT_CONTAINER_CREATION = False  # 禁用直接容器创建
+CONTAINER_NAMESPACE = 'mission-django-app'  # 统一命名空间
+ROUTE_CACHE_TTL = 30  # 路由缓存30秒
+HEALTH_CHECK_INTERVAL = 10  # 健康检查间隔(秒)
+MAX_LATENCY_THRESHOLD = 300  # 最大延迟阈值(毫秒)

@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 from .models import RouteRegistry, RouteLog
 from ..userdb.models import ContainerInstance
 from .balancer import LoadBalancer
+from django.db.models import F  # 添加F表达式导入
 
 @require_http_methods(["GET"])
 def get_healthy_instances(request, user_id):
@@ -16,7 +17,7 @@ def get_healthy_instances(request, user_id):
         ).order_by('current_connections')  # 按当前连接数排序（最少连接策略）
         lb = LoadBalancer(route)
         selected_instance = lb.select_instance()  # 使用负载均衡策略选择实例
-        # 更新实例连接数（需要原子操作避免并发问题）
+        # 更新实例连接数（原子操作避免并发问题）
         ContainerInstance.objects.filter(id=selected_instance.id).update(current_connections=F('current_connections')+1)
         
         return JsonResponse({

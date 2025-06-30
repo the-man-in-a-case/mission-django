@@ -7,3 +7,4 @@ redis==5.0.1
 pymysql
 tasks==2.8.0
 gunicorn==21.2.0
+django-prometheus

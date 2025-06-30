@@ -25,7 +25,9 @@ spec:
   - type: Pods
     pods:
       metric:
-        name: http_requests_per_second
+        # 这个名称来自 Prometheus Adapter 的转换规则
+        name: django_http_requests_per_second
       target:
         type: AverageValue
-        averageValue: 100
+        # 目标值: 每个 Pod 平均处理 100 RPS
+        averageValue: "100"

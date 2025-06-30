@@ -1,53 +1,90 @@
-apiVersion: v1
-kind: Pod
+# 这是一个用于动态创建用户容器的模板文件。
+# admin_service 在收到创建请求后，应读取此文件，
+# 并将所有占位符（如 ${USER_ID} 和 ${TENANT_ID}）替换为实际值，
+# 然后将生成的两个资源（Deployment 和 Service）应用到 Kubernetes 集群中。
+#
+# 推荐使用一个独特的标识符（如 tenant_id）来确保资源名称的唯一性。
+# 例如：
+#   Deployment name: user-container-dep-${TENANT_ID}
+#   Service name:    user-container-svc-${TENANT_ID}
+#   Label selector:  app: user-container, tenant: ${TENANT_ID}
+#
+# user_gateway 随后就可以通过 "http://user-container-svc-${TENANT_ID}" 这样的
+# 内部 DNS 地址将流量路由到这个特定的用户容器。
+---
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: user-container-template
-  labels:
-    app: user-container
+  # 占位符：admin_service 需要替换这个名称，确保其唯一性
+  name: user-container-dep-${TENANT_ID}
 spec:
-  containers:
-  - name: user-container
-    image: user_container:latest
-    imagePullPolicy: IfNotPresent
-    ports:
-    - containerPort: 8000
-    env:
-    - name: USER_ID
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.labels['user-id']
-    - name: ADMIN_SERVICE_URL
-      value: "http://admin-service:8000"
-    - name: GATEWAY_URL
-      value: "http://user-gateway:8000"
-    # 添加健康检查
-    startupProbe:
-      httpGet:
-        path: /healthz
-        port: 8000
-      failureThreshold: 30
-      periodSeconds: 10
-    livenessProbe:
-      httpGet:
-        path: /healthz
-        port: 8000
-      initialDelaySeconds: 20
-      periodSeconds: 30
-      timeoutSeconds: 5
-      failureThreshold: 3
-    readinessProbe:
-      httpGet:
-        path: /readyz
-        port: 8000
-      initialDelaySeconds: 10
-      periodSeconds: 10
-      timeoutSeconds: 3
-      failureThreshold: 2
-    resources:
-      requests:
-        cpu: "100m"
-        memory: "128Mi"
-      limits:
-        cpu: "250m"
-        memory: "256Mi"
-  restartPolicy: Never # 或 OnFailure，取决于您的业务逻辑
+  replicas: 1
+  selector:
+    matchLabels:
+      # 标签也使用占位符，用于 Service 和 Deployment 的关联
+      app: user-container
+      tenant: ${TENANT_ID}
+  template:
+    metadata:
+      labels:
+        app: user-container
+        tenant: ${TENANT_ID}
+    spec:
+      containers:
+      - name: user-container
+        image: user_container:latest # 确保镜像存在
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: USER_ID
+          # 占位符：由 admin_service 传入
+          value: "${USER_ID}"
+        - name: TENANT_ID
+          value: "${TENANT_ID}"
+        - name: ADMIN_SERVICE_URL
+          value: "http://admin-service:80"
+        - name: GATEWAY_URL
+          value: "http://user-gateway:80"
+        # 健康检查配置保持不变，非常完善
+        startupProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          failureThreshold: 30
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http
+          initialDelaySeconds: 20
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  # 占位符：Service 名称同样需要 admin_service 替换
+  name: user-container-svc-${TENANT_ID}
+spec:
+  selector:
+    # 这里的 selector 必须与上面 Deployment template 中的 labels 完全匹配
+    app: user-container
+    tenant: ${TENANT_ID}
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000

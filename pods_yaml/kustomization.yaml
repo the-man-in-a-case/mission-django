@@ -13,6 +13,7 @@ resources:
   - 04-rbac.yaml
   - 05-user-gateway-hpa.yaml
   - 06-ingress.yaml
+  - 07-monitoring.yaml 
 
 # 为所有资源添加通用标签
 commonLabels:

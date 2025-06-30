@@ -4,44 +4,90 @@ class ContainerOrchestrator:
     def __init__(self):
         self.k8s_client = K8sClient()
 
-    def create_k8s_resources(self, user_id: str, config: dict) -> tuple:
-        """创建K8s Deployment和Service"""
-        deployment_name = f"user-{user_id}-deploy"
-        service_name = f"user-{user_id}-svc"
-        
-        # 构造Deployment配置（示例）
+    def create_k8s_resources(self, user_id: str, tenant_id: str) -> tuple:
+        """创建K8s Deployment和Service（结构与yaml模板一致）"""
+        deployment_name = f"user-container-dep-{tenant_id}"
+        service_name = f"user-container-svc-{tenant_id}"
+
         deployment_spec = {
-            "metadata": {"name": deployment_name},
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+                "name": deployment_name
+            },
             "spec": {
                 "replicas": 1,
+                "selector": {
+                    "matchLabels": {
+                        "app": "user-container",
+                        "tenant": tenant_id
+                    }
+                },
                 "template": {
+                    "metadata": {
+                        "labels": {
+                            "app": "user-container",
+                            "tenant": tenant_id
+                        }
+                    },
                     "spec": {
-                        "containers": [{
-                            "name": "user-container",
-                            "image": config.get("image", "business-app:latest"),
-                            "resources": {
-                                "limits": {
-                                    "cpu": config["cpu_limit"],
-                                    "memory": config["memory_limit"]
+                        "containers": [
+                            {
+                                "name": "user-container",
+                                "image": "user_container:latest",
+                                "imagePullPolicy": "IfNotPresent",
+                                "ports": [
+                                    {"containerPort": 8000, "name": "http"}
+                                ],
+                                "env": [
+                                    {"name": "USER_ID", "value": str(user_id)},
+                                    {"name": "TENANT_ID", "value": str(tenant_id)},
+                                    {"name": "ADMIN_SERVICE_URL", "value": "http://admin-service:80"},
+                                    {"name": "GATEWAY_URL", "value": "http://user-gateway:80"}
+                                ],
+                                "startupProbe": {
+                                    "httpGet": {"path": "/healthz", "port": "http"},
+                                    "failureThreshold": 30,
+                                    "periodSeconds": 10
+                                },
+                                "livenessProbe": {
+                                    "httpGet": {"path": "/healthz", "port": "http"},
+                                    "initialDelaySeconds": 20,
+                                    "periodSeconds": 30
+                                },
+                                "readinessProbe": {
+                                    "httpGet": {"path": "/readyz", "port": "http"},
+                                    "initialDelaySeconds": 10,
+                                    "periodSeconds": 10
+                                },
+                                "resources": {
+                                    "requests": {"cpu": "100m", "memory": "128Mi"},
+                                    "limits": {"cpu": "250m", "memory": "256Mi"}
                                 }
-                            },
-                            "env": [{"name": "USER_ID", "value": str(user_id)}]
-                        }]
+                            }
+                        ]
                     }
                 }
             }
         }
-        
-        # 构造Service配置（示例）
+
         service_spec = {
-            "metadata": {"name": service_name},
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "name": service_name
+            },
             "spec": {
-                "type": "ClusterIP",
-                "ports": [{"port": 8080, "targetPort": 8080}],
-                "selector": {"app": deployment_name}
+                "selector": {
+                    "app": "user-container",
+                    "tenant": tenant_id
+                },
+                "ports": [
+                    {"protocol": "TCP", "port": 80, "targetPort": 8000}
+                ]
             }
         }
-        
+
         self.k8s_client.create_deployment(deployment_name, deployment_spec)
         self.k8s_client.create_service(service_name, service_spec)
         return deployment_name, service_name

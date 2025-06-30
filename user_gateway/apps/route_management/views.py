@@ -15,7 +15,7 @@ from .serializers import (
     ContainerRegistryCreateSerializer,
     RouteMetricsSerializer
 )
-from .route_manager import RouteManager
+from .route_manager import RouteManager, K8sRouteManager
 from .services import RouteManagementService
 from common.permissions import IsGatewayService
 
@@ -91,22 +91,20 @@ class ContainerRegistryViewSet(viewsets.ModelViewSet):
             )
 
     @action(detail=True, methods=['get'])
-    def route_info(self, request, user_id=None):
+    def route_info(self, request, pk=None):
         """获取路由信息"""
+        tenant_id = pk  # 这里 pk 就是 tenant_id，因为 DRF 默认用 pk 作为主键参数
         try:
-            route_manager = RouteManager()
-            route_info = route_manager.get_user_container_route(user_id)
-            
-            if not route_info:
+            route_manager = K8sRouteManager()
+            target_url, route_info = route_manager.route_request(tenant_id, request.data)
+            if not target_url:
                 return Response(
-                    {'error': 'Container not available'},
+                    {'error': 'Container not available', **route_info},
                     status=status.HTTP_404_NOT_FOUND
                 )
-            
-            return Response(route_info)
-            
+            return Response({'target_url': target_url, **route_info})
         except Exception as e:
-            logger.error(f"Failed to get route info for user {user_id}: {str(e)}")
+            logger.error(f"Failed to get route info for tenant {tenant_id}: {str(e)}")
             return Response(
                 {'error': 'Failed to get route information'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR

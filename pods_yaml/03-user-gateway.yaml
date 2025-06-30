@@ -3,18 +3,27 @@ kind: Deployment
 metadata:
   name: user-gateway
 spec:
-  replicas: 1 # HPA 会动态调整副本数
+  replicas: 1 # HPA动态调整
   selector:
     matchLabels:
       app: user-gateway
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   template:
     metadata:
       labels:
         app: user-gateway
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/path: '/prometheus/metrics' # Django-Prometheus 暴露指标的路径
+        prometheus.io/port: '8000' # 应用监听的端口
     spec:
       containers:
       - name: user-gateway
-        image: user_gateway:latest # 确保您的镜像已准备好
+        image: user_gateway:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
@@ -32,27 +41,29 @@ spec:
           value: "redis"
         - name: DJANGO_SETTINGS_MODULE
           value: "user_gateway.settings"
-        # 添加健康检查
+        # 增强健康检查
         livenessProbe:
           httpGet:
-            path: /healthz # 假设您有健康检查端点
+            path: /health/
             port: http
-          initialDelaySeconds: 15
-          periodSeconds: 20
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3
         readinessProbe:
           httpGet:
-            path: /readyz # 假设您有就绪检查端点
+            path: /ready/
             port: http
           initialDelaySeconds: 5
-          periodSeconds: 10
-        # 必须定义资源请求才能使用 HPA
+          periodSeconds: 5
+          successThreshold: 2
+        # 统一资源配置
         resources:
           requests:
-            cpu: "200m"
+            cpu: "100m"
             memory: "256Mi"
           limits:
-            cpu: "500m"
-            memory: "512Mi"
+            cpu: "1000m"
+            memory: "1Gi"
 ---
 apiVersion: v1
 kind: Service
