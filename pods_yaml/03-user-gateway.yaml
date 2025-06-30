@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-gateway
+spec:
+  replicas: 1 # HPA 会动态调整副本数
+  selector:
+    matchLabels:
+      app: user-gateway
+  template:
+    metadata:
+      labels:
+        app: user-gateway
+    spec:
+      containers:
+      - name: user-gateway
+        image: user_gateway:latest # 确保您的镜像已准备好
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: DB_HOST
+          value: "mysql"
+        - name: DB_USER
+          value: "user"
+        - name: DB_PASSWORD
+          value: "password"
+        - name: DB_NAME
+          value: "mydb"
+        - name: REDIS_HOST
+          value: "redis"
+        - name: DJANGO_SETTINGS_MODULE
+          value: "user_gateway.settings"
+        # 添加健康检查
+        livenessProbe:
+          httpGet:
+            path: /healthz # 假设您有健康检查端点
+            port: http
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /readyz # 假设您有就绪检查端点
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        # 必须定义资源请求才能使用 HPA
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-gateway
+spec:
+  selector:
+    app: user-gateway
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000

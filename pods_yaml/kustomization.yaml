@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 统一为所有资源设置命名空间
+namespace: mission-django-app
+
+# 要部署的资源列表
+resources:
+  - 00-namespace.yaml
+  - 01-infrastructure.yaml
+  - 02-admin-service.yaml
+  - 03-user-gateway.yaml
+  - 04-rbac.yaml
+  - 05-user-gateway-hpa.yaml
+  - 06-ingress.yaml
+
+# 为所有资源添加通用标签
+commonLabels:
+  app.kubernetes.io/part-of: mission-django
+
+# 配置变量
+configMapGenerator:
+  - name: app-config
+    literals:
+      - ENVIRONMENT=production
+      - LOG_LEVEL=info
+
+# 加密数据
+secretGenerator:
+  - name: app-secrets
+    literals:
+      - DB_PASSWORD=your_secure_password
+      - REDIS_PASSWORD=your_redis_password

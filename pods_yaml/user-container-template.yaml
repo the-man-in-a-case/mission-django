@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: user-container-template
+  labels:
+    app: user-container
+spec:
+  containers:
+  - name: user-container
+    image: user_container:latest
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 8000
+    env:
+    - name: USER_ID
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.labels['user-id']
+    - name: ADMIN_SERVICE_URL
+      value: "http://admin-service:8000"
+    - name: GATEWAY_URL
+      value: "http://user-gateway:8000"
+    # 添加健康检查
+    startupProbe:
+      httpGet:
+        path: /healthz
+        port: 8000
+      failureThreshold: 30
+      periodSeconds: 10
+    livenessProbe:
+      httpGet:
+        path: /healthz
+        port: 8000
+      initialDelaySeconds: 20
+      periodSeconds: 30
+      timeoutSeconds: 5
+      failureThreshold: 3
+    readinessProbe:
+      httpGet:
+        path: /readyz
+        port: 8000
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 2
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
+      limits:
+        cpu: "250m"
+        memory: "256Mi"
+  restartPolicy: Never # 或 OnFailure，取决于您的业务逻辑

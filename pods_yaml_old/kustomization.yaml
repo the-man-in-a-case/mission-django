@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# 基础资源（移除 user-container-deployment.yaml）
+resources:
+  - all-in-one-deployment.yaml
+  - services.yaml
+  - ingress.yaml
+  - admin_service_deployment.yaml
+
+# 配置变量
+configMapGenerator:
+  - name: app-config
+    literals:
+      - ENVIRONMENT=production
+      - LOG_LEVEL=info
+
+# 加密数据
+secretGenerator:
+  - name: app-secrets
+    literals:
+      - DB_PASSWORD=your_secure_password
+      - REDIS_PASSWORD=your_redis_password
+# 命名空间
+namespace: mission-django
