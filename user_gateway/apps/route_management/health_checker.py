@@ -1,9 +1,11 @@
 import asyncio
+
+from django.db.models import F
 import aiohttp
 import logging
 from typing import Dict, List
 from django.utils import timezone
-from userdb.models import UserContainer, ContainerEndpoint
+from userdb.models import UserContainer, ContainerEndpoint, ContainerInstance
 from .route_manager import K8sRouteManager
 from ..load_balancer.circuit_breaker import CircuitBreaker
 
@@ -57,24 +59,34 @@ class HealthChecker:
     
     async def _check_pod_health(self, pod_info: Dict) -> bool:
         """检查单个Pod的健康状态"""
+        pod_info.setdefault("ports", "8000")
         try:
-            health_url = f"http://{pod_info['ip']}:{pod_info['ports'][0]}/health"
+            health_url = f"http://{pod_info['ip']}:{pod_info['ports'][0]}/healthz"
             
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=self.timeout)) as session:
                 async with session.get(health_url) as response:
                     if response.status == 200:
+                        # 健康检查成功，重置熔断器
+                        instance = ContainerInstance.objects.get(pod_name=pod_info['target_ref'])
+                        cb = CircuitBreaker(instance, instance.container.route_registry.load_balancer_config)
+                        cb.record_success()
                         return True
                     else:
                         logger.warning(f"Pod {pod_info['ip']} health check returned status {response.status}")
+                        # 记录健康检查失败
+                        instance = ContainerInstance.objects.get(pod_name=pod_info['target_ref'])
+                        cb = CircuitBreaker(instance, instance.container.route_registry.load_balancer_config)
+                        cb.record_failure()
                         return False
                         
         except asyncio.TimeoutError:
             logger.warning(f"Pod {pod_info['ip']} health check timed out")
-            if not is_healthy:
-                instance = ContainerInstance.objects.get(pod_name=pod_info['name'])
+            if not False:
+                logger.warning(f"Pod {pod_info['ip']} health check timed out")
+                instance = ContainerInstance.objects.get(pod_name=pod_info['target_ref'])
                 cb = CircuitBreaker(instance, instance.container.route_registry.load_balancer_config)
                 cb.record_failure()  # 记录失败触发熔断
-            return is_healthy
+            return False
         except Exception as e:
             logger.error(f"Pod {pod_info['ip']} health check failed: {e}")
             return False

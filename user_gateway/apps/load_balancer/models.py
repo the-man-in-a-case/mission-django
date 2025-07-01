@@ -59,6 +59,16 @@ class LoadBalancerConfig(models.Model):
     connection_timeout = models.IntegerField(default=30, verbose_name='连接超时(秒)')
     idle_timeout = models.IntegerField(default=60, verbose_name='空闲超时(秒)')
     
+    # 新增配置字段
+    ip_hash_algorithm = models.CharField(
+        max_length=20, 
+        default='md5', 
+        choices=[('md5', 'MD5'), ('sha256', 'SHA256'), ('sha1', 'SHA1')],
+        verbose_name='IP哈希算法'
+    )
+    cache_timeout = models.IntegerField(default=300, verbose_name='实例缓存超时(秒)')
+    weight_config_json = models.TextField(default='{}', verbose_name='权重配置JSON')
+    
     retry_attempts = models.IntegerField(default=3, verbose_name='重试次数')
     retry_delay = models.FloatField(default=1.0, verbose_name='重试延迟(秒)')
     

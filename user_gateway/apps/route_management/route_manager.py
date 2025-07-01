@@ -120,14 +120,45 @@ class K8sRouteManager:
     
     def route_request(self, tenant_id: str, request_data: Dict) -> Tuple[Optional[str], Dict]:
         """基于K8s Service进行路由"""
+        import time
+        import uuid
+        from ..load_balancer.models import RouteRegistry, RouteLog
+        start_time = time.time()
+        request_id = request_data.get('request_id', str(uuid.uuid4()))
+        client_ip = request_data.get('client_ip', 'unknown')
+        request_method = request_data.get('method', 'GET')
+        request_path = request_data.get('path', '/')
+        user_agent = request_data.get('user_agent', '')
+        headers = request_data.get('headers', {})
+        target_url = None
+        route_info = {}
+        success = False
+        response_time = 0
+        response_status = 0
+        error_type = None
+        error_message = None
         try:
             cached_route = self._get_cached_route(tenant_id)
             if cached_route and self._verify_route_health(cached_route):
-                return cached_route['target_url'], cached_route
+                target_url = cached_route['target_url']
+                route_info = cached_route
+                success = True
+                response_time = (time.time() - start_time) * 1000
+                response_status = 200
+                error_type = None
+                error_message = None
+                return target_url, route_info
+            
             service_info = self.get_user_container_service(tenant_id)
             if not service_info:
                 self._trigger_container_creation(tenant_id)
+                success = False
+                response_time = (time.time() - start_time) * 1000
+                response_status = 503
+                error_type = 'gateway'
+                error_message = 'Container is being created'
                 return None, {'status': 'creating', 'message': 'Container is being created'}
+            
             target_url = f"http://{service_info['cluster_ip']}:{service_info['ports'][0]['port']}"
             route_info = {
                 'target_url': target_url,
@@ -135,10 +166,63 @@ class K8sRouteManager:
                 'cached_at': timezone.now().isoformat()
             }
             self._cache_route(tenant_id, route_info)
+            
+            success = True
+            response_time = (time.time() - start_time) * 1000
+            response_status = 200
+            error_type = None
+            error_message = None
+            
             return target_url, route_info
+        
         except Exception as e:
             logger.error(f"Route request failed for tenant {tenant_id}: {e}")
+            success = False
+            response_time = (time.time() - start_time) * 1000
+            response_status = 500
+            error_type = 'server'
+            error_message = str(e)
             return None, {'status': 'error', 'message': str(e)}
+        
+        finally:
+            # 记录路由日志
+            try:
+                from userdb.models import UserContainer
+                container = UserContainer.objects.get(user_id=tenant_id)
+                route_registry = RouteRegistry.objects.get(container=container)
+
+                RouteLog.objects.create(
+                    route_registry=route_registry,
+                    request_id=request_id,
+                    request_method=request_method,
+                    request_path=request_path,
+                    request_headers=headers,
+                    client_ip=client_ip,
+                    user_agent=user_agent,
+                    target_url=target_url,
+                    load_balance_strategy=route_registry.load_balance_strategy,
+                    response_status=response_status,
+                    response_time=response_time,
+                    error_type=error_type,
+                    error_message=error_message
+                )
+
+                # 更新路由指标
+                if hasattr(route_registry, 'metrics'):
+                    route_registry.metrics.update_metrics(
+                        response_time=response_time,
+                        success=success,
+                        error_type=error_type
+                    )
+
+            except UserContainer.DoesNotExist:
+                logger.warning(f"Container not found for tenant {tenant_id}, cannot log route")
+            except RouteRegistry.DoesNotExist:
+                logger.warning(f"Route registry not found for tenant {tenant_id}, cannot log route")
+            except Exception as e:
+                logger.error(f"Failed to log route request: {str(e)}")
+
+        return target_url, route_info
     
     def _get_cached_route(self, tenant_id: str) -> Optional[Dict]:
         """从缓存获取路由信息"""

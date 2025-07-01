@@ -133,3 +133,21 @@ CONTAINER_NAMESPACE = 'mission-django-app'  # 统一命名空间
 ROUTE_CACHE_TTL = 30  # 路由缓存30秒
 HEALTH_CHECK_INTERVAL = 10  # 健康检查间隔(秒)
 MAX_LATENCY_THRESHOLD = 300  # 最大延迟阈值(毫秒)
+
+
+# 添加Celery配置
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # 根据实际环境修改
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Shanghai'
+CELERY_ENABLE_UTC = False
+
+# 任务结果过期时间（秒）
+CELERY_TASK_RESULT_EXPIRES = 3600
+
+# 导入任务模块
+CELERY_IMPORTS = (
+    'apps.route_management.tasks',
+)
