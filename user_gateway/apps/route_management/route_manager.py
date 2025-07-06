@@ -190,7 +190,15 @@ class K8sRouteManager:
                 from userdb.models import UserContainer
                 container = UserContainer.objects.get(user_id=tenant_id)
                 route_registry = RouteRegistry.objects.get(container=container)
-
+                metric, created = ContainerMetric.objects.get_or_create(
+                    container=container,
+                    timestamp=timezone.now().replace(second=0, microsecond=0),
+                    defaults={'request_count': 0, 'error_count': 0}
+                )
+                metric.request_count += 1
+                if not success:
+                    metric.error_count += 1
+                metric.save()
                 RouteLog.objects.create(
                     route_registry=route_registry,
                     request_id=request_id,

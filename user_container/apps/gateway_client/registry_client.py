@@ -42,3 +42,20 @@ class GatewayRegistryClient:
             "is_healthy": is_healthy
         }
         return self._make_request('post', self.HEALTH_REPORT_ENDPOINT, payload)
+
+    def report_metrics(self, metrics):
+        """上报客户端指标到监控系统"""
+        try:
+            response = requests.post(
+                f"{settings.ADMIN_SERVICE_URL}/api/monitoring/metrics/",
+                json={
+                    'container_id': self.container_id,
+                    'metrics': metrics,
+                    'timestamp': time.time()
+                },
+                headers={'Authorization': f'Bearer {self.token}'}
+            )
+            return response.status_code == 200
+        except Exception as e:
+            logger.error(f"Failed to report metrics: {str(e)}")
+            return False

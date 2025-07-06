@@ -7,13 +7,49 @@ logger = logging.getLogger(__name__)
 
 class MetricsCollector:
     """指标采集器"""
-    
+    def __init__(self):
+        try:
+            config.load_incluster_config()
+        except config.ConfigException:
+            config.load_kube_config()
+        self.k8s_client = client.CoreV1Api()
+        self.metrics_client = client.CustomObjectsApi()
+
     def collect_container_metrics(self):
         """采集容器实例指标"""
         instances = ContainerInstance.objects.all()
         for instance in instances:
             self._update_instance_metrics(instance)
-            
+            self._collect_k8s_metrics(instance)
+
+    def _collect_k8s_metrics(self, instance):
+        """从K8s API采集容器指标"""
+        try:
+            # 获取Pod指标
+            metrics = self.metrics_client.list_namespaced_custom_object(
+                group="metrics.k8s.io",
+                version="v1beta1",
+                namespace=instance.container.namespace,
+                plural="pods"
+            )
+
+            for pod in metrics['items']:
+                if pod['metadata']['name'].startswith(instance.pod_name):
+                    for container in pod['containers']:
+                        cpu_usage = float(container['usage']['cpu'].replace('n', '')) / 10000000
+                        memory_usage = float(container['usage']['memory'].replace('Ki', '')) / 1024 / 1024
+
+                        # 保存指标
+                        ContainerMetric.objects.create(
+                            container=instance.container,
+                            cpu_usage=cpu_usage,
+                            memory_usage=memory_usage,
+                            # 其他指标...
+                        )
+                        logger.info(f"成功采集实例 {instance.instance_id} 的K8s指标")
+        except Exception as e:
+            logger.error(f"K8s指标采集失败: {str(e)}")
+    
     def _update_instance_metrics(self, instance):
         """更新单个实例指标"""
         try:
@@ -43,6 +79,9 @@ class MetricsCollector:
 class ResourceMonitor:
     """资源监控器"""
     
+    def __init__(self):
+        self.alert_manager = AlertManager()
+        
     def check_resource_usage(self):
         """检查资源使用情况"""
         containers = UserContainer.objects.all()
@@ -68,3 +107,23 @@ class ResourceMonitor:
                 
         except Exception as e:
             logger.error(f"资源监控失败: {str(e)}")
+    
+    def _trigger_alert(self, container, alert_type):
+        """触发资源警报"""
+        from apps.userdb.models import AlertRule
+        
+        # 获取或创建资源警报规则
+        rule, created = AlertRule.objects.get_or_create(
+            rule_type=alert_type,
+            container_id=container.id,
+            defaults={
+                'threshold': 90,
+                'message': f'容器资源超限: {alert_type}',
+                'trigger_condition': f'instance.{alert_type}_usage > instance.{alert_type}_limit * 0.9',
+                'is_active': True
+            }
+        )
+        
+        # 直接触发警报
+        if not rule.triggered_at:
+            self.alert_manager._trigger_alert(rule)

@@ -19,6 +19,14 @@ class ContainerMonitoringViewSet(viewsets.ReadOnlyModelViewSet):
             return UserContainer.objects.all()
         return UserContainer.objects.filter(user=self.request.user)
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        resource_usage = MonitoringService.get_container_resource_usage(instance.id)
+        serializer = self.get_serializer(instance)
+        data = serializer.data
+        data.update(resource_usage)
+        return Response(data)
+
 class InstanceHealthViewSet(viewsets.ReadOnlyModelViewSet):
     """容器实例健康状态视图集"""
     permission_classes = [IsAuthenticated]

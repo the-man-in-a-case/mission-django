@@ -540,3 +540,42 @@ class AlertRule(models.Model):
     
     def __str__(self):
         return f"{self.container_instance} - {self.get_level_display()} 警报"
+
+class ContainerMetric(models.Model):
+    """容器指标数据模型"""
+    container = models.ForeignKey(UserContainer, on_delete=models.CASCADE, related_name='metrics')
+    timestamp = models.DateTimeField(default=timezone.now)
+    cpu_usage = models.FloatField(help_text='CPU使用率(百分比)')
+    memory_usage = models.FloatField(help_text='内存使用率(百分比)')
+    disk_usage = models.FloatField(help_text='磁盘使用率(百分比)')
+    network_in = models.FloatField(help_text='网络入流量(B/s)')
+    network_out = models.FloatField(help_text='网络出流量(B/s)')
+    request_count = models.IntegerField(default=0, help_text='请求计数')
+    error_count = models.IntegerField(default=0, help_text='错误计数')
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['container', 'timestamp']),
+        ]
+
+class ResourceAlert(models.Model):
+    """资源告警模型"""
+    ALERT_LEVEL_CHOICES = (
+        ('info', '信息'),
+        ('warning', '警告'),
+        ('critical', '严重'),
+    )
+    ALERT_TYPE_CHOICES = (
+        ('cpu', 'CPU过载'),
+        ('memory', '内存过载'),
+        ('disk', '磁盘过载'),
+        ('network', '网络异常'),
+        ('health', '健康检查失败'),
+    )
+    container = models.ForeignKey(UserContainer, on_delete=models.CASCADE, related_name='alerts')
+    alert_type = models.CharField(max_length=20, choices=ALERT_TYPE_CHOICES)
+    level = models.CharField(max_length=10, choices=ALERT_LEVEL_CHOICES, default='warning')
+    message = models.TextField()
+    triggered_at = models.DateTimeField(default=timezone.now)
+    resolved_at = models.DateTimeField(null=True, blank=True)
+    is_resolved = models.BooleanField(default=False)

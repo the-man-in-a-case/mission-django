@@ -59,12 +59,20 @@ class HealthChecker:
     
     async def _check_pod_health(self, pod_info: Dict) -> bool:
         """检查单个Pod的健康状态"""
-        pod_info.setdefault("ports", "8000")
+        pod_info.setdefault("ports", [8000])
         try:
             health_url = f"http://{pod_info['ip']}:{pod_info['ports'][0]}/healthz"
             
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=self.timeout)) as session:
                 async with session.get(health_url) as response:
+                    instance = ContainerInstance.objects.get(pod_name=pod_info['target_ref'])
+                    HealthCheckRecord.objects.create(
+                        container_instance=instance,
+                        is_healthy=response.status == 200,
+                        status_code=response.status,
+                        response_time=(await response.text()) if response.status == 200 else None,
+                        check_url=health_url
+                    )
                     if response.status == 200:
                         # 健康检查成功，重置熔断器
                         instance = ContainerInstance.objects.get(pod_name=pod_info['target_ref'])
