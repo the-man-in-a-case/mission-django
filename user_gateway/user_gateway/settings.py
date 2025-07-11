@@ -39,9 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.userdb',
     'django_prometheus', 
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
 ]
-
-# AUTH_USER_MODEL = 'apps.userdb.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,8 +81,12 @@ WSGI_APPLICATION = 'user_gateway.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'userdb',
+        'USER': 'django_user',
+        'PASSWORD': 'django_pass',
+        'HOST': 'mysql-service',
+        'PORT': '3306',
     }
 }
 
@@ -151,3 +156,20 @@ CELERY_TASK_RESULT_EXPIRES = 3600
 CELERY_IMPORTS = (
     'apps.route_management.tasks',
 )
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+}
+
+# Token验证配置
+TOKEN_EXPIRATION_DAYS = 7

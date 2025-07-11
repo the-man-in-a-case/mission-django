@@ -3,6 +3,8 @@ import uuid
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
+from django.contrib.auth.models import User
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -579,3 +581,22 @@ class ResourceAlert(models.Model):
     triggered_at = models.DateTimeField(default=timezone.now)
     resolved_at = models.DateTimeField(null=True, blank=True)
     is_resolved = models.BooleanField(default=False)
+
+class Token(models.Model):
+    """扩展DRF Token模型，增加过期时间"""
+    key = models.CharField(max_length=40, primary_key=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='auth_token')
+    created = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'auth_token'
+
+    def save(self, *args, **kwargs):
+        if not self.key:
+            self.key = self.generate_key()
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def generate_key(cls):
+        return binascii.hexlify(os.urandom(20)).decode()

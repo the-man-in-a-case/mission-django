@@ -5,10 +5,31 @@ from ..userdb.models import ContainerInstance
 from .balancer import LoadBalancer
 from .circuit_breaker import CircuitBreaker
 from django.db.models import F  # 添加F表达式导入
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.exceptions import AuthenticationFailed
+from apps.route_management.utils import TokenValidator
 
 @require_http_methods(["GET"])
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def get_healthy_instances(request, tenant_id):
     try:
+        # 额外Token验证逻辑
+        token_key = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[-1]
+        if not token_key:
+            raise AuthenticationFailed('Token header is missing')
+        
+        # 验证Token
+        user = TokenValidator.validate_token(token_key)
+        
+        # 验证租户ID与Token用户匹配
+        if str(user.tenant_id) != str(tenant_id):
+            raise AuthenticationFailed('Token does not match tenant')
+        
+        # 原有业务逻辑
         route_registry = RouteRegistry.objects.get(user__tenant_id=tenant_id, is_active=True)
         lb = LoadBalancer(route_registry)
         instance = lb.select_instance()
@@ -49,6 +70,12 @@ def get_healthy_instances(request, tenant_id):
             'port': instance.port
         })
         
+    except AuthenticationFailed as e:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Authentication failed',
+            'detail': str(e)
+        }, status=401)
     except Exception as e:
         # 错误处理和日志记录
         if 'route_registry' in locals():

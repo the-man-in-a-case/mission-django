@@ -3,7 +3,11 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import status, viewsets, permissions
 from rest_framework.decorators import action
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from rest_framework import status
+from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.db import transaction
@@ -148,3 +152,32 @@ class RouteMetricsViewSet(viewsets.ReadOnlyModelViewSet):
             'failed_requests': total_failed,
             'overall_success_rate': round((total_successful / total_requests * 100), 2) if total_requests > 0 else 0
         })
+
+
+class CustomAuthToken(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        try:
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data['user']
+            token, created = Token.objects.get_or_create(user=user)
+            
+            # 设置Token过期时间
+            if not created:
+                # 如果Token已存在且过期则刷新
+                if token.expires_at and token.expires_at < timezone.now():
+                    token.key = Token.generate_key()
+            token.expires_at = timezone.now() + timezone.timedelta(days=settings.TOKEN_EXPIRATION_DAYS)
+            token.save()
+            
+            return Response({
+                'token': token.key,
+                'user_id': user.pk,
+                'email': user.email,
+                'expires_at': token.expires_at
+            })
+        except Exception as e:
+            return Response({
+                'error': 'Authentication failed',
+                'detail': str(e)
+            }, status=status.HTTP_401_UNAUTHORIZED)

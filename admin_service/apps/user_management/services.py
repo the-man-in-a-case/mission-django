@@ -208,12 +208,35 @@ class UserService:
         )
     
     @transaction.atomic
-    def create_user_with_token(self, user_data: Dict) -> Tuple[User, Token]:
-        """创建用户并生成Token"""
-        user = self.create_user(user_data)
-        from rest_framework.authtoken.models import Token
-        token, _ = Token.objects.get_or_create(user=user)
-        return user, token
+    def create_user_with_token(self, user_data):
+        """创建用户并生成Token，增加过期时间"""
+        with transaction.atomic():
+            # 创建用户
+            user = User.objects.create_user(
+                username=user_data['username'],
+                email=user_data['email'],
+                password=user_data['password'],
+                permission_level=user_data.get('permission_level', 'basic'),
+                status='active'
+            )
+    
+            # 创建或更新Token，增加过期时间字段
+            token, created = Token.objects.get_or_create(user=user)
+            if not created:
+                # 如果Token已存在则刷新
+                token.key = Token.generate_key()
+            # 添加过期时间（7天）
+            token.expires_at = timezone.now() + timezone.timedelta(days=7)
+            token.save()
+    
+            # 记录用户活动
+            UserActivity.objects.create(
+                user=user,
+                activity_type='account_created',
+                details=f'User {user.username} created with token'
+            )
+    
+            return user, token
     
     def get_filtered_users(self, query_params: Dict) -> List[User]:
         """处理查询参数并返回过滤后的用户列表"""
