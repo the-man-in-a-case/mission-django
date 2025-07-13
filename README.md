@@ -242,3 +242,26 @@ def send_alert(event):
 ---
 
 如需详细的每个文件的修改 diff 或具体实现细节，请告知你想先看哪个模块的详细代码！
+
+
+
+
+---
+### 1.1 user-container/gateway_client（业务异常采集）
+
+- 采集：容器内部仿真失败等业务异常。
+- 存储：将异常信息写入 `userdb` 的监控表。
+- 通信：可通过 HTTP API 上报到 `route_management`。
+
+### 1.2 user_gateway/route_management（容器、请求状态采集）
+
+- 采集：容器健康状态、资源使用、重启次数等容器情况；用户请求异常、接口超时、认证失败、请求次数等请求情况。
+- 存储：同样写入 `userdb` 的监控表。
+- 通信：可定时推送或由 `monitoring` 拉取。
+
+### 1.3 admin_service/monitoring（汇总分析与告警）
+
+- 汇总：定时/实时拉取 `userdb` 监控表数据。
+- 分析：根据策略（如异常频率、容器状态）判断是否告警。
+- 存储：写入 `userdb` 的告警表。
+- 告警：Webhook等方式通知管理员。

@@ -5,6 +5,11 @@ from .models import ServiceInstance
 from .registry_client import GatewayRegistryClient
 from common.utils import get_current_user_container_id
 from django.conf import settings
+import json
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from shared_models.userdb.models import BusinessErrorLog, ContainerInstance, ContainerMetric
 
 @require_http_methods(["POST"])
 def register_service(request):
@@ -56,3 +61,68 @@ def report_health(request):
 from django.shortcuts import render
 
 # Create your views here.
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+@csrf_exempt
+def report_business_error(request):
+    """上报业务异常信息"""
+    try:
+        data = json.loads(request.body)
+        instance_id = data.get('instance_id')
+        error_type = data.get('error_type')
+        error_message = data.get('error_message')
+        stack_trace = data.get('stack_trace', '')
+
+        if not all([instance_id, error_type, error_message]):
+            return JsonResponse({
+                'code': 400,
+                'msg': '缺少必要参数',
+                'detail': 'instance_id, error_type和error_message为必填项'
+            }, status=400)
+
+        # 获取容器实例
+        instance = ContainerInstance.objects.filter(instance_id=instance_id).first()
+        if not instance:
+            return JsonResponse({
+                'code': 404,
+                'msg': '容器实例不存在'
+            }, status=404)
+
+        # 创建异常日志
+        error_log = BusinessErrorLog.objects.create(
+            container_instance=instance,
+            error_type=error_type,
+            error_message=error_message,
+            stack_trace=stack_trace
+        )
+
+        # 更新容器指标中的异常计数
+        metric, created = ContainerMetric.objects.get_or_create(
+            container=instance.container,
+            timestamp__date=timezone.now().date(),
+            defaults={'timestamp': timezone.now()}
+        )
+        metric.business_error_count += 1
+        metric.last_business_error = f'{error_type}: {error_message[:200]}'
+        metric.save()
+
+        return JsonResponse({
+            'code': 200,
+            'msg': '业务异常上报成功',
+            'error_id': error_log.id
+        })
+
+    except json.JSONDecodeError:
+        return JsonResponse({
+            'code': 400,
+            'msg': '无效的JSON格式'
+        }, status=400)
+    except Exception as e:
+        logger.error(f'业务异常上报失败: {str(e)}')
+        return JsonResponse({
+            'code': 500,
+            'msg': '服务器内部错误',
+            'detail': str(e)
+        }, status=500)

@@ -4,6 +4,7 @@ from userdb.models import (
     UserContainer, ContainerInstance, RouteRegistry, LoadBalancerConfig,
     RouteMetrics, RouteLog, HealthCheckRecord, GatewayNode
 )
+from shared_models.userdb.models import BusinessErrorLog
 
 
 class UserContainerSerializer(serializers.ModelSerializer):
@@ -375,3 +376,14 @@ class RouteMetricsUpdateSerializer(serializers.Serializer):
                 "失败请求必须指定错误类型"
             )
         return data
+
+
+class BusinessErrorLogSerializer(serializers.ModelSerializer):
+    container_instance_id = serializers.CharField(source='container_instance.instance_id', read_only=True)
+    container_name = serializers.CharField(source='container_instance.container.name', read_only=True)
+
+    class Meta:
+        model = BusinessErrorLog
+        fields = ['id', 'container_instance_id', 'container_name', 'error_type', 
+                 'error_message', 'stack_trace', 'occurred_at', 'is_resolved', 'resolved_at']
+        read_only_fields = fields

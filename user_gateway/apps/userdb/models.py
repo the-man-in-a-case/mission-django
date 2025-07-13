@@ -490,4 +490,22 @@ class GatewayNode(models.Model):
         return (
             self.is_active and 
             timezone.now() - self.last_heartbeat < timezone.timedelta(minutes=2)
-        )    
+        )
+from rest_framework.authtoken.models import Token
+from django.utils import timezone
+
+class Token(Token):
+    expires_at = models.DateTimeField(default=timezone.now() + timezone.timedelta(days=7))
+    is_revoked = models.BooleanField(default=False)
+    scope = models.CharField(max_length=100, blank=True, default='default')
+    last_used = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'authtoken_token'
+        verbose_name = 'Token'
+        verbose_name_plural = 'Tokens'
+
+    def save(self, *args, **kwargs):
+        if not self.expires_at:
+            self.expires_at = timezone.now() + timezone.timedelta(days=7)
+        super().save(*args, **kwargs)

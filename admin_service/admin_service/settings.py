@@ -45,12 +45,16 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',  # 启用Token认证
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # 添加Session认证以支持管理界面
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',  # 全局要求认证
+        'rest_framework.permissions.IsAuthenticated',  # 默认需要认证
     )
 }
+
+# 添加自定义Token模型配置
+AUTH_TOKEN_MODEL = 'userdb.Token'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -60,6 +64,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.user_management.middleware.TokenAuthenticationMiddleware',  # 添加Token认
+ 
 ]
 
 ROOT_URLCONF = 'admin_service.urls'
@@ -88,8 +94,12 @@ WSGI_APPLICATION = 'admin_service.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'userdb',
+        'USER': 'django_user',
+        'PASSWORD': 'django_pass',
+        'HOST': 'mysql-service',
+        'PORT': '3306',
     }
 }
 
@@ -135,9 +145,22 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Redis 配置
+REDIS_HOST = 'redis'
+REDIS_PORT = 6379
+REDIS_DB = 0
+REDIS_PASSWORD = None
+
+# InfluxDB 配置
+INFLUXDB_HOST = 'influxdb'
+INFLUXDB_PORT = 8086
+INFLUXDB_TOKEN = None
+INFLUXDB_ORG = None
+INFLUXDB_BUCKET = None
+
 # Celery 配置
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # 需安装 Redis 作为消息代理
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
 CELERY_TIMEZONE = 'Asia/Shanghai'
 
 # 定时任务调度（Celery Beat）

@@ -1,5 +1,15 @@
 from rest_framework import permissions
 
+class IsAdminUser(permissions.BasePermission):
+    """仅允许管理员用户访问"""
+    def has_permission(self, request, view):
+        return request.user and request.user.is_staff
+
+class IsRegularUser(permissions.BasePermission):
+    """仅允许普通用户访问"""
+    def has_permission(self, request, view):
+        return request.user and not request.user.is_staff
+
 class IsAdminOrReadOnly(permissions.BasePermission):
     """管理员权限或只读权限：安全方法（GET/HEAD/OPTIONS）允许认证用户，非安全方法仅管理员"""
     def has_permission(self, request, view):

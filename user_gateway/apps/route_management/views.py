@@ -22,6 +22,8 @@ from .serializers import (
 from .route_manager import RouteManager, K8sRouteManager
 from .services import RouteManagementService
 from common.permissions import IsGatewayService
+from shared_models.userdb.models import BusinessErrorLog
+from .serializers import BusinessErrorLogSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -162,22 +164,87 @@ class CustomAuthToken(ObtainAuthToken):
             user = serializer.validated_data['user']
             token, created = Token.objects.get_or_create(user=user)
             
-            # 设置Token过期时间
+            # 设置Token过期时间、吊销状态和权限范围
             if not created:
                 # 如果Token已存在且过期则刷新
                 if token.expires_at and token.expires_at < timezone.now():
                     token.key = Token.generate_key()
+            
+            # 设置过期时间（7天）
             token.expires_at = timezone.now() + timezone.timedelta(days=settings.TOKEN_EXPIRATION_DAYS)
+            # 默认未吊销
+            token.is_revoked = False
+            # 设置默认权限范围
+            token.scope = request.data.get('scope', 'read,write')  # 从请求中获取权限范围，默认为read,write
             token.save()
             
             return Response({
                 'token': token.key,
                 'user_id': user.pk,
                 'email': user.email,
-                'expires_at': token.expires_at
+                'expires_at': token.expires_at,
+                'scope': token.scope
             })
         except Exception as e:
             return Response({
                 'error': 'Authentication failed',
                 'detail': str(e)
             }, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class TokenManagementViewSet(viewsets.ViewSet):
+    """Token管理接口"""
+    permission_classes = [IsAuthenticated]
+    
+    @action(detail=False, methods=['post'])
+    def revoke(self, request):
+        """吊销当前用户的Token"""
+        try:
+            token_key = request.META.get('HTTP_AUTHORIZATION', '').split(' ')[-1]
+            token = Token.objects.get(key=token_key, user=request.user)
+            token.is_revoked = True
+            token.save()
+            
+            return Response({'status': 'success', 'message': 'Token has been revoked'})
+        except Token.DoesNotExist:
+            return Response({'error': 'Token not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+class BusinessErrorLogViewSet(viewsets.ReadOnlyModelViewSet):
+    """业务异常日志查询接口"""
+    serializer_class = BusinessErrorLogSerializer
+    permission_classes = [IsGatewayService]
+
+    def get_queryset(self):
+        queryset = BusinessErrorLog.objects.all()
+        container_id = self.request.query_params.get('container_id')
+        instance_id = self.request.query_params.get('instance_id')
+        is_resolved = self.request.query_params.get('is_resolved')
+        start_time = self.request.query_params.get('start_time')
+        end_time = self.request.query_params.get('end_time')
+
+        if container_id:
+            queryset = queryset.filter(container_instance__container_id=container_id)
+        if instance_id:
+            queryset = queryset.filter(container_instance__instance_id=instance_id)
+        if is_resolved is not None:
+            queryset = queryset.filter(is_resolved=is_resolved.lower() == 'true')
+        if start_time:
+            queryset = queryset.filter(occurred_at__gte=start_time)
+        if end_time:
+            queryset = queryset.filter(occurred_at__lte=end_time)
+
+        return queryset.order_by('-occurred_at')
+
+    @action(detail=True, methods=['post'])
+    def resolve(self, request, pk=None):
+        """标记异常为已解决"""
+        error_log = self.get_object()
+        error_log.is_resolved = True
+        error_log.resolved_at = timezone.now()
+        error_log.save()
+        return Response({
+            'status': 'success',
+            'message': '异常已标记为解决',
+            'resolved_at': error_log.resolved_at
+        })

@@ -69,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'apps.route_management.middleware.RequestMetricsMiddleware', 
 ]
 
 ROOT_URLCONF = 'user_container.urls'
@@ -163,11 +164,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ADMIN_SERVICE_BASE_URL = ''
 
+# Redis 配置
+REDIS_HOST = 'redis'
+REDIS_PORT = 6379
+REDIS_DB = 0
+REDIS_PASSWORD = None
+
+# InfluxDB 配置
+INFLUXDB_HOST = 'influxdb'
+INFLUXDB_PORT = 8086
+INFLUXDB_TOKEN = None
+INFLUXDB_ORG = None
+INFLUXDB_BUCKET = None
 # RabbitMQ 配置
-RABBITMQ_HOST = '192.168.119.200'
-RABBITMQ_PORT = 30074
+# RABBITMQ_HOST = '192.168.119.200'
+# RABBITMQ_PORT = 30074
+RABBITMQ_HOST = 'rabbitmq'
+RABBITMQ_PORT = 5672
 RABBITMQ_USERNAME = 'admin'
-RABBITMQ_PASSWORD = 'admin123'
+# RABBITMQ_PASSWORD = 'admin123'
+RABBITMQ_PASSWORD = 'password'
 QUEUE_NAME = 'calculation'
 EXCHANGE_NAME = 'calculation'
 

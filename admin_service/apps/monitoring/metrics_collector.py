@@ -2,6 +2,8 @@ from django.utils import timezone
 from userdb.models import ContainerInstance, RouteMetrics, HealthCheckRecord
 from .models import MonitoringConfig
 import logging
+from kubernetes import config, client
+import redis
 
 logger = logging.getLogger(__name__)
 
@@ -14,6 +16,14 @@ class MetricsCollector:
             config.load_kube_config()
         self.k8s_client = client.CoreV1Api()
         self.metrics_client = client.CustomObjectsApi()
+        redis_config = MonitoringConfig.get_redis_config()
+        self.redis_client = redis.Redis(
+            host=redis_config['host'],
+            port=redis_config['port'],
+            db=redis_config['db'],
+            password=redis_config['password'],
+            decode_responses=True
+        )
 
     def collect_container_metrics(self):
         """采集容器实例指标"""

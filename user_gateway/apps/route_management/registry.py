@@ -18,6 +18,7 @@ class ContainerRegistry:
             host=settings.REDIS_HOST,
             port=settings.REDIS_PORT,
             db=settings.REDIS_DB,
+            password=settings.REDIS_PASSWORD,
             decode_responses=True
         )
         self.registry_prefix = "container_registry"

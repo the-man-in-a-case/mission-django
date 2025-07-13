@@ -23,9 +23,19 @@ logger = logging.getLogger(__name__)
 
 class UserViewSet(viewsets.ModelViewSet):
     """用户管理视图集"""
-    queryset = User.objects.exclude(status='deleted')
+    # queryset = User.objects.exclude(status='deleted')
     permission_classes = [permissions.IsAuthenticated, IsAdminOrReadOnly]
     
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            permission_classes = [IsAdminUser]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
     def get_serializer_class(self):
         if self.action == 'list':
             return UserListSerializer
@@ -241,7 +251,7 @@ class AuthViewSet(viewsets.ViewSet):
     """认证视图集"""
     permission_classes = [permissions.AllowAny]
     
-    @action(detail=False, methods=['post'])
+    @action(detail=False, methods=['post'], permission_classes=[permissions.AllowAny])
     def login(self, request):
         """用户登录"""
         try:
@@ -285,7 +295,22 @@ class AuthViewSet(viewsets.ViewSet):
                 },
                 status=status.HTTP_400_BAD_REQUEST
             )
-    
+    @action(detail=False, methods=['get'], permission_classes=[permissions.IsAuthenticated])
+    def profile(self, request):
+        # 普通用户和管理员都可访问
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], permission_classes=[permissions.IsAdminUser])
+    def user_stats(self, request):
+        # 仅管理员可访问
+        stats = {
+            'total_users': User.objects.count(),
+            'active_users': User.objects.filter(is_active=True).count()
+        }
+        return Response(stats)
+
+
     @action(detail=False, methods=['post'])
     def logout(self, request):
         """用户登出"""

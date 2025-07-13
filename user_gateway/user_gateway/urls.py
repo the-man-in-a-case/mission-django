@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from apps.route_management.views import CustomAuthToken
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('prometheus/', include('django_prometheus.urls')), # 新增 prometheus metrics 端点
+    path('prometheus/', include('django_prometheus.urls')),
+    path('api/token/', CustomAuthToken.as_view(), name='api_token_auth'),
+    path('api/load-balancer/', include('apps.load_balancer.urls')),  # 添加此行
 ]

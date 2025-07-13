@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token as DRFToken
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -582,15 +583,16 @@ class ResourceAlert(models.Model):
     resolved_at = models.DateTimeField(null=True, blank=True)
     is_resolved = models.BooleanField(default=False)
 
-class Token(models.Model):
-    """扩展DRF Token模型，增加过期时间"""
-    key = models.CharField(max_length=40, primary_key=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='auth_token')
-    created = models.DateTimeField(auto_now_add=True)
-    expires_at = models.DateTimeField(null=True, blank=True)
-
+class Token(DRFToken):
+    """扩展DRF Token模型，增加过期时间、吊销状态和权限范围"""
+    expires_at = models.DateTimeField(default=timezone.now() + timezone.timedelta(days=7))
+    is_revoked = models.BooleanField(default=False)  # 新增吊销状态字段
+    scope = models.CharField(max_length=255, blank=True, help_text="Token权限范围，多个用逗号分隔")  # 新增权限范围字段
+    
     class Meta:
         db_table = 'auth_token'
+        verbose_name = 'Token'
+        verbose_name_plural = 'Tokens'
 
     def save(self, *args, **kwargs):
         if not self.key:

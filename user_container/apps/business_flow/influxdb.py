@@ -1,10 +1,11 @@
 from influxdb_client import InfluxDBClient
+from django.conf import settings
 
 # 参数设置（保持原有配置）
-url = "http://192.168.119.200:8087"
-token = "oYIDVNEHbwIZZvrNfFpQou42VV9QIvSJ9uzbkZE-zZNFkFkv3TN7l23GobiNHfNSfMNYj9aFIhtcpq6Tn9UqKA=="
-org = "my-org"
-bucket = "003"
+# url = "http://192.168.119.200:8087"
+# token = "oYIDVNEHbwIZZvrNfFpQou42VV9QIvSJ9uzbkZE-zZNFkFkv3TN7l23GobiNHfNSfMNYj9aFIhtcpq6Tn9UqKA=="
+# org = "my-org"
+# bucket = "003"
 
 def query_influxdb_data(target_id: str = 'abc') -> list:
     """
@@ -13,6 +14,11 @@ def query_influxdb_data(target_id: str = 'abc') -> list:
     :return: 包含日志字符串和原始数据的列表
     """
     try:
+                # 使用 settings 中的配置
+        url = f"http://{settings.INFLUXDB_HOST}:{settings.INFLUXDB_PORT}"
+        token = settings.INFLUXDB_TOKEN
+        org = settings.INFLUXDB_ORG
+        bucket = settings.INFLUXDB_BUCKET
         # 初始化客户端
         client = InfluxDBClient(url=url, token=token, org=org)
         query_api = client.query_api()

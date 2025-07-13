@@ -3,6 +3,7 @@ from .alert_manager import AlertManager
 from django.utils import timezone
 from .models import AlertRule
 from apps.userdb.models import ContainerInstance, RouteMetrics
+from shared_models.userdb.models import BusinessErrorLog  # 添加缺失的导入
 
 class MonitoringService:
     def __init__(self):
@@ -17,10 +18,51 @@ class MonitoringService:
         self.metrics_collector.collect_container_metrics()
         # 2. 检查资源使用
         self.resource_monitor.check_resource_usage()
-        # 3. 评估告警规则
+        # 3. 检查业务异常
+        self.check_business_errors()
+        # 4. 评估告警规则
         self.alert_manager.check_alerts()
-        # 4. 清理历史数据
+        # 5. 清理历史数据
         self.db_cleaner.cleanup_old_data()
+
+    def check_business_errors(self):
+        """检查业务异常并创建告警"""
+        # 获取最近30分钟内的未解决异常
+        recent_errors = BusinessErrorLog.objects.filter(
+            occurred_at__gte=timezone.now() - timezone.timedelta(minutes=30),
+            is_resolved=False
+        )
+
+        # 按容器实例和异常类型分组统计
+        error_groups = recent_errors.values('container_instance', 'error_type').annotate(
+            count=models.Count('id')
+        )
+
+        for group in error_groups:
+            # 检查是否达到告警阈值（5分钟内同一类型异常出现3次）
+            if group['count'] >= 3:
+                instance = ContainerInstance.objects.get(id=group['container_instance'])
+                # 检查是否已存在相同类型的未解决告警
+                existing_alert = AlertRule.objects.filter(
+                    container_instance=instance,
+                    rule_type='business_error',
+                    trigger_condition__contains=group['error_type'],
+                    is_active=True,
+                    triggered_at__gte=timezone.now() - timezone.timedelta(minutes=5)
+                ).first()
+
+                if not existing_alert:
+                    # 创建新告警
+                    AlertRule.objects.create(
+                        container_instance=instance,
+                        level='error',
+                        rule_type='business_error',
+                        threshold=3,
+                        trigger_condition=f'5分钟内业务异常类型: {group["error_type"]} 出现 {group["count"]} 次',
+                        message=f'业务异常告警: {group["error_type"]} 异常频繁发生',
+                        is_active=True,
+                        triggered_at=timezone.now()
+                    )
 
     @staticmethod
     def get_container_dashboard_data(container_id):

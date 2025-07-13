@@ -52,7 +52,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_prometheus.middleware.PrometheusAfterMiddleware', 
+    'django_prometheus.middleware.PrometheusAfterMiddleware',
+    'apps.route_management.middleware.TokenAuthenticationMiddleware',  # 添加Token认证中间件
 ]
 
 ROOT_URLCONF = 'user_gateway.urls'
@@ -140,15 +141,27 @@ HEALTH_CHECK_INTERVAL = 10  # 健康检查间隔(秒)
 MAX_LATENCY_THRESHOLD = 300  # 最大延迟阈值(毫秒)
 
 
-# 添加Celery配置
-CELERY_BROKER_URL = 'redis://localhost:6379/0'  # 根据实际环境修改
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+# Redis 配置
+REDIS_HOST = 'redis'
+REDIS_PORT = 6379
+REDIS_DB = 0
+REDIS_PASSWORD = None
+
+# InfluxDB 配置
+INFLUXDB_HOST = 'influxdb'
+INFLUXDB_PORT = 8086
+INFLUXDB_TOKEN = None
+INFLUXDB_ORG = None
+INFLUXDB_BUCKET = None
+
+# Celery 配置
+CELERY_BROKER_URL = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
+CELERY_RESULT_BACKEND = f'redis://{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}'
+CELERY_TIMEZONE = 'Asia/Shanghai'
+CELERY_ENABLE_UTC = False
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'Asia/Shanghai'
-CELERY_ENABLE_UTC = False
-
 # 任务结果过期时间（秒）
 CELERY_TASK_RESULT_EXPIRES = 3600
 
@@ -171,5 +184,7 @@ REST_FRAMEWORK = {
     ],
 }
 
+# 添加自定义Token模型配置
+AUTH_TOKEN_MODEL = 'userdb.Token'
 # Token验证配置
 TOKEN_EXPIRATION_DAYS = 7
