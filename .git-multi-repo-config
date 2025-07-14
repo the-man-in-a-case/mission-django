@@ -1,4 +1,4 @@
-REMOTE1_URL=https://github.com/the-man-in-a-case/mission-django.git
+REMOTE1_URL=git@github.com:the-man-in-a-case/mission-django.git
 REMOTE1_BRANCH=main
 REMOTE2_URL=git@192.168.119.200:222/Simulation/taskmanagementplatform.git
 REMOTE2_BRANCH=develop
