@@ -12,6 +12,79 @@
 
 下面我会详细梳理业务链、数据库设计、各模块的接口与代码调整建议，并给出关键代码片段。
 
+
+
+---
+
+## 1. 新增路由（/routes/ POST）
+
+### 1.1 入口
+- 路由：`/routes/`（POST）
+- 视图：`RouteListView.post(request)`
+
+### 1.2 主要调用链
+1. `RouteListView.post(request)`
+2. `RouteCreateSerializer(data=request.data)` 进行参数校验
+3. `serializer.is_valid(raise_exception=True)`
+4. `route_manager.create_route(serializer.validated_data)` 业务逻辑
+5. `RouteSerializer(route)` 结果序列化
+6. `Response(out_serializer.data)`
+
+### 1.3 业务逻辑
+- 主要在 `route_manager.py` 的 `create_route` 函数中实现，负责将新路由信息写入（通常是内存或数据库）。
+- 需要校验路由的唯一性、合法性等。
+
+### 1.4 数据流
+- 请求体为路由相关参数（如路径、目标服务等）。
+- 校验通过后，写入路由表，返回新建路由的详细信息。
+
+---
+
+## 2. 服务注册（/register/ POST）
+
+### 2.1 入口
+- 路由：`/register/`（POST）
+- 视图：`ServiceRegisterView.post(request)`
+
+### 2.2 主要调用链
+1. `ServiceRegisterView.post(request)`
+2. `ServiceRegisterSerializer(data=request.data)` 进行参数校验
+3. `serializer.is_valid(raise_exception=True)`
+4. `registry.register_service(serializer.validated_data)` 业务逻辑
+5. `Response({"message": "注册成功"})`
+
+### 2.3 业务逻辑
+- 主要在 `registry.py` 的 `register_service` 函数中实现，负责将服务实例注册到注册中心（通常是内存、数据库或第三方服务发现组件）。
+- 需要校验服务名、实例唯一性等。
+
+### 2.4 数据流
+- 请求体为服务注册相关参数（如服务名、实例地址、端口等）。
+- 校验通过后，写入服务注册表，返回注册成功消息。
+
+---
+
+## 3. 主要差别总结
+
+| 对比项         | 新增路由（/routes/ POST）                | 服务注册（/register/ POST）           |
+|----------------|------------------------------------------|---------------------------------------|
+| 入口视图       | RouteListView.post                       | ServiceRegisterView.post              |
+| 参数校验       | RouteCreateSerializer                    | ServiceRegisterSerializer             |
+| 业务处理模块   | route_manager.create_route               | registry.register_service             |
+| 主要数据       | 路由信息（路径、目标服务等）             | 服务信息（服务名、实例、端口等）      |
+| 结果           | 返回新建路由的详细信息                   | 返回注册成功的消息                    |
+| 作用           | 管理API网关的路由表                      | 管理服务注册中心的服务实例            |
+
+---
+
+## 4. 代码层级差异
+
+- **新增路由**更偏向于API网关的路由管理，涉及路由表的增删改查。
+- **服务注册**更偏向于服务发现与注册，涉及服务实例的动态注册与注销。
+
+
+
+
+
 ---
 
 ## 1. 监控业务链路设计

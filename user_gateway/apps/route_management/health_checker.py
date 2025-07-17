@@ -8,6 +8,7 @@ from django.utils import timezone
 from userdb.models import UserContainer, ContainerEndpoint, ContainerInstance
 from .route_manager import K8sRouteManager
 from ..load_balancer.circuit_breaker import CircuitBreaker
+from .services import RouteManagementService  
 
 logger = logging.getLogger(__name__)
 
@@ -49,6 +50,10 @@ class HealthChecker:
                 container.status = 'error'
             
             container.save()
+            # 新增: 采集并上报容器资源使用情况
+            for instance in container.instances.all():
+                RouteManagementService.collect_container_resources(instance)
+
             return is_healthy
             
         except Exception as e:

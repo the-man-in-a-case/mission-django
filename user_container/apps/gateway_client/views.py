@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from shared_models.userdb.models import BusinessErrorLog, ContainerInstance, ContainerMetric
+from .services import GatewayClientService  
 
 @require_http_methods(["POST"])
 def register_service(request):
@@ -97,6 +98,9 @@ def report_business_error(request):
             error_message=error_message,
             stack_trace=stack_trace
         )
+
+        # 新增: 上报到 route_management
+        GatewayClientService.report_exception_to_route_management(error_log)
 
         # 更新容器指标中的异常计数
         metric, created = ContainerMetric.objects.get_or_create(

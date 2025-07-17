@@ -4,6 +4,7 @@ from django.utils import timezone
 from .models import AlertRule
 from apps.userdb.models import ContainerInstance, RouteMetrics
 from shared_models.userdb.models import BusinessErrorLog  # 添加缺失的导入
+from django.db.models import Avg, Max  
 
 class MonitoringService:
     def __init__(self):
@@ -20,6 +21,8 @@ class MonitoringService:
         self.resource_monitor.check_resource_usage()
         # 3. 检查业务异常
         self.check_business_errors()
+        # 新增: 分析资源趋势
+        self.analyze_resource_trends()
         # 4. 评估告警规则
         self.alert_manager.check_alerts()
         # 5. 清理历史数据
@@ -102,3 +105,63 @@ class MonitoringService:
             'memory_usage': '1.5Gi',
             'usage_percent': {'cpu': 80, 'memory': 75}
         }
+
+    def analyze_resource_trends(self):
+        """分析资源使用趋势并创建告警"""
+        # 分析最近1小时的CPU和内存趋势
+        one_hour_ago = timezone.now() - timezone.timedelta(hours=1)
+        instances = ContainerInstance.objects.filter(is_healthy=True)
+
+        for instance in instances:
+            metrics = ContainerMetric.objects.filter(
+                container=instance.container,
+                timestamp__gte=one_hour_ago
+            ).order_by('timestamp')
+
+            if len(metrics) < 5:  # 需要至少5个数据点才能分析趋势
+                continue
+
+            # 计算CPU使用率趋势
+            cpu_trend = self._calculate_trend([m.cpu_usage for m in metrics])
+            memory_trend = self._calculate_trend([m.memory_usage for m in metrics])
+
+            # CPU使用率持续上升且超过阈值
+            if cpu_trend > 0.1 and metrics.last().cpu_usage > 80:
+                self.alert_manager._trigger_alert(AlertRule.objects.create(
+                    container_instance=instance,
+                    level='warning',
+                    rule_type='cpu_trend',
+                    threshold=80,
+                    trigger_condition=f'CPU使用率持续上升，当前{metrics.last().cpu_usage}%',
+                    message=f'CPU使用率趋势异常: 过去1小时上升{cpu_trend*100:.2f}%',
+                    is_active=True,
+                    triggered_at=timezone.now()
+                ))
+
+            # 内存使用率持续上升且超过阈值
+            if memory_trend > 0.1 and metrics.last().memory_usage > 80:
+                self.alert_manager._trigger_alert(AlertRule.objects.create(
+                    container_instance=instance,
+                    level='warning',
+                    rule_type='memory_trend',
+                    threshold=80,
+                    trigger_condition=f'内存使用率持续上升，当前{metrics.last().memory_usage}%',
+                    message=f'内存使用率趋势异常: 过去1小时上升{memory_trend*100:.2f}%',
+                    is_active=True,
+                    triggered_at=timezone.now()
+                ))
+
+    def _calculate_trend(self, values):
+        """计算数据趋势（简单线性回归斜率）"""
+        n = len(values)
+        if n < 2:
+            return 0
+
+        x = list(range(n))
+        x_mean = sum(x) / n
+        y_mean = sum(values) / n
+
+        numerator = sum((xi - x_mean) * (yi - y_mean) for xi, yi in zip(x, values))
+        denominator = sum((xi - x_mean) **2 for xi in x)
+
+        return numerator / denominator if denominator != 0 else 0
