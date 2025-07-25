@@ -24,6 +24,10 @@ from .services import RouteManagementService
 from common.permissions import IsGatewayService
 from shared_models.userdb.models import BusinessErrorLog
 from .serializers import BusinessErrorLogSerializer
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from .models import ExceptionData, MetricsData
+
 
 logger = logging.getLogger(__name__)
 
@@ -248,3 +252,38 @@ class BusinessErrorLogViewSet(viewsets.ReadOnlyModelViewSet):
             'message': '异常已标记为解决',
             'resolved_at': error_log.resolved_at
         })
+
+
+@api_view(['POST'])
+@permission_classes([IsGatewayService])
+def receive_exception_report(request):
+    """接收gateway_client上报的异常数据"""
+    try:
+        data = request.data
+        exceptions = data.get('exceptions', [])
+        
+        for exc in exceptions:
+            ExceptionData.objects.create(
+                container_id=exc['container_id'],
+                service_name=exc['service_name'],
+                source=exc.get('source', 'gateway_client'),
+                exception_type=exc['exception_type'],
+                exception_message=exc['exception_message'],
+                stack_trace=exc.get('stack_trace', ''),
+                severity=exc['severity'],
+                timestamp=exc['timestamp']
+            )
+        
+        return Response({
+            'status': 'success',
+            'received_count': len(exceptions)
+        })
+        
+    except Exception as e:
+        return Response({
+            'status': 'error',
+            'message': str(e)
+        }, status=400)
+
+# 在urls.py中添加路由
+# path('api/exceptions/report/', receive_exception_report, name='receive-exceptions'),

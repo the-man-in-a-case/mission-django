@@ -170,6 +170,31 @@ CELERY_IMPORTS = (
     'apps.route_management.tasks',
 )
 
+# Celery配置
+
+
+CELERY_BEAT_SCHEDULE = {
+    'collect-exceptions': {
+        'task': 'gateway_client.tasks.collect_exceptions_task',
+        'schedule': 60.0,
+    },
+    'report-exceptions': {
+        'task': 'gateway_client.tasks.report_exceptions_task',
+        'schedule': 300.0,
+    },
+    'report-health-metrics': {
+        'task': 'gateway_client.tasks.report_health_metrics_task',
+        'schedule': 60.0,
+    },
+}
+
+# 外部服务URL配置
+USER_GATEWAY_URL = 'http://localhost:8000'
+ROUTE_MANAGEMENT_URL = 'http://localhost:8000'
+MONITORING_SERVICE_URL = 'http://localhost:8000'
+
+
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

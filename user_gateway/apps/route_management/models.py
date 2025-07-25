@@ -31,6 +31,12 @@ class ExceptionData(models.Model):
         ('redis', 'Redis'),
         ('influxdb', 'InfluxDB'),
     ]
+    SEVERITY_CHOICES = [
+        ('low', '低'),
+        ('medium', '中'),
+        ('high', '高'),
+        ('critical', '严重')
+    ]
     
     container_id = models.CharField(max_length=100, db_index=True)
     service_name = models.CharField(max_length=100)
@@ -40,33 +46,14 @@ class ExceptionData(models.Model):
     stack_trace = models.TextField(blank=True)
     timestamp = models.DateTimeField(default=timezone.now)
     is_reported = models.BooleanField(default=False)
-    severity = models.CharField(max_length=10, choices=[
-        ('low', '低'),
-        ('medium', '中'),
-        ('high', '高'),
-        ('critical', '严重')
-    ], default='medium')
-
+    severity = models.CharField(max_length=10, choices=SEVERITY_CHOICES, default='medium')
+    
     class Meta:
         ordering = ['-timestamp']
         indexes = [
             models.Index(fields=['is_reported', '-timestamp']),
             models.Index(fields=['container_id', '-timestamp']),
         ]
-
-class ServiceRegistry(models.Model):
-    """服务注册信息"""
-    service_id = models.CharField(max_length=100, unique=True)
-    service_type = models.CharField(max_length=50)
-    host = models.CharField(max_length=100)
-    port = models.IntegerField()
-    is_active = models.BooleanField(default=True)
-    registered_at = models.DateTimeField(default=timezone.now)
-    last_heartbeat = models.DateTimeField(default=timezone.now)
-    metadata = models.JSONField(default=dict, blank=True)
-
-    class Meta:
-        ordering = ['-registered_at']
 
 class MetricsData(models.Model):
     """指标数据"""
@@ -81,3 +68,16 @@ class MetricsData(models.Model):
         indexes = [
             models.Index(fields=['service_id', 'metric_name', '-timestamp']),
         ]
+class ServiceRegistry(models.Model):
+    """服务注册信息"""
+    service_id = models.CharField(max_length=100, unique=True)
+    service_type = models.CharField(max_length=50)
+    host = models.CharField(max_length=100)
+    port = models.IntegerField()
+    is_active = models.BooleanField(default=True)
+    registered_at = models.DateTimeField(default=timezone.now)
+    last_heartbeat = models.DateTimeField(default=timezone.now)
+    metadata = models.JSONField(default=dict, blank=True)
+
+    class Meta:
+        ordering = ['-registered_at']

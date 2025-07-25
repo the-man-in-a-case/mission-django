@@ -33,12 +33,33 @@ class AlertManager:
             logger.error(f"警报规则评估失败: {str(e)}")
 
     def _trigger_alert(self, rule):
-        """触发警报并发送通知"""
+        """触发警报并存储到共享userdb"""
         rule.triggered_at = timezone.now()
         rule.save()
-        # 此处应集成通知系统
+        
+        # 新增：写入共享告警表
+        from shared_models.userdb.models import ResourceAlert
+        ResourceAlert.objects.create(
+            container_id=rule.container_instance.container_id,
+            alert_type=self._get_alert_type(rule.rule_type),
+            level=rule.level,
+            message=rule.message,
+            triggered_at=rule.triggered_at
+        )
+        
         logger.warning(f"触发警报: {rule.message}")
-
+        self._send_webhook_notification(rule)
+    
+    def _get_alert_type(self, rule_type):
+        """将规则类型映射为告警类型"""
+        mapping = {
+            'container_cpu': 'cpu',
+            'container_memory': 'memory',
+            'route_latency': 'network',
+            'instance_health': 'health'
+        }
+        return mapping.get(rule_type, 'health')
+        
         # 新增: Webhook通知实现
         self._send_webhook_notification(rule)
 

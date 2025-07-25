@@ -190,6 +190,29 @@ EXCHANGE_NAME = 'calculation'
 # 新增：用户网关服务配置（根据实际环境填写URL）
 USER_GATEWAY_URL = 'http://user-gateway:8000'  # 示例值，需替换为实际网关地址
 
+# Celery配置
+
+
+CELERY_BEAT_SCHEDULE = {
+    'collect-exceptions': {
+        'task': 'gateway_client.tasks.collect_exceptions_task',
+        'schedule': 60.0,
+    },
+    'report-exceptions': {
+        'task': 'gateway_client.tasks.report_exceptions_task',
+        'schedule': 300.0,
+    },
+    'report-health-metrics': {
+        'task': 'gateway_client.tasks.report_health_metrics_task',
+        'schedule': 60.0,
+    },
+}
+
+# 外部服务URL配置
+USER_GATEWAY_URL = 'http://localhost:8000'
+ROUTE_MANAGEMENT_URL = 'http://localhost:8000'
+MONITORING_SERVICE_URL = 'http://localhost:8000'
+
 
 # Celery 配置
 CELERY_BROKER_URL = f"amqp://{RABBITMQ_USERNAME}:{RABBITMQ_PASSWORD}@{RABBITMQ_HOST}:{RABBITMQ_PORT}//"  # 使用 RabbitMQ 作为消息代理

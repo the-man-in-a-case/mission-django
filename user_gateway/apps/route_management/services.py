@@ -7,6 +7,10 @@ from datetime import timedelta
 import logging
 from .models import ContainerHealthRecord, ExceptionData, MetricsData
 
+import psutil
+import docker
+from kubernetes import client, config
+
 logger = logging.getLogger(__name__)
 
 class RouteManagementService:
@@ -29,15 +33,59 @@ class RouteManagementService:
 
     @staticmethod
     def collect_container_resources(container_id):
-        """采集容器资源使用情况"""
-        # 这里实现具体的资源采集逻辑
-        return {
-            'cpu_usage': 75.5,
-            'memory_usage': 60.2,
-            'disk_usage': 45.8,
-            'network_rx': 1024000,
-            'network_tx': 512000
-        }
+        """采集容器实际资源使用情况"""
+        try:
+            # 优先使用Kubernetes API
+            config.load_incluster_config()
+            v1 = client.CoreV1Api()
+            
+            # 获取Pod指标
+            metrics_client = client.CustomObjectsApi()
+            metrics = metrics_client.list_namespaced_custom_object(
+                group="metrics.k8s.io",
+                version="v1beta1",
+                namespace="user-containers",
+                plural="pods"
+            )
+            
+            for pod in metrics['items']:
+                if container_id in pod['metadata']['name']:
+                    container_metrics = pod['containers'][0]
+                    return {
+                        'cpu_usage': float(container_metrics['usage']['cpu'].replace('n', '')) / 1000000,
+                        'memory_usage': float(container_metrics['usage']['memory'].replace('Ki', '')) / 1024,
+                        'disk_usage': psutil.disk_usage('/').percent,
+                        'network_rx': float(container_metrics.get('network', {}).get('rx_bytes', 0)),
+                        'network_tx': float(container_metrics.get('network', {}).get('tx_bytes', 0))
+                    }
+                    
+        except Exception as e:
+            logger.error(f"K8s指标采集失败: {e}")
+            # 回退到Docker API
+            try:
+                docker_client = docker.from_env()
+                container = docker_client.containers.get(container_id)
+                stats = container.stats(stream=False)
+                
+                cpu_delta = stats['cpu_stats']['cpu_usage']['total_usage'] - \
+                           stats['precpu_stats']['cpu_usage']['total_usage']
+                system_delta = stats['cpu_stats']['system_cpu_usage'] - \
+                              stats['precpu_stats']['system_cpu_usage']
+                
+                return {
+                    'cpu_usage': (cpu_delta / system_delta) * 100.0 if system_delta > 0 else 0,
+                    'memory_usage': (stats['memory_stats']['usage'] / 
+                                   stats['memory_stats']['limit']) * 100.0,
+                    'disk_usage': psutil.disk_usage('/').percent,
+                    'network_rx': stats['networks']['eth0']['rx_bytes'],
+                    'network_tx': stats['networks']['eth0']['tx_bytes']
+                }
+            except Exception as e2:
+                logger.error(f"Docker指标采集失败: {e2}")
+                return {
+                    'cpu_usage': 0, 'memory_usage': 0, 'disk_usage': 0,
+                    'network_rx': 0, 'network_tx': 0
+                }
 
 class DataCollectorService:
     """异常数据收集服务"""
