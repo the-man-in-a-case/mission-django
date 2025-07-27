@@ -1,0 +1,31 @@
+{
+  "node": {
+    "federation": "EnergySystem",
+    "version": "v1.3"
+  },
+  "topo": {
+    "files": {
+      "exchange.fed": {
+        "federation": "EnergySystem",
+        "version": "v1.3",
+        "spaces": [],
+        "objects": [
+          {
+            "name": "PowerPlant",
+            "attributes": ["Power", "Load", "Step", "Time", "Compressor26", "Compressor58", "Compressor60"]
+          },
+          {
+            "name": "GasPipeline", 
+            "attributes": ["GasFlow", "FlowRate", "Step", "SimTime", "NodeName", "GeneratorConsumption", "IntegratedNode4", "IntegratedNode7", "IntegratedNode8", "IntegratedNode9", "IntegratedNode10", "IntegratedNode18", "IntegratedNode20"]
+          }
+        ],
+        "interactions": [
+          {
+            "name": "EnergyDataExchange",
+            "parameters": ["PowerValue", "GasFlowValue"]
+          }
+        ]
+      }
+    }
+  }
+}

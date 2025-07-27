@@ -1,0 +1,149 @@
+{# opendss模板 - 支持所有.dss文件 #}
+{% set master_content = data.files.get('master_file.dss', {}) %}
+{% set loads_content = data.files.get('loads.dss', {}) %}
+{% set generators_content = data.files.get('generators.dss', {}) %}
+{% set generators_as_vsrcs_content = data.files.get('generators_as_vsrcs.dss', {}) %}
+{% set lines_content = data.files.get('lines.dss', {}) %}
+{% set transformers_content = data.files.get('transformers.dss', {}) %}
+{% set shunts_content = data.files.get('shunts.dss', {}) %}
+{% set sw_shunts_content = data.files.get('sw_shunts.dss', {}) %}
+{% set dc_facts_content = data.files.get('dc_and_facts_equiv_elements.dss', {}) %}
+{% set confirm_kv_bases_content = data.files.get('confirm_kv_bases.dss', {}) %}
+
+---
+# master_file.dss
+{% if master_content %}
+Clear
+
+set DefaultBaseFrequency={{ master_content.frequency or 60 }}
+
+New Circuit.{{ master_content.circuit.name }}
+~ basekv={{ master_content.circuit.basekv }} phases={{ master_content.circuit.phases }} pu={{ master_content.circuit.pu }} angle={{ master_content.circuit.angle }} frequency={{ master_content.circuit.frequency }} baseMVA={{ master_content.circuit.baseMVA }} puZ1=[{{ master_content.circuit.puZ1|join(', ') }}] !Model={{ master_content.circuit.model }}
+~ bus1={{ master_content.circuit.bus1 }}
+
+/**** Conversion from PSS/E RAW data file ****/
+
+/**** Circuit elements definition ****/
+
+{% for redirect in master_content.redirects or [] %}
+{% if redirect.comment %}{{ redirect.comment }}{% endif %}
+redirect {{ redirect.file }}
+{% endfor %}
+
+/**** Voltage bases for all buses ****/
+Set VoltageBases = [{{ master_content.voltageBases|join(', ') }}]
+Calcv
+redirect {{ master_content.kvBaseFile or 'confirm_kv_bases.dss' }}
+
+set algorithm={{ master_content.algorithm or 'NCIM' }} !IgnoreGenQLimits=Yes
+
+!/*
+!set maxcontroliter=100 maxiterations=100
+!Solve mode = snap
+!Solve mode = direct
+!*/
+!show voltages ln Nodes
+!show powers MVA Elem
+
+/*Set mode=daily
+Set maxiterations=500
+Set stepsize=36s
+Set number=50
+
+solve
+
+summary*/
+{% endif %}
+
+---
+# loads.dss
+{% if loads_content %}
+{% for section in loads_content.sections or [] %}
+{{ section.comment }}
+{% endfor %}
+
+{% for load in loads_content.loads or [] %}
+New Load.{{ load.name }}   phases={{ load.phases }} bus={{ load.bus }}   kv={{ load.kv }} kW={{ load.kW }}  kvar={{ load.kvar }}  model={{ load.model }} daily={{ load.daily }} spectrum={{ load.spectrum }}
+{% endfor %}
+{% endif %}
+
+---
+# generators.dss
+{% if generators_content %}
+{% for gen in generators_content.generators or [] %}
+New Generator.{{ gen.name }} phases={{ gen.phases }} bus={{ gen.bus }} kv={{ gen.kv }} kW={{ gen.kW }} kvar={{ gen.kvar }} model={{ gen.model }}
+{% endfor %}
+{% endif %}
+
+---
+# generators_as_vsrcs.dss
+{% if generators_as_vsrcs_content %}
+{% for vsrc in generators_as_vsrcs_content.vsrcs or [] %}
+New Vsource.{{ vsrc.name }} phases={{ vsrc.phases }} bus1={{ vsrc.bus }} basekv={{ vsrc.basekv }} pu={{ vsrc.pu }} angle={{ vsrc.angle }} frequency={{ vsrc.frequency or 60 }}
+{% endfor %}
+{% endif %}
+
+---
+# lines.dss
+{% if lines_content %}
+{% for line in lines_content.lines or [] %}
+New Line.{{ line.name }} phases={{ line.phases }} bus1={{ line.bus1 }} bus2={{ line.bus2 }} kv={{ line.kv }} r={{ line.r }} x={{ line.x }} length={{ line.length }} units={{ line.units }}
+{% endfor %}
+{% endif %}
+
+---
+# transformers.dss
+{% if transformers_content %}
+{% for trans in transformers_content.transformers or [] %}
+New Transformer.{{ trans.name }} phases={{ trans.phases }} windings={{ trans.windings }}
+~ buses=[{{ trans.buses|join(', ') }}] kvs=[{{ trans.kvs|join(', ') }}] kvas=[{{ trans.kvas|join(', ') }}]
+{% endfor %}
+{% endif %}
+
+---
+# shunts.dss
+{% if shunts_content %}
+{% for section in shunts_content.sections or [] %}
+{{ section.comment }}
+{% endfor %}
+
+{% for shunt in shunts_content.shunts or [] %}
+New Capacitor.{{ shunt.name }} phases={{ shunt.phases }} bus={{ shunt.bus }} kv={{ shunt.kv }} kvar={{ shunt.kvar }}
+{% endfor %}
+{% endif %}
+
+---
+# sw_shunts.dss
+{% if sw_shunts_content %}
+{% for comment in sw_shunts_content.comments or [] %}
+{{ comment }}
+{% endfor %}
+
+{% for sw_shunt in sw_shunts_content.sw_shunts or [] %}
+New Capacitor.{{ sw_shunt.name }} phases={{ sw_shunt.phases }} bus={{ sw_shunt.bus }} kv={{ sw_shunt.kv }} kvar={{ sw_shunt.kvar }} conn={{ sw_shunt.conn }} states=[{{ sw_shunt.states|join(', ') }}]
+{% endfor %}
+{% endif %}
+
+---
+# dc_and_facts_equiv_elements.dss
+{% if dc_facts_content %}
+{% for comment in dc_facts_content.comments or [] %}
+{{ comment }}
+{% endfor %}
+
+{% for element in dc_facts_content.elements or [] %}
+New {{ element.type }}.{{ element.name }} {{ element.parameters }}
+{% endfor %}
+{% endif %}
+
+---
+# confirm_kv_bases.dss
+{% if confirm_kv_bases_content %}
+{% for comment in confirm_kv_bases_content.comments or [] %}
+{{ comment }}
+{% endfor %}
+
+{% for base in confirm_kv_bases_content.voltage_bases or [] %}
+Set VoltageBases = [{{ base.bases|join(', ') }}]
+{% endfor %}
+{% endif %}

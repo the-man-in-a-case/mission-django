@@ -1,0 +1,56 @@
+{
+  "node": {
+    "package": "",
+    "network_name": "Topology",
+    "parameters": [
+      {"name": "sim-time-limit", "type": "string", "value": "\"1000s\""},
+      {"name": "cpu-time-limit", "type": "string", "value": "\"1000s\""}
+    ],
+    "node_types": [
+      {
+        "name": "Node",
+        "parameters": [
+          {"name": "address", "type": "int", "value": "0"},
+          {"name": "gateSize", "type": "int", "value": "4"}
+        ],
+        "gates": [
+          {"direction": "inout", "name": "gate[]"}
+        ]
+      }
+    ],
+    "modules": [
+      {
+        "name": "node0",
+        "type": "Node",
+        "parameters": [
+          {"name": "address", "value": "0"},
+          {"name": "gateSize", "value": "4"}
+        ],
+        "gates": [
+          {"name": "gate", "connection": "node1.gate++"}
+        ]
+      },
+      {
+        "name": "node1", 
+        "type": "Node",
+        "parameters": [
+          {"name": "address", "value": "1"},
+          {"name": "gateSize", "value": "4"}
+        ],
+        "gates": [
+          {"name": "gate", "connection": "node0.gate++"}
+        ]
+      }
+    ]
+  },
+  "topo": {
+    "connections": [
+      {
+        "from_node": "node0",
+        "from_gate": "gate[0]",
+        "to_node": "node1",
+        "to_gate": "gate[0]"
+      }
+    ]
+  }
+}

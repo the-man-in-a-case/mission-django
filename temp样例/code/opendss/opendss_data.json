@@ -1,0 +1,99 @@
+{
+  "node": {
+    "circuit": {
+      "name": "ieee118bus",
+      "basekv": 138.0,
+      "phases": 3,
+      "pu": 1.005,
+      "angle": 39.69,
+      "frequency": 60.0,
+      "baseMVA": 728.5374813610073,
+      "puZ1": [0.001, 0.2],
+      "model": "ideal",
+      "bus1": "89_clinchrv"
+    }
+  },
+  "topo": {
+    "files": {
+      "master_file.dss": {
+        "circuit": {
+          "name": "ieee118bus",
+          "basekv": 138.0,
+          "phases": 3,
+          "pu": 1.005,
+          "angle": 39.69,
+          "frequency": 60.0,
+          "baseMVA": 728.5374813610073,
+          "puZ1": [0.001, 0.2],
+          "model": "ideal",
+          "bus1": "89_clinchrv"
+        },
+        "redirects": [
+          {"file": "generators.dss", "comment": "! definitions for generators"},
+          {"file": "generators_as_vsrcs.dss", "comment": "! definitions for generators"},
+          {"file": "dc_and_facts_equiv_elements.dss", "comment": "! definitions for dc and facts elements from pss/e"},
+          {"file": "lines.dss", "comment": "! definitions for lines"},
+          {"file": "transformers.dss", "comment": "! definitions for transformers"},
+          {"file": "loads.dss", "comment": "! definitions for loads"},
+          {"file": "shunts.dss", "comment": "! definitions for reactors and capacitors"},
+          {"file": "sw_shunts.dss", "comment": "! definitions for switched reactors and capacitors"}
+        ],
+        "voltageBases": [138.0],
+        "kvBaseFile": "confirm_kv_bases.dss",
+        "algorithm": "NCIM"
+      },
+      "loads.dss": {
+        "sections": [
+          {"comment": "/********************************************************************************************************  load definitions for 138.0kV  ***/"}
+        ],
+        "loads": [
+          {"name": "Load_at_1_1", "phases": 3, "bus": "1_riversde", "kv": 138.0, "kW": 51000.0, "kvar": 27000.0, "model": 1, "daily": "Default", "spectrum": "Linear"},
+          {"name": "Load_at_2_1", "phases": 3, "bus": "2_pokagon", "kv": 138.0, "kW": 20000.0, "kvar": 9000.0, "model": 1, "daily": "Default", "spectrum": "Linear"},
+          {"name": "compressor_at_26_1", "phases": 3, "bus": "26_tannrsck", "kv": 138.0, "kW": 50000.0, "kvar": 0.0, "model": 2, "daily": "Default", "spectrum": "Linear"}
+        ]
+      },
+      "generators.dss": {
+        "generators": [
+          {"name": "gen1", "phases": 3, "bus": "bus1", "kv": 138.0, "kW": 100000, "kvar": 0, "model": 1}
+        ]
+      },
+      "lines.dss": {
+        "lines": [
+          {"name": "line1", "phases": 3, "bus1": "bus1", "bus2": "bus2", "kv": 138.0, "r": 0.1, "x": 0.2, "length": 1.0, "units": "km"}
+        ]
+      },
+      "transformers.dss": {
+        "transformers": [
+          {"name": "trans1", "phases": 3, "windings": 2, "buses": ["bus1", "bus2"], "kvs": [138.0, 138.0], "kvas": [100000, 100000]}
+        ]
+      },
+      "shunts.dss": {
+        "shunts": [
+          {"name": "shunt1", "phases": 3, "bus": "bus1", "kv": 138.0, "kvar": 1000}
+        ]
+      },
+      "config.py": {
+        "gas_generators": ["gen1", "gen2"],
+        "compressor_loads": ["compressor_at_26_1", "compressor_at_58_2"],
+        "gas_node_to_generator": {"node1": "gen1", "node2": "gen2"},
+        "gas_power_conversion": {"efficiency": 0.35, "heat_rate": 9.5},
+        "file_paths": {
+          "opendss": "./IEEE118Bus_modified/",
+          "gas": "./gas_data/",
+          "output": "./results/"
+        },
+        "simulation_params": {
+          "start_time": 0,
+          "end_time": 86400,
+          "time_step": 300
+        },
+        "fault_simulation": {
+          "enable": false,
+          "fault_bus": "bus1",
+          "fault_time": 3600,
+          "fault_duration": 60
+        }
+      }
+    }
+  }
+}

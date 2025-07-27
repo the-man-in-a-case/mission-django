@@ -1,0 +1,35 @@
+{# certi模板 - 支持exchange.fed文件 #}
+{% set fed_content = data.files.get('exchange.fed', {}) %}
+{% if fed_content %}
+(FED
+  (Federation {{ fed_content.federation or 'EnergySystem' }})
+  (FEDversion {{ fed_content.version or 'v1.3' }})
+  (spaces
+{% for space in fed_content.spaces or [] %}
+    {{ space }}
+{% endfor %}
+  )
+  (objects
+    (class ObjectRoot
+      (attribute privilegeToDelete reliable timestamp)
+{% for obj_class in fed_content.objects or [] %}
+      (class {{ obj_class.name }}\{% for attr in obj_class.attributes %}
+        (attribute {{ attr }} reliable timestamp)
+{% endfor %}
+      )
+{% endfor %}
+    )
+  )
+  (interactions
+    (class InteractionRoot reliable timestamp
+{% for inter_class in fed_content.interactions or [] %}
+      (class {{ inter_class.name }} reliable timestamp
+{% for param in inter_class.parameters %}
+        (parameter {{ param }})
+{% endfor %}
+      )
+{% endfor %}
+    )
+  )
+)
+{% endif %}

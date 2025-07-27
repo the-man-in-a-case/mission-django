@@ -1,0 +1,70 @@
+{# omnet++模板 - 支持topology.ini和topology.ned文件 #}
+{% set ini_content = data.files.get('topology.ini', {}) %}
+{% set ned_content = data.files.get('topology.ned', {}) %}
+
+---
+# topology.ini文件内容
+{% if ini_content %}
+[General]
+{% for section, params in ini_content.sections.items() %}
+[{{ section }}]
+{% for key, value in params.items() %}
+{{ key }} = {{ value }}
+{% endfor %}
+
+{% endfor %}
+{% endif %}
+
+---
+# topology.ned文件内容
+{% if ned_content %}
+package {{ ned_content.package or '' }};
+
+{% if ned_content.imports %}
+{% for imp in ned_content.imports %}
+import {{ imp }};
+{% endfor %}
+{% endif %}
+
+network {{ ned_content.network_name or 'Topology' }}
+{
+    parameters:
+{% for param in ned_content.parameters or [] %}
+        {{ param.name }}: {{ param.type }} = {{ param.value }};
+{% endfor %}
+
+    types:
+{% for node_type in ned_content.node_types or [] %}
+        module {{ node_type.name }}
+        {
+            parameters:
+{% for param in node_type.parameters %}
+                {{ param.name }}: {{ param.type }} = {{ param.value }};
+{% endfor %}
+            gates:
+{% for gate in node_type.gates %}
+                {{ gate.direction }} {{ gate.name }};
+{% endfor %}
+        }
+{% endfor %}
+
+    submodules:
+{% for node in ned_content.nodes or [] %}
+        {{ node.name }}: {{ node.type }} {
+            parameters:
+{% for param in node.parameters %}
+                {{ param.name }} = {{ param.value }};
+{% endfor %}
+            gates:
+{% for gate in node.gates %}
+                {{ gate.name }} <--> {{ gate.connection }};
+{% endfor %}
+        }
+{% endfor %}
+
+    connections:
+{% for conn in ned_content.connections or [] %}
+        {{ conn.from_node }}.{{ conn.from_gate }} <--> {{ conn.to_node }}.{{ conn.to_gate }};
+{% endfor %}
+}
+{% endif %}
